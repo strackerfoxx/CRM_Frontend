@@ -1,0 +1,41 @@
+/* ...existing code... */
+
+.ui-sidebar {
+  position: relative;
+  transition: width .18s ease;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+}
+
+/* trigger container positions the button overlapping the sidebar edge */
+.sidebar-trigger-container {
+  position: absolute;
+  top: 0.5rem;
+  right: -1.6rem; /* ajusta para alinearlo en el borde */
+  z-index: 20;
+}
+
+.sidebar-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 0.5rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
+  color: inherit;
+  cursor: pointer;
+}
+
+/* estados: closed / open ancho ejemplo */
+.ui-sidebar.closed { width: 4.5rem; }
+.ui-sidebar.open { width: 16rem; }
+
+/* contenedor interno del contenido */
+.sidebar-content {
+  padding: 1rem;
+}
+
+/* ...existing code... */

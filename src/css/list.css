@@ -1,0 +1,44 @@
+.list-screen {
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+    gap: 2rem;
+}
+@media (max-width: 712px) {
+    .list-screen {
+        grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    }
+}
+
+/* ...existing code... */
+
+.list-grid{
+  display: grid;
+  grid-template-columns: .6fr .8fr 1fr 1fr; /* ajusta anchos según necesites */
+  gap: 12px;
+  align-items: center;
+}
+
+/* Espaciado y estilo de cada celda */
+.list-grid > div,
+.list-grid > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Separador más sutil */
+.list-grid.border-b {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Responsive: en pantallas pequeñas apilar columnas */
+@media (max-width: 640px){
+  .list-grid{
+    grid-template-columns: 1fr; 
+    gap: 6px;
+  }
+  .header { 
+    display: none; /* oculta encabezado en móvil si quieres */
+  }
+  .list-grid > div { white-space: normal; } /* permitir wrapping en filas apiladas */
+}
