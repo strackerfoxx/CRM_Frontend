@@ -13,6 +13,42 @@ const BusinessProvider = ({ children }) => {
     "phone": "552405238",
     "email": "correo@correo.com",
     "plan": "ADVANCED",
+        "businessHours": {
+        "friday": {
+            "open": "09:00",
+            "close": "18:00",
+            "closed": false
+        },
+        "monday": {
+            "open": "09:00",
+            "close": "18:00",
+            "closed": false
+        },
+        "sunday": {
+            "closed": true
+        },
+        "tuesday": {
+            "open": "09:00",
+            "close": "18:00",
+            "closed": false
+        },
+        "saturday": {
+            "open": "10:00",
+            "close": "14:00",
+            "closed": false
+        },
+        "thursday": {
+            "open": "09:00",
+            "close": "18:00",
+            "closed": false
+        },
+        "wednesday": {
+            "open": "09:00",
+            "close": "18:00",
+            "closed": false
+        }
+    },
+    "specialDays": null,
     "isActive": true,
     "createdAt": "2025-08-31T23:01:05.748Z",
     "updatedAt": "2025-08-31T23:02:44.965Z",

@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import { dateReseter } from "@/middleware/dateReseter"
@@ -12,7 +13,7 @@ async function getAppointment(id){
     try {
         const {data: appointment} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/appointment/get-by-id?id=${id}`, {
             headers: {
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtZjBidjFjMjAwMDN2azc0MndtNjloajUiLCJuYW1lIjoiQWRtaW4iLCJyb2xlIjoiQURNSU4iLCJidXNpbmVzc0lkIjoiY21mMGFvM3A2MDAwMXZrNWN2cXNqanVkMSIsImlhdCI6MTc2MDIyMzIwMywiZXhwIjoxNzYyODE1MjAzfQ.6W3XJzBAaxPrRpRq-mrFZuD-GEkpaQYcIcfZZ-zGE24`
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtZjBidjFjMjAwMDN2azc0MndtNjloajUiLCJuYW1lIjoiQWRtaW4iLCJyb2xlIjoiQURNSU4iLCJidXNpbmVzc0lkIjoiY21mMGFvM3A2MDAwMXZrNWN2cXNqanVkMSIsImlhdCI6MTc2Mzk0OTcyMSwiZXhwIjoxNzY2NTQxNzIxfQ.MuYQolrfWtVkcqr71WpdWP78z018ngAaX263du0kMA4`
             }
         })
         return appointment

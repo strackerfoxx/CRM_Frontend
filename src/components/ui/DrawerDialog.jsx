@@ -31,11 +31,11 @@ export function DrawerDialog({children}) {
         <DialogTrigger asChild>
           <Button variant="outline">Crear Cita</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[625px] bg-neutral-900 max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Crear Cita</DialogTitle>
             <DialogDescription>
-              Crea una cita nieva. Haz click en guardar cuando termines.
+              Crea una cita nueva. Haz click en guardar cuando termines.
             </DialogDescription>
           </DialogHeader>
           {children}
@@ -49,11 +49,11 @@ export function DrawerDialog({children}) {
       <DrawerTrigger asChild>
         <Button variant="outline">Edit Profile</Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="bg-neutral-900">
         <DrawerHeader className="text-left">
           <DialogTitle>Crear Cita</DialogTitle>
             <DialogDescription>
-              Crea una cita nieva. Haz click en guardar cuando termines.
+              Crea una cita nueva. Haz click en guardar cuando termines.
             </DialogDescription>
         </DrawerHeader>
         {children}
