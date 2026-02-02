@@ -21,7 +21,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
-export function DrawerDialog({children}) {
+export function DrawerDialog({children, title, description}) {
   const [open, setOpen] = React.useState(false)
   const isDesktop = window.innerWidth >= 768
 
@@ -29,13 +29,13 @@ export function DrawerDialog({children}) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Crear Cita</Button>
+          <Button className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 text-white hover:bg-blue-700 cursor-pointer" >{title}</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[625px] bg-neutral-900 max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Crear Cita</DialogTitle>
+            <DialogTitle>{title}</DialogTitle>
             <DialogDescription>
-              Crea una cita nueva. Haz click en guardar cuando termines.
+              {description}
             </DialogDescription>
           </DialogHeader>
           {children}
@@ -47,13 +47,13 @@ export function DrawerDialog({children}) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="outline">{title}</Button>
       </DrawerTrigger>
       <DrawerContent className="bg-neutral-900">
         <DrawerHeader className="text-left">
-          <DialogTitle>Crear Cita</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
             <DialogDescription>
-              Crea una cita nueva. Haz click en guardar cuando termines.
+              {description}
             </DialogDescription>
         </DrawerHeader>
         {children}

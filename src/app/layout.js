@@ -2,6 +2,7 @@ import { Providers } from "./providers"
 import { BusinessProvider } from "./context/BusinessProvider";
 import { UserProvider } from "./context/UserProvider";
 import { AppointmentProvider } from "./context/AppointmentProvider";
+import { ClientProvider } from "./context/ClientProvider";
 import "./globals.css";
 
 export const metadata = {
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
           <UserProvider>
             <BusinessProvider>
               <AppointmentProvider>
-                <Providers>{children}</Providers>
+                <ClientProvider>
+                  <Providers>{children}</Providers>
+                </ClientProvider>
               </AppointmentProvider>
             </BusinessProvider>
           </UserProvider>

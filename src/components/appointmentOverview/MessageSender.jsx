@@ -37,8 +37,8 @@ export default function MessageSender({client, date, hour}) {
                 onClick={() => setMessage(`Hola, ${client.name}, te recordamos que tu cita es para el dia ${date} a las ${hour}! Atentamente, ${user.name}`)}
             >Recordatorio</button>
             <button className="message" 
-                onClick={() => setMessage(`Hola, ${client.name}, lamentalemente tuvimos que cancelar tu cita para el dia ${date} a las ${hour}, lo sentimos mucho. Atentamente, ${user.name}`)}
-            >Avisar cacelacion</button>
+                onClick={() => setMessage(`Hola, ${client.name}, lamentablemente tuvimos que cancelar tu cita para el dia ${date} a las ${hour}, lo sentimos mucho. Atentamente, ${user.name}`)}
+            >Avisar cancelacion</button>
             <button className="message" 
                 onClick={() => setMessage(`Hola, ${client.name}, retrasado`)}
             >Avisar retraso</button>

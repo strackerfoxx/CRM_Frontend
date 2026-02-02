@@ -6,14 +6,14 @@ const BusinessContext = createContext()
 
 const BusinessProvider = ({ children }) => {
     const [business, setBusiness] = useState(
-        {
-    "id": "cmf0ao3p60001vk5cvqsjjud1",
+{
+    "id": "cmiwg5e9w0000vkbg03hsebwf",
     "name": "Gut Klinik",
     "address": "calzada del bone",
     "phone": "552405238",
     "email": "correo@correo.com",
     "plan": "ADVANCED",
-        "businessHours": {
+    "businessHours": {
         "friday": {
             "open": "09:00",
             "close": "18:00",
@@ -25,6 +25,8 @@ const BusinessProvider = ({ children }) => {
             "closed": false
         },
         "sunday": {
+            "open": "00:00",
+            "close": "00:00",
             "closed": true
         },
         "tuesday": {
@@ -34,7 +36,7 @@ const BusinessProvider = ({ children }) => {
         },
         "saturday": {
             "open": "10:00",
-            "close": "14:00",
+            "close": "15:00",
             "closed": false
         },
         "thursday": {
@@ -48,206 +50,89 @@ const BusinessProvider = ({ children }) => {
             "closed": false
         }
     },
-    "specialDays": null,
-    "isActive": true,
-    "createdAt": "2025-08-31T23:01:05.748Z",
-    "updatedAt": "2025-08-31T23:02:44.965Z",
+    "specialDays": {},
+    "defaultSlotInterval": 20,
+    "deletedAt": null,
+    "createdAt": "2025-12-08T01:02:15.428Z",
+    "updatedAt": "2026-01-03T05:47:19.825Z",
     "users": [
         {
-            "id": "cmf0bv1c20003vk742wm69hj5",
-            "name": "Admin",
+            "id": "cmiwg8x520002vkbgnl98uclr",
+            "name": "Klinik Admin",
             "phone": null,
             "email": "correo@correo.com",
-            "password": "$2b$10$1fbmz4gz0eI1V812hRpBUuv8Vdtikf3aAJoPDbTDk.QIRUWOpe25.",
+            "password": "$2b$10$eq0sKM3G0mFy.1GohlDiGuPXLLGIFM3h6pj3yIdGyhZKr7uiOxoAi",
             "role": "ADMIN",
-            "isActive": true,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "createdAt": "2025-08-31T23:34:28.942Z",
-            "updatedAt": "2025-08-31T23:34:28.942Z"
-        }
-    ],
-    "clients": [
-        {
-            "id": "cmf0jkqer0002vkd4d5dfkb19",
-            "isActive": true,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "clientId": "cmf0jkqbr0000vkd4vx6yel3c",
-            "createdAt": "2025-09-01T03:10:25.203Z",
-            "updatedAt": "2025-09-01T03:10:25.203Z",
-            "client": {
-                "id": "cmf0jkqbr0000vkd4vx6yel3c",
-                "name": "Pepe",
-                "email": null,
-                "phone": "552405238",
-                "token": null,
-                "isConfirmed": false,
-                "createdAt": "2025-09-01T03:10:25.096Z",
-                "updatedAt": "2025-09-01T03:10:25.096Z"
-            },
-            "notes": []
+            "deletedAt": null,
+            "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+            "createdAt": "2025-12-08T01:04:59.846Z",
+            "updatedAt": "2025-12-08T04:22:29.998Z"
         },
         {
-            "id": "cmfknuy9l0002vk8kr4h3eyak",
-            "isActive": true,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "clientId": "cmfknuy540000vk8kz8f00epg",
-            "createdAt": "2025-09-15T05:05:43.929Z",
-            "updatedAt": "2025-09-15T05:05:43.929Z",
-            "client": {
-                "id": "cmfknuy540000vk8kz8f00epg",
-                "name": "Pepe",
-                "email": null,
-                "phone": "5517739222",
-                "token": null,
-                "isConfirmed": false,
-                "createdAt": "2025-09-15T05:05:43.761Z",
-                "updatedAt": "2025-09-15T05:05:43.761Z"
-            },
-            "notes": []
+            "id": "cmj9np1le0001vkg8tbxui9zc",
+            "name": "Romina - Estilista",
+            "phone": null,
+            "email": "rom@correo.com",
+            "password": "$2b$10$cJX6nc1SGWnQ42CLrgxnEeBVJ1.gL8CvvExbtSJGLRri0UXvgZa8u",
+            "role": "EMPLOYEE",
+            "deletedAt": null,
+            "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+            "createdAt": "2025-12-17T06:54:29.697Z",
+            "updatedAt": "2025-12-17T06:54:29.697Z"
         },
         {
-            "id": "cmg0ad5uk0002vkmsqtzfjp5q",
-            "isActive": true,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "clientId": "cmg0ad5rj0000vkmsh31qwasq",
-            "createdAt": "2025-09-26T03:32:17.756Z",
-            "updatedAt": "2025-09-26T03:32:17.756Z",
-            "client": {
-                "id": "cmg0ad5rj0000vkmsh31qwasq",
-                "name": "Alex Edu",
-                "email": null,
-                "phone": "5518839216",
-                "token": null,
-                "isConfirmed": true,
-                "createdAt": "2025-09-26T03:32:17.647Z",
-                "updatedAt": "2025-09-26T03:32:33.315Z"
-            },
-            "notes": [
-                {
-                    "id": "cmg3aqlkv0001vkykl6rk7m1g",
-                    "content": "El cliente prefiere no charla y una botella de agua",
-                    "isActive": true,
-                    "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-                    "createdAt": "2025-09-28T06:06:03.168Z",
-                    "updatedAt": "2025-09-28T06:06:03.168Z"
-                },
-                {
-                    "id": "cmg3asa9c0003vkyknhoqfjbp",
-                    "content": "El cliente cumple años el 10 de septiembre",
-                    "isActive": true,
-                    "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-                    "createdAt": "2025-09-28T06:07:21.775Z",
-                    "updatedAt": "2025-09-28T06:15:44.726Z"
-                }
-            ]
+            "id": "cmjtcczey0009vk1khg74cfh9",
+            "name": "Ana",
+            "phone": null,
+            "email": "ana@gmail.com",
+            "password": "$2b$10$eq0sKM3G0mFy.1GohlDiGuPXLLGIFM3h6pj3yIdGyhZKr7uiOxoAi",
+            "role": "EMPLOYEE",
+            "deletedAt": null,
+            "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+            "createdAt": "2025-12-31T01:32:34.763Z",
+            "updatedAt": "2025-12-31T01:31:39.307Z"
+        },
+        {
+            "id": "cmjxq09740001vkfkef3c4dhd",
+            "name": "Marcos - Manicurista",
+            "phone": null,
+            "email": "marcos13@gmail.com",
+            "password": "$2b$10$HJUtwiA9ma.DDYhqQPDfXeYncekwYLloJK5YbqfudljQkzjBxc5CG",
+            "role": "EMPLOYEE",
+            "deletedAt": null,
+            "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+            "createdAt": "2026-01-03T03:05:40.240Z",
+            "updatedAt": "2026-01-03T03:05:40.240Z"
         }
     ],
     "services": [
         {
-            "id": "cmfxfg65p0001vk8smqj4l7jd",
-            "name": "Tratamiento de Keratina",
-            "durationMin": 30,
-            "price": 999.99,
-            "description": null,
-            "isActive": true,
-            "imageUrl": null,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "createdAt": "2025-09-24T03:31:17.677Z",
-            "updatedAt": "2025-09-24T03:54:54.325Z"
-        },
-        {
-            "id": "cmh2z6vld0001vkb02wbha853",
-            "name": "Corte de Cabello",
-            "durationMin": 25,
-            "price": 150,
-            "description": null,
-            "isActive": true,
-            "imageUrl": null,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "createdAt": "2025-10-23T05:22:29.500Z",
-            "updatedAt": "2025-10-23T05:22:29.500Z"
-        },
-        {
-            "id": "cmh2z8u0n0003vkb0t1tnsgg0",
-            "name": "Aplicacion de tinte",
-            "durationMin": 25,
-            "price": 150,
-            "description": null,
-            "isActive": true,
-            "imageUrl": null,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "createdAt": "2025-10-23T05:24:00.792Z",
-            "updatedAt": "2025-10-23T05:24:00.792Z"
-        },
-        {
-            "id": "cmh2z9ft40005vkb0fc6jl1k4",
-            "name": "Alaciado permanente",
-            "durationMin": 60,
-            "price": 700,
-            "description": null,
-            "isActive": true,
-            "imageUrl": null,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "createdAt": "2025-10-23T05:24:29.074Z",
-            "updatedAt": "2025-10-23T05:24:29.074Z"
-        },
-        {
-            "id": "cmh2z9xsg0007vkb0eyki2nel",
+            "id": "cmj9nvo1d0001vknktf60petq",
             "name": "Extensiones de Pestañas",
             "durationMin": 80,
-            "price": 1200,
+            "cleaningTimeMin": 0,
+            "price": 999.99,
             "description": null,
-            "isActive": true,
             "imageUrl": null,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "createdAt": "2025-10-23T05:24:52.383Z",
-            "updatedAt": "2025-10-23T05:24:52.383Z"
-        }
-    ],
-    "appointments": [
-        {
-            "id": "cmg1fot6e0000vklse3pndz70",
-            "date": "2025-01-01T00:00:00.000Z",
-            "status": "SCHEDULED",
+            "category": null,
             "isActive": true,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "userId": "cmf0bv1c20003vk742wm69hj5",
-            "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-            "createdAt": "2025-09-26T22:49:05.431Z",
-            "updatedAt": "2025-09-27T06:53:48.732Z"
+            "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+            "createdAt": "2025-12-17T06:59:38.737Z",
+            "updatedAt": "2025-12-29T01:04:51.064Z"
         },
         {
-            "id": "cmg1ymemp0001vkm0l7rrmqt9",
-            "date": "2025-12-01T23:00:00.000Z",
-            "status": "CANCELED",
+            "id": "cmjqgy1k20001vkz8znvhubyp",
+            "name": "Nanoplastia",
+            "durationMin": 150,
+            "cleaningTimeMin": 0,
+            "price": 4500,
+            "description": null,
+            "imageUrl": null,
+            "category": null,
             "isActive": true,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "userId": null,
-            "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-            "createdAt": "2025-09-27T07:39:06.001Z",
-            "updatedAt": "2025-09-27T23:14:20.408Z"
-        },
-        {
-            "id": "cmg2zdp0m0001vkqk61axk9gw",
-            "date": "2025-12-01T22:00:00.000Z",
-            "status": "SCHEDULED",
-            "isActive": true,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "userId": null,
-            "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-            "createdAt": "2025-09-28T00:48:05.350Z",
-            "updatedAt": "2025-09-28T00:48:05.350Z"
-        },
-        {
-            "id": "cmh2zce6i0009vkb0mto3mi00",
-            "date": "2025-10-31T18:00:00.000Z",
-            "status": "COMPLETED",
-            "isActive": true,
-            "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-            "userId": null,
-            "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-            "createdAt": "2025-10-23T05:26:46.986Z",
-            "updatedAt": "2025-10-23T05:48:25.620Z"
+            "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+            "createdAt": "2025-12-29T01:17:36.821Z",
+            "updatedAt": "2026-01-03T05:39:37.985Z"
         }
     ]
 }

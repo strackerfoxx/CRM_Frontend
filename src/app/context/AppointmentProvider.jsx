@@ -7,61 +7,93 @@ const AppointmentContext = createContext()
 const AppointmentProvider = ({children}) => {
     const [appointments, setAppointments] = useState([
     {
-        "id": "cmg1fot6e0000vklse3pndz70",
-        "date": "2025-12-02T17:00:00.000Z",
+        "id": "cmjxu2xtm0001vk8o1fjpz4f6",
+        "date": "2026-01-10T06:00:00.000Z",
+        "startTime": "12:00",
+        "endTime": "13:20",
+        "durationMin": 80,
+        "startTimeMinutes": 720,
+        "endTimeMinutes": 800,
         "status": "SCHEDULED",
-        "isActive": true,
-        "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-        "userId": "cmf0bv1c20003vk742wm69hj5",
-        "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-        "createdAt": "2025-09-26T22:49:05.431Z",
-        "updatedAt": "2025-09-27T06:53:48.732Z",
-        "services": [],
-        "businessClient": {
-            "id": "cmg0ad5uk0002vkmsqtzfjp5q",
-            "client": {
-                "name": "Alex Edu",
-                "email": null,
-                "phone": "5518839216"
-            }
-        },
-        "user": {
-            "name": "Admin"
-        }
-    },
-    {
-        "id": "cmg1ymemp0001vkm0l7rrmqt9",
-        "date": "2025-12-01T09:45:00.000Z",
-        "status": "CANCELED",
-        "isActive": true,
-        "businessId": "cmf0ao3p60001vk5cvqsjjud1",
+        "businessId": "cmiwg5e9w0000vkbg03hsebwf",
         "userId": null,
-        "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-        "createdAt": "2025-09-27T07:39:06.001Z",
-        "updatedAt": "2025-09-27T23:14:20.408Z",
+        "businessClientId": "cmiwh6ofm0004vkigj3f2uo5g",
+        "createdAt": "2026-01-03T04:59:43.879Z",
+        "updatedAt": "2026-01-03T04:59:43.879Z",
         "services": [
             {
-                "id": "cmg1ymeps0002vkm0z51jntlb",
-                "appointmentId": "cmg1ymemp0001vkm0l7rrmqt9",
-                "serviceId": "cmfxfg65p0001vk8smqj4l7jd",
-                "createdAt": "2025-09-27T07:39:06.112Z",
-                "updatedAt": "2025-09-27T07:39:06.112Z",
+                "id": "cmjxu2xx40002vk8odv7s52an",
+                "appointmentId": "cmjxu2xtm0001vk8o1fjpz4f6",
+                "serviceId": "cmj9nvo1d0001vknktf60petq",
+                "userId": "cmj9np1le0001vkg8tbxui9zc",
+                "createdAt": "2026-01-03T04:59:44.057Z",
+                "updatedAt": "2026-01-03T04:59:44.057Z",
                 "service": {
-                    "id": "cmfxfg65p0001vk8smqj4l7jd",
-                    "name": "Tratamiento de Keratina",
-                    "durationMin": 30,
+                    "id": "cmj9nvo1d0001vknktf60petq",
+                    "name": "Extensiones de Pestañas",
+                    "durationMin": 80,
+                    "cleaningTimeMin": 0,
                     "price": 999.99,
                     "description": null,
-                    "isActive": true,
                     "imageUrl": null,
-                    "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-                    "createdAt": "2025-09-24T03:31:17.677Z",
-                    "updatedAt": "2025-09-24T03:54:54.325Z"
+                    "category": null,
+                    "isActive": true,
+                    "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+                    "createdAt": "2025-12-17T06:59:38.737Z",
+                    "updatedAt": "2025-12-29T01:04:51.064Z"
                 }
             }
         ],
         "businessClient": {
-            "id": "cmg0ad5uk0002vkmsqtzfjp5q",
+            "id": "cmiwh6ofm0004vkigj3f2uo5g",
+            "client": {
+                "name": "Manuel",
+                "email": "",
+                "phone": "5535287904"
+            }
+        },
+        "user": null
+    },
+    {
+        "id": "cmjxu4lpg0004vk8ohe66sjgl",
+        "date": "2026-01-10T06:00:00.000Z",
+        "startTime": "12:20",
+        "endTime": "13:40",
+        "durationMin": 80,
+        "startTimeMinutes": 740,
+        "endTimeMinutes": 820,
+        "status": "SCHEDULED",
+        "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+        "userId": null,
+        "businessClientId": "cmiwnpnh2000avk6wazdrv2bk",
+        "createdAt": "2026-01-03T05:01:01.541Z",
+        "updatedAt": "2026-01-03T05:01:01.541Z",
+        "services": [
+            {
+                "id": "cmjxu4lqz0005vk8oeuq8ena2",
+                "appointmentId": "cmjxu4lpg0004vk8ohe66sjgl",
+                "serviceId": "cmj9nvo1d0001vknktf60petq",
+                "userId": "cmjtcczey0009vk1khg74cfh9",
+                "createdAt": "2026-01-03T05:01:01.596Z",
+                "updatedAt": "2026-01-03T05:01:01.596Z",
+                "service": {
+                    "id": "cmj9nvo1d0001vknktf60petq",
+                    "name": "Extensiones de Pestañas",
+                    "durationMin": 80,
+                    "cleaningTimeMin": 0,
+                    "price": 999.99,
+                    "description": null,
+                    "imageUrl": null,
+                    "category": null,
+                    "isActive": true,
+                    "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+                    "createdAt": "2025-12-17T06:59:38.737Z",
+                    "updatedAt": "2025-12-29T01:04:51.064Z"
+                }
+            }
+        ],
+        "businessClient": {
+            "id": "cmiwnpnh2000avk6wazdrv2bk",
             "client": {
                 "name": "Alex Edu",
                 "email": null,
@@ -71,187 +103,100 @@ const AppointmentProvider = ({children}) => {
         "user": null
     },
     {
-        "id": "cmg2zdp0m0001vkqk61axk9gw",
-        "date": "2025-12-01T12:00:00.000Z",
+        "id": "cmjxu5u330007vk8oh9arcebb",
+        "date": "2026-01-10T06:00:00.000Z",
+        "startTime": "09:40",
+        "endTime": "11:00",
+        "durationMin": 80,
+        "startTimeMinutes": 580,
+        "endTimeMinutes": 660,
         "status": "SCHEDULED",
-        "isActive": true,
-        "businessId": "cmf0ao3p60001vk5cvqsjjud1",
+        "businessId": "cmiwg5e9w0000vkbg03hsebwf",
         "userId": null,
-        "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-        "createdAt": "2025-09-28T00:48:05.350Z",
-        "updatedAt": "2025-09-28T00:48:05.350Z",
+        "businessClientId": "cmiwnpnh2000avk6wazdrv2bk",
+        "createdAt": "2026-01-03T05:01:59.056Z",
+        "updatedAt": "2026-01-03T05:01:59.056Z",
         "services": [
             {
-                "id": "cmg2zdp5t0002vkqkw68416ff",
-                "appointmentId": "cmg2zdp0m0001vkqk61axk9gw",
-                "serviceId": "cmfxfg65p0001vk8smqj4l7jd",
-                "createdAt": "2025-09-28T00:48:05.538Z",
-                "updatedAt": "2025-09-28T00:48:05.538Z",
+                "id": "cmjxu5u680008vk8ohzavnr6t",
+                "appointmentId": "cmjxu5u330007vk8oh9arcebb",
+                "serviceId": "cmj9nvo1d0001vknktf60petq",
+                "userId": "cmj9np1le0001vkg8tbxui9zc",
+                "createdAt": "2026-01-03T05:01:59.169Z",
+                "updatedAt": "2026-01-03T05:01:59.169Z",
                 "service": {
-                    "id": "cmfxfg65p0001vk8smqj4l7jd",
-                    "name": "Tratamiento de Keratina",
-                    "durationMin": 30,
+                    "id": "cmj9nvo1d0001vknktf60petq",
+                    "name": "Extensiones de Pestañas",
+                    "durationMin": 80,
+                    "cleaningTimeMin": 0,
                     "price": 999.99,
                     "description": null,
-                    "isActive": true,
                     "imageUrl": null,
-                    "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-                    "createdAt": "2025-09-24T03:31:17.677Z",
-                    "updatedAt": "2025-09-24T03:54:54.325Z"
+                    "category": null,
+                    "isActive": true,
+                    "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+                    "createdAt": "2025-12-17T06:59:38.737Z",
+                    "updatedAt": "2025-12-29T01:04:51.064Z"
                 }
             }
         ],
         "businessClient": {
-            "id": "cmg0ad5uk0002vkmsqtzfjp5q",
+            "id": "cmiwnpnh2000avk6wazdrv2bk",
             "client": {
                 "name": "Alex Edu",
                 "email": null,
                 "phone": "5518839216"
             }
         },
-        "user": "Admin"
+        "user": null
     },
     {
-        "id": "cmg2zdp0m0001akqk61axk6zw",
-        "date": "2025-12-01T15:30:00.000Z",
+        "id": "cmjxu6hns000avk8oydtpxesi",
+        "date": "2026-01-10T06:00:00.000Z",
+        "startTime": "13:20",
+        "endTime": "14:40",
+        "durationMin": 80,
+        "startTimeMinutes": 800,
+        "endTimeMinutes": 880,
         "status": "SCHEDULED",
-        "isActive": true,
-        "businessId": "cmf0ao3p60001vk5cvqsjjud1",
+        "businessId": "cmiwg5e9w0000vkbg03hsebwf",
         "userId": null,
-        "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-        "createdAt": "2025-09-28T00:48:05.350Z",
-        "updatedAt": "2025-09-28T00:48:05.350Z",
+        "businessClientId": "cmiwh6ofm0004vkigj3f2uo5g",
+        "createdAt": "2026-01-03T05:02:29.608Z",
+        "updatedAt": "2026-01-03T05:02:29.608Z",
         "services": [
             {
-                "id": "cmg2zdp5t0002vkqkw68416ff",
-                "appointmentId": "cmg2zdp0m0001vkqk61axk9gw",
-                "serviceId": "cmfxfg65p0001vk8smqj4l7jd",
-                "createdAt": "2025-09-28T00:48:05.538Z",
-                "updatedAt": "2025-09-28T00:48:05.538Z",
+                "id": "cmjxu6hpd000bvk8oiowe35v7",
+                "appointmentId": "cmjxu6hns000avk8oydtpxesi",
+                "serviceId": "cmj9nvo1d0001vknktf60petq",
+                "userId": "cmj9np1le0001vkg8tbxui9zc",
+                "createdAt": "2026-01-03T05:02:29.666Z",
+                "updatedAt": "2026-01-03T05:02:29.666Z",
                 "service": {
-                    "id": "cmfxfg65p0001vk8smqj4l7jd",
-                    "name": "Tratamiento de Keratina",
-                    "durationMin": 30,
+                    "id": "cmj9nvo1d0001vknktf60petq",
+                    "name": "Extensiones de Pestañas",
+                    "durationMin": 80,
+                    "cleaningTimeMin": 0,
                     "price": 999.99,
                     "description": null,
-                    "isActive": true,
                     "imageUrl": null,
-                    "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-                    "createdAt": "2025-09-24T03:31:17.677Z",
-                    "updatedAt": "2025-09-24T03:54:54.325Z"
+                    "category": null,
+                    "isActive": true,
+                    "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+                    "createdAt": "2025-12-17T06:59:38.737Z",
+                    "updatedAt": "2025-12-29T01:04:51.064Z"
                 }
             }
         ],
         "businessClient": {
-            "id": "cmg0ad5uk0002vkmsqtzfjp5q",
+            "id": "cmiwh6ofm0004vkigj3f2uo5g",
             "client": {
-                "name": "Alex Edu",
-                "email": null,
-                "phone": "5518839216"
+                "name": "Manuel",
+                "email": "",
+                "phone": "5535287904"
             }
         },
-        "user": "Admin"
-    },
-    {
-        "id": "cmg2zdp0m0001akqk61axk6zw",
-        "date": "2025-12-01T13:00:00.000Z",
-        "status": "SCHEDULED",
-        "isActive": true,
-        "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-        "userId": null,
-        "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-        "createdAt": "2025-09-28T00:48:05.350Z",
-        "updatedAt": "2025-09-28T00:48:05.350Z",
-        "services": [
-            {
-                "id": "cmg2zdp5t0002vkqkw68416ff",
-                "appointmentId": "cmg2zdp0m0001vkqk61axk9gw",
-                "serviceId": "cmfxfg65p0001vk8smqj4l7jd",
-                "createdAt": "2025-09-28T00:48:05.538Z",
-                "updatedAt": "2025-09-28T00:48:05.538Z",
-                "service": {
-                    "id": "cmfxfg65p0001vk8smqj4l7jd",
-                    "name": "Tratamiento de Keratina",
-                    "durationMin": 30,
-                    "price": 999.99,
-                    "description": null,
-                    "isActive": true,
-                    "imageUrl": null,
-                    "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-                    "createdAt": "2025-09-24T03:31:17.677Z",
-                    "updatedAt": "2025-09-24T03:54:54.325Z"
-                }
-            },
-            {
-                "id": "cmg2zdp5t0002vkqkw68416ff",
-                "appointmentId": "cmg2zdp0m0001vkqk61axk9gw",
-                "serviceId": "cmfxfg65p0001vk8smqj4l7jd",
-                "createdAt": "2025-09-28T00:48:05.538Z",
-                "updatedAt": "2025-09-28T00:48:05.538Z",
-                "service": {
-                    "id": "cmfxfg65p0001vk8smqj4l7jd",
-                    "name": "Tratamiento de Keratina",
-                    "durationMin": 25,
-                    "price": 999.99,
-                    "description": null,
-                    "isActive": true,
-                    "imageUrl": null,
-                    "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-                    "createdAt": "2025-09-24T03:31:17.677Z",
-                    "updatedAt": "2025-09-24T03:54:54.325Z"
-                }
-            }
-        ],
-        "businessClient": {
-            "id": "cmg0ad5uk0002vkmsqtzfjp5q",
-            "client": {
-                "name": "Alex Edu",
-                "email": null,
-                "phone": "5518839216"
-            }
-        },
-        "user": "Admin"
-    },
-    {
-        "id": "cmg2zdp0m0001akqk61axk6zw",
-        "date": "2025-12-01T15:00:00.000Z",
-        "status": "SCHEDULED",
-        "isActive": true,
-        "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-        "userId": null,
-        "businessClientId": "cmg0ad5uk0002vkmsqtzfjp5q",
-        "createdAt": "2025-09-28T00:48:05.350Z",
-        "updatedAt": "2025-09-28T00:48:05.350Z",
-        "services": [
-            {
-                "id": "cmg2zdp5t0002vkqkw68416ff",
-                "appointmentId": "cmg2zdp0m0001vkqk61axk9gw",
-                "serviceId": "cmfxfg65p0001vk8smqj4l7jd",
-                "createdAt": "2025-09-28T00:48:05.538Z",
-                "updatedAt": "2025-09-28T00:48:05.538Z",
-                "service": {
-                    "id": "cmfxfg65p0001vk8smqj4l7jd",
-                    "name": "Tratamiento de Keratina",
-                    "durationMin": 30,
-                    "price": 999.99,
-                    "description": null,
-                    "isActive": true,
-                    "imageUrl": null,
-                    "businessId": "cmf0ao3p60001vk5cvqsjjud1",
-                    "createdAt": "2025-09-24T03:31:17.677Z",
-                    "updatedAt": "2025-09-24T03:54:54.325Z"
-                }
-            }
-        ],
-        "businessClient": {
-            "id": "cmg0ad5uk0002vkmsqtzfjp5q",
-            "client": {
-                "name": "Alex Edu",
-                "email": null,
-                "phone": "5518839216"
-            }
-        },
-        "user": "Admin"
+        "user": null
     }
 ])
     const { token } = useUser()
@@ -264,13 +209,14 @@ const AppointmentProvider = ({children}) => {
                 }
                 try {
                     const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/appointment/get-all`, { headers })
-                    // setAppointments(data.appointments)
+                    setAppointments(data.appointments)
+                    console.log("Appointments fetched:", data.appointments)
                 } catch (error) {
                     console.log(error.message)
                 }
             }
             
-            // getAppointments
+            // getAppointments()
 
         }
     }, [token])
