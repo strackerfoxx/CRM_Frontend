@@ -1,5 +1,7 @@
 "use client";
 
+import { useParams } from "next/navigation";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -11,12 +13,14 @@ import PaymentSummary from "@/components/appointmentOverview/PaymentSummary";
 import InfoCard from "@/components/appointmentOverview/InfoCard";
 import OverviewHeader from "@/components/OverviewHeader";
 
-export default function AppointmentDetailsClient({ id }) {
+export default function AppointmentDetailsClient() {
   const { token, isLoaded } = useUser();
   const [appointment, setAppointment] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-
+  
+  const id = useParams()?.id
+  
   useEffect(() => {
     if (!isLoaded) {
       return;
@@ -34,7 +38,7 @@ export default function AppointmentDetailsClient({ id }) {
       try {
         setIsLoading(true);
         const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/appointment/get-by-id?id=${id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-id?id=${id}`,
           {
             headers: {
               Authorization: token,
@@ -62,7 +66,7 @@ export default function AppointmentDetailsClient({ id }) {
     };
 
     getAppointment();
-
+    
     return () => {
       isActive = false;
     };
@@ -89,6 +93,7 @@ export default function AppointmentDetailsClient({ id }) {
       </div>
     );
   }
+
 
   return (
     <div className="flex min-h-screen w-full flex-col font-display">
@@ -157,7 +162,7 @@ export default function AppointmentDetailsClient({ id }) {
                 />
                 <InfoCard
                   title="Hora"
-                  value={dateReseter(appointment.date, "hh:mm")}
+                  value={dateReseter(appointment.startTime, "hh:mm")}
                 />
               </div>
             </div>
@@ -168,9 +173,9 @@ export default function AppointmentDetailsClient({ id }) {
           </div>
 
           <MessageSender
-            client={appointment.businessClient?.client}
+            client={appointment?.businessClient?.client}
             date={dateReseter(appointment.date, "dd-mm-yyy")}
-            hour={dateReseter(appointment.date, "hh:mm")}
+            hour={dateReseter(appointment.startTime, "hh:mm")}
           />
         </div>
       </main>

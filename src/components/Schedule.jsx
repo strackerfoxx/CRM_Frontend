@@ -4,16 +4,21 @@ import { useBusiness } from "@/hooks/useBusiness"
 import { useAvailableSlots } from "@/hooks/useAvailableSlots"
 import Spinner from "./Spinner"
 
-export default function Schedule({ date, servicesSelected, hour, setHour, token, userId }) {
+import { useUser } from "@/hooks/useUser"
+
+export default function Schedule({ date, servicesSelected, hour, setHour, userId }) {
   const { business } = useBusiness()
   const [slots, setSlots] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
+  const { token } = useUser()
   
   if (!date || servicesSelected.length === 0) {
     return <h1>Tienes que seleccionar una fecha y servicios</h1>
   }
 
   useEffect(() => {
+    if(!token) return
     setIsLoading(true)
     async function fetchSlots() {
       setSlots(await useAvailableSlots({ date, servicesSelected, business, token, userId }))
@@ -21,7 +26,7 @@ export default function Schedule({ date, servicesSelected, hour, setHour, token,
     fetchSlots()
     
     setIsLoading(false)
-  }, [servicesSelected, date, userId])
+  }, [servicesSelected, date, userId, token])
   
 
   if (slots.length === 0) {

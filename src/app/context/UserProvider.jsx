@@ -16,19 +16,19 @@ const UserProvider = ({ children }) => {
 
             const getUser = async () => {
                 const headers = {
-                    "Authorization": `${userState.token}`
+                    "Authorization": `Bearer ${userState.token}`
                 }
                 try {
-                    // const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/users/getuser`, { headers })
+                    const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/user/get-user-by-id`, { headers })
+                    setUser({name: data?.user?.name, email: data?.user?.email, id: data?.user?._id})
                 } catch (error) {
                     console.log(error.message)
                 }
             }
-            getUser()
+            // getUser()
         }
         setIsLoaded(true)
     }, [])
-    
     return (
         <UserContext.Provider value={{ token, setToken, isLoaded, user, setUser }}>
             {children}

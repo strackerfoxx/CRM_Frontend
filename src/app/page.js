@@ -71,7 +71,7 @@ export default function LoginForm() {
           <FormProvider {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="w-96 p-6 bg-neutral-950 rounded-lg shadow-lg space-y-6"
+              className="w-96 p-6 bg-neutral-800 rounded-lg shadow-lg space-y-6"
             >
                 {/* Email */}
                 <FormField

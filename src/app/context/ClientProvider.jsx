@@ -41,13 +41,31 @@ const ClientProvider = ({children}) => {
                 "createdAt": "2025-12-08T04:33:57.654Z",
                 "updatedAt": "2025-12-08T04:34:28.781Z"
             }
+        },
+        {
+            "id": "cml5oy83u0001vktk8h2qsd3s",
+            "deletedAt": null,
+            "businessId": "cmiwg5e9w0000vkbg03hsebwf",
+            "clientId": "cml5owva50000vktkf8ubflmh",
+            "createdAt": "2026-02-02T21:37:57.643Z",
+            "updatedAt": "2026-02-02T21:37:43.426Z",
+            "client": {
+                "id": "cml5owva50000vktkf8ubflmh",
+                "name": "Diego Castle",
+                "email": "diegoyoyo2007@gmail.com",
+                "phone": "5524012866",
+                "token": null,
+                "isConfirmed": true,
+                "createdAt": "2026-02-02T21:36:54.365Z",
+                "updatedAt": "2026-02-02T21:36:18.319Z"
+            }
         }
     ])
     const { token } = useUser()
 
     useEffect(() => {
         if(token){
-             const getClients = async () => {
+            const getClients = async () => {
                 const headers = {
                     "Authorization": token
                 }
@@ -61,6 +79,7 @@ const ClientProvider = ({children}) => {
             
             // getClients()
         }
+        console.log(clients)
     }, [token])
     
 

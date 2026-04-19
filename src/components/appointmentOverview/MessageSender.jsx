@@ -13,7 +13,7 @@ const WhatsAppIcon = () => (
 export default function MessageSender({client, date, hour}) {
     const [message, setMessage] = useState("");
     const { user } = useUser();
-    console.log(client)
+    
   return (
       <div className="mt-8 rounded-xl border border-neutral-800 bg-neutral-950 p-6">
         <h3 className="flex items-center gap-3 text-lg font-semibold text-white">
@@ -37,7 +37,7 @@ export default function MessageSender({client, date, hour}) {
                 onClick={() => setMessage(`Hola, ${client.name}, te recordamos que tu cita es para el dia ${date} a las ${hour}! Atentamente, ${user.name}`)}
             >Recordatorio</button>
             <button className="message" 
-                onClick={() => setMessage(`Hola, ${client.name}, lamentablemente tuvimos que cancelar tu cita para el dia ${date} a las ${hour}, lo sentimos mucho. Atentamente, ${user.name}`)}
+                onClick={() => setMessage(`Hola, ${client.name}, lamentablemente tuvimos que cancelar tu cita del dia ${date} a las ${hour}, lo sentimos mucho. Atentamente, ${user.name}`)}
             >Avisar cancelacion</button>
             <button className="message" 
                 onClick={() => setMessage(`Hola, ${client.name}, retrasado`)}

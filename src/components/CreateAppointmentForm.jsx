@@ -1,4 +1,5 @@
 "use client"
+import axios from "axios"
 import { cn } from "@/lib/utils"
 
 import { Input } from "@/components/ui/input"
@@ -15,11 +16,14 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import { toast } from "sonner"
+
 import { DateTimePicker } from "@/components/DateTimePicker"
 import Schedule from "@/components/Schedule"
 
 import { useBusiness } from "@/hooks/useBusiness"
 import { useClient } from "@/hooks/useClients"
+import { useUser } from "@/hooks/useUser"
 
 import { useState } from "react"
 
@@ -32,6 +36,8 @@ export default function createAppointmentForm({label}) {
     const [client, setClient] = useState(undefined)
     const [profesional, setProfesional] = useState(undefined)
     const [servicesSelected, setServicesSelected] = useState([])
+
+    const { token } = useUser()
 
     async function handlesubmit(e){
         e.preventDefault();
@@ -51,21 +57,44 @@ export default function createAppointmentForm({label}) {
         // aqui el problema es que si por ejemplo van una hora a comer o en general hay una hora (entre el horario establecido)
         // en el que no estan disponibles no quitamos esa hora, solo se recibe hora de apertura y cierre
 
-        // if(profesional === "automatic"){
-        //     setProfesional(undefined)
-        // }
-        
+        const services = []
+        for (const id of servicesSelected) {
+            services.push({serviceId: id})
+        }
+
         console.log({
-            "date": new Date(date).toJSON().split("T")[0] + "T" + hour + ":00", 
-            "clientId": client, 
-            "services": servicesSelected, 
-            "businessId": business.id,
-            "user": profesional
-        })
+                    date: new Date(date).toJSON().split("T")[0],
+                    businessClientId: client,
+                    services,
+                    businessId: business.id,
+                    user: profesional
+                })
+        const createAppointment = async () => {
+            const headers = {
+                "Authorization": token  
+            } 
+
+            try {
+                const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/create`, {
+                    date: new Date(date).toJSON().split("T")[0],
+                    startTime: hour,
+                    businessClientId: client,
+                    services,
+                    businessId: business.id
+                }, { headers })
+                toast.success(data?.msg || "Cita creada exitosamente")
+            } catch (error) {
+                console.log(error)
+                console.log(data?.msg)
+                toast.error(data?.msg || "Error al crear la cita")
+            }
+        }
+        createAppointment()
     }
 
   return (
     <form className={cn("grid items-start gap-6")} onSubmit={ event => handlesubmit(event)}>
+
         <div className="grid gap-3">
             <Label htmlFor="cliente">Cliente</Label>
 
@@ -116,7 +145,7 @@ export default function createAppointmentForm({label}) {
                 <div className="grid gap-3">
                     <Label htmlFor="hora">Horarios disponibles:</Label>
                     
-                    <Schedule date={date} servicesSelected={servicesSelected} setHour={setHour} hour={hour} token={token} userId={profesional} />
+                    <Schedule date={date} servicesSelected={servicesSelected} setHour={setHour} hour={hour} userId={profesional} />
                 </div>
             }
 
