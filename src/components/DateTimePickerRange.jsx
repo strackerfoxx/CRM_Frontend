@@ -19,7 +19,6 @@ export function DatePickerWithRange({ date, setDate }) {
   //   to: new Date(),
   // })
 
-  console.log(date)
   return (
     <Field className="mx-auto bg-black rounded-md">
       <Popover>

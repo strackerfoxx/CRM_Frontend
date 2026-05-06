@@ -21,8 +21,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
+import { useDrawer } from "@/hooks/useDrawer"
+
 export function DrawerDialog({children, title, description}) {
-  const [open, setOpen] = React.useState(false)
+  const { open, setOpen } = useDrawer()
   const isDesktop = window.innerWidth >= 768
 
   if (isDesktop) {

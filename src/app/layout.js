@@ -4,6 +4,8 @@ import { UserProvider } from "./context/UserProvider";
 import { AppointmentProvider } from "./context/AppointmentProvider";
 import { ClientProvider } from "./context/ClientProvider";
 import { ServiceProvider } from "./context/ServiceProvider";
+import { TeamProvider } from "./context/TeamProvider";
+import { DrawerProvider } from "./context/DrawerProvider";
 import "./globals.css";
 
 export const metadata = {
@@ -17,13 +19,17 @@ export default function RootLayout({ children }) {
       <body className="antialiased">
           <UserProvider>
             <BusinessProvider>
-              <ServiceProvider>
-                <AppointmentProvider>
-                  <ClientProvider>
-                    <Providers>{children}</Providers>
-                  </ClientProvider>
-                </AppointmentProvider>
-              </ServiceProvider>
+              <TeamProvider>
+                <ServiceProvider>
+                  <AppointmentProvider>
+                    <ClientProvider>
+                      <DrawerProvider>
+                        <Providers>{children}</Providers>
+                      </DrawerProvider>
+                    </ClientProvider>
+                  </AppointmentProvider>
+                </ServiceProvider>
+              </TeamProvider>
             </BusinessProvider>
           </UserProvider>
       </body>

@@ -48,7 +48,7 @@ export default function List({appointments}) {
         </div>
 
         {filteredAppointments.map((appointment) => (
-          <Link href={`/main/appointment/${appointment.id}`} key={appointment.id} 
+          <Link href={`/main/appointments/${appointment.id}`} key={appointment.id} 
             className="list-grid item hover:bg-neutral-800 px-6 py-4 mt-2 border-b rounded-b-xl border-b-neutral-700"
           >
             <div className="col-time">{appointment.startTime}</div>

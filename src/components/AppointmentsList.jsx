@@ -18,7 +18,7 @@ export default function AppointmentsList({ appointments }) {
                 </div>
 
                 {appointments.map((a) => (
-                    <Link href={`/main/appointment/${a.id}`} key={a.id} 
+                    <Link href={`/main/appointments/${a.id}`} key={a.id} 
                         className="grid grid-cols-5 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
                     > 
                         <div className="col-name overflow-hidden">{a.businessClient.client.name}</div>

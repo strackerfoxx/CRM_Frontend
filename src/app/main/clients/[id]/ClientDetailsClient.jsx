@@ -103,7 +103,7 @@ export default function ClientDetailsClient() {
   return (
     <>
       <OverviewHeader />
-      <div className="px-20 py-7">
+      <div className="px-20 py-7 mt-15">
         <div className="flex justify-between items-center">
             <div>
                 <h1 className="text-4xl font-bold mb-3">{client?.client?.name}</h1>
@@ -162,7 +162,7 @@ export default function ClientDetailsClient() {
               </div>
         </div>
 
-        <div className="bg-neutral-900 rounded-md mt-10">
+        <div className="bg-neutral-900 rounded-md mt-10 mb-16">
           <h3 className="text-lg font-semibold p-6">Historial de citas</h3>
           <div className="grid grid-cols-4 header text-neutral-400 font-semibold mb-2 border-b pb-2 p-5">
                 <span>Fecha</span>
@@ -171,7 +171,7 @@ export default function ClientDetailsClient() {
                 <span>Monto</span>
             </div>
             {appointments?.map(appointment => (
-                <Link href={`/main/appointment/${appointment.id}`} key={appointment.id} 
+                <Link href={`/main/appointments/${appointment.id}`} key={appointment.id} 
                     className="grid grid-cols-4 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
                 >
                     <div className="col-name overflow-hidden">{dateReseter(appointment.date, "dd-mm-yyy")}</div>
@@ -215,6 +215,7 @@ export default function ClientDetailsClient() {
             }
         </div>
       </div>
+            <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent pointer-events-none" />
     </>
   )
 }

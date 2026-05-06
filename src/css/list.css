@@ -11,6 +11,21 @@
 
 /* ...existing code... */
 
+.list-grid-actions{
+  display: grid;
+  grid-template-columns: 1fr .8fr 1fr auto; /* ajusta anchos según necesites */
+  gap: 12px;
+  align-items: center;
+}
+
+/* Responsive para list-grid-actions */
+@media (max-width: 640px){
+  .list-grid-actions{
+    grid-template-columns: 1fr; 
+    gap: 6px;
+  }
+}
+
 .list-grid{
   display: grid;
   grid-template-columns: .6fr .8fr 1fr 1fr; /* ajusta anchos según necesites */
@@ -32,7 +47,7 @@
 }
 
 /* Responsive: en pantallas pequeñas apilar columnas */
-@media (max-width: 640px){
+@media (max-width: 768px){
   .list-grid{
     grid-template-columns: 1fr; 
     gap: 6px;

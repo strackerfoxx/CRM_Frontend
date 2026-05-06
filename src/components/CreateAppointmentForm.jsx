@@ -24,20 +24,36 @@ import Schedule from "@/components/Schedule"
 import { useBusiness } from "@/hooks/useBusiness"
 import { useClient } from "@/hooks/useClients"
 import { useUser } from "@/hooks/useUser"
+import { useService } from "@/hooks/useService"
+import { useDrawer } from "@/hooks/useDrawer"
+import { useAppointment } from "@/hooks/useAppointment"
 
 import { useState } from "react"
+import { set } from "zod"
 
-export default function createAppointmentForm({label}) {
+export default function createAppointmentForm({
+    label,
+    client,
+    setClient,
+    date,
+    setDate,
+    servicesSelected,
+    setServicesSelected,
+    profesional,
+    setProfesional,
+    hour,
+    setHour
+}) {
 
     const { business } = useBusiness()
     const { clients } = useClient()
-    const [date, setDate] = useState(undefined)
-    const [hour, setHour] = useState(undefined)
-    const [client, setClient] = useState(undefined)
-    const [profesional, setProfesional] = useState(undefined)
-    const [servicesSelected, setServicesSelected] = useState([])
+    const { services } = useService()
+    const { setAppointments } = useAppointment()
+    const { closeDrawer } = useDrawer()
+    const { token, user } = useUser()
 
-    const { token } = useUser()
+    const [loading, setLoading] = useState(false)
+
 
     async function handlesubmit(e){
         e.preventDefault();
@@ -57,40 +73,48 @@ export default function createAppointmentForm({label}) {
         // aqui el problema es que si por ejemplo van una hora a comer o en general hay una hora (entre el horario establecido)
         // en el que no estan disponibles no quitamos esa hora, solo se recibe hora de apertura y cierre
 
-        const services = []
+        const servicesQuery = []
         for (const id of servicesSelected) {
-            services.push({serviceId: id})
+            servicesQuery.push({serviceId: id, userId: profesional})
         }
 
-        console.log({
-                    date: new Date(date).toJSON().split("T")[0],
-                    businessClientId: client,
-                    services,
-                    businessId: business.id,
-                    user: profesional
-                })
+        const appointmentData = {
+            date: new Date(date).toJSON().split("T")[0],
+            businessClientId: client,
+            services: servicesQuery,
+            businessId: business.id,
+            user: user.id,
+            startTime: hour
+        }
         const createAppointment = async () => {
-            const headers = {
-                "Authorization": token  
-            } 
+                const headers = {
+                    "Authorization": token  
+                } 
 
-            try {
-                const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/create`, {
-                    date: new Date(date).toJSON().split("T")[0],
-                    startTime: hour,
-                    businessClientId: client,
-                    services,
-                    businessId: business.id
-                }, { headers })
-                toast.success(data?.msg || "Cita creada exitosamente")
-            } catch (error) {
-                console.log(error)
-                console.log(data?.msg)
-                toast.error(data?.msg || "Error al crear la cita")
+                try {
+                    setLoading(true)
+                    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/create`, appointmentData, { headers })
+                    toast.success(data?.msg || "Cita creada exitosamente")
+                    setAppointments(prev => [...prev, data.appointment])
+                } catch (error) {
+                    console.log(error)
+                    console.log(data?.msg)
+                    toast.error(data?.msg || "Error al crear la cita")
+                }finally {
+                    setTimeout(() => {
+                        closeDrawer()
+                        setLoading(false)
+                        setClient(undefined)
+                        setDate(undefined)
+                        setProfesional(undefined)
+                        setHour(undefined)
+                        setServicesSelected([])
+                    }, 1000);
+                }
             }
+            createAppointment()
         }
-        createAppointment()
-    }
+                
 
   return (
     <form className={cn("grid items-start gap-6")} onSubmit={ event => handlesubmit(event)}>
@@ -118,7 +142,7 @@ export default function createAppointmentForm({label}) {
             <Label htmlFor="servicio">Servicios</Label>
             {/* <Input id="username" defaultValue="@shadcn" /> */}
             {/* <DateTimePicker date={date} setDate={setDate}  /> */}
-            <ServiceCard services={business.services} servicesSelected={servicesSelected} setServicesSelected={setServicesSelected} />
+            <ServiceCard services={services} servicesSelected={servicesSelected} setServicesSelected={setServicesSelected} />
         </div>
         {!date || servicesSelected.length === 0 ? null : (
             <>
@@ -150,7 +174,9 @@ export default function createAppointmentForm({label}) {
             }
 
             {/* {!date || servicesSelected.length === 0 || !hour ? <Button type="submit" disabled >Guardar cambios</Button> : <Button type="submit" >Guardar cambios</Button>} */}
-            <Button className="cursor-pointer" type="submit" >{label}</Button>
+            <Button className="cursor-pointer" type="submit" disabled={loading} >
+                {label}
+            </Button>
             </>
         )}
     </form>
