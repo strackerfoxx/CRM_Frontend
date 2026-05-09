@@ -21,6 +21,9 @@ export default function ClientDetailsClient() {
   const [ notes, setNotes ] = useState([])
   const [ newNote, setNewNote ] = useState("")
   const [ isCreatingNote, setIsCreatingNote ] = useState(false)
+  const [ editingNoteId, setEditingNoteId ] = useState(null)
+  const [ editNoteContent, setEditNoteContent ] = useState("")
+  const [ isUpdatingNote, setIsUpdatingNote ] = useState(false)
   const [ isLoading, setIsLoading ] = useState(true)
   const [ client, setClient ] = useState({})
 
@@ -83,6 +86,36 @@ export default function ClientDetailsClient() {
       appointmentDates.push(new Date(appointment.date))
     })
 
+
+    const handleUpdateNote = async (noteId) => {
+      if (!editNoteContent.trim()) return;
+      setIsUpdatingNote(true);
+      try {
+        const { data } = await axios.put(
+          `${process.env.NEXT_PUBLIC_API_URL}/note/update`,
+          {
+            id: noteId,
+            content: editNoteContent
+          },
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        if (data && data.note) {
+          setNotes(prevNotes =>
+            prevNotes.map(n => n.id === noteId ? data.note : n)
+          );
+          setEditingNoteId(null);
+          setEditNoteContent("");
+        }
+      } catch (error) {
+        console.error("Error updating note", error);
+      } finally {
+        setIsUpdatingNote(false);
+      }
+    };
 
     const handleCreateNote = async () => {
       if (!newNote.trim()) return;
@@ -192,9 +225,52 @@ export default function ClientDetailsClient() {
                 <div className="space-y-4 overflow-y-scroll max-h-[150px] pr-2">
 
                   {notes?.map(note => (
-                    <div key={note.id} className="bg-neutral-950 p-4 rounded-md">
-                      <p className="text-sm text-neutral-400 my-2">{dateReseter(note.updatedAt, "dd-mm-yyy")}</p>
-                      <p className="text-white">{note.content}</p>
+                    <div key={note.id} className="bg-neutral-950 p-4 rounded-md group relative">
+                      <div className="flex justify-between items-center mb-2">
+                        <p className="text-sm text-neutral-400 m-0">{dateReseter(note.updatedAt, "dd-mm-yyy")}</p>
+                        {editingNoteId !== note.id && (
+                          <button
+                            onClick={() => {
+                              setEditingNoteId(note.id);
+                              setEditNoteContent(note.content);
+                            }}
+                            className="text-xs text-blue-500 hover:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            Editar
+                          </button>
+                        )}
+                      </div>
+
+                      {editingNoteId === note.id ? (
+                        <div className="flex flex-col gap-2 mt-2">
+                          <textarea
+                            value={editNoteContent}
+                            onChange={(e) => setEditNoteContent(e.target.value)}
+                            className="w-full bg-neutral-900 text-white rounded-md p-3 min-h-[80px]"
+                          />
+                          <div className="flex justify-end gap-2 mt-1">
+                            <button
+                              onClick={() => {
+                                setEditingNoteId(null);
+                                setEditNoteContent("");
+                              }}
+                              className="text-xs text-neutral-400 hover:text-white px-2 py-1"
+                              disabled={isUpdatingNote}
+                            >
+                              Cancelar
+                            </button>
+                            <button
+                              onClick={() => handleUpdateNote(note.id)}
+                              disabled={isUpdatingNote}
+                              className="text-xs bg-blue-600 hover:bg-blue-500 text-white rounded px-3 py-1 disabled:opacity-50"
+                            >
+                              {isUpdatingNote ? "Guardando..." : "Guardar"}
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <p className="text-white">{note.content}</p>
+                      )}
                     </div>
                   ))}   
 
