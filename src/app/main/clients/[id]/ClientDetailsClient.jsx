@@ -19,6 +19,8 @@ export default function ClientDetailsClient() {
   const [ date, setDate ] = useState()
   const [ appointments, setAppointments ] = useState([])
   const [ notes, setNotes ] = useState([])
+  const [ newNote, setNewNote ] = useState("")
+  const [ isCreatingNote, setIsCreatingNote ] = useState(false)
   const [ isLoading, setIsLoading ] = useState(true)
   const [ client, setClient ] = useState({})
 
@@ -82,6 +84,33 @@ export default function ClientDetailsClient() {
     })
 
 
+    const handleCreateNote = async () => {
+      if (!newNote.trim()) return;
+      setIsCreatingNote(true);
+      try {
+        const { data } = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/note/create`,
+          {
+            clientId: id,
+            content: newNote
+          },
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        if (data && data.note) {
+          setNotes(prevNotes => [data.note, ...prevNotes]);
+          setNewNote("");
+        }
+      } catch (error) {
+        console.error("Error creating note", error);
+      } finally {
+        setIsCreatingNote(false);
+      }
+    };
+
     useEffect(() => {
       const getAppointmentsByDate = async (date) => {
         const { data } = await 
@@ -144,7 +173,18 @@ export default function ClientDetailsClient() {
               <div className="bg-neutral-900 rounded-md p-6 flex flex-col gap-4">
                 <h3 className="text-lg font-semibold">Agregar nota</h3>
                 <textarea name="notes" id="notes" 
+                value={newNote}
+                onChange={(e) => setNewNote(e.target.value)}
                 className="w-full h-[150px] bg-neutral-950 text-white rounded-md p-4"></textarea>
+                <div className="flex justify-end">
+                  <button
+                    onClick={handleCreateNote}
+                    disabled={isCreatingNote}
+                    className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 disabled:opacity-50"
+                  >
+                    {isCreatingNote ? "Guardando..." : "Guardar nota"}
+                  </button>
+                </div>
               </div>
 
               <div className="bg-neutral-900 rounded-md p-6 flex flex-col gap-4">
