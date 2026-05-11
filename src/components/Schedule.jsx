@@ -6,7 +6,7 @@ import Spinner from "./Spinner"
 
 import { useUser } from "@/hooks/useUser"
 
-export default function Schedule({ date, servicesSelected, hour, setHour, userId }) {
+export default function Schedule({ date, servicesSelected, hour, setHour, userId, appointmentId = null }) {
   const { business } = useBusiness()
   const [slots, setSlots] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -21,7 +21,7 @@ export default function Schedule({ date, servicesSelected, hour, setHour, userId
     if(!token) return
     setIsLoading(true)
     async function fetchSlots() {
-      setSlots(await useAvailableSlots({ date, servicesSelected, business, token, userId }))
+      setSlots(await useAvailableSlots({ date, servicesSelected, business, token, userId, excludeAppointmentId: appointmentId }))
     }
     fetchSlots()
     
@@ -32,6 +32,7 @@ export default function Schedule({ date, servicesSelected, hour, setHour, userId
   if (slots.length === 0) {
     return <h1>No hay horarios disponibles</h1>
   }
+
 
   return (
     <div>

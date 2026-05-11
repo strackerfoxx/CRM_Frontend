@@ -1,8 +1,7 @@
-"use client"
+﻿"use client"
 import axios from "axios"
 import { cn } from "@/lib/utils"
 
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 
@@ -28,157 +27,266 @@ import { useService } from "@/hooks/useService"
 import { useDrawer } from "@/hooks/useDrawer"
 import { useAppointment } from "@/hooks/useAppointment"
 
-import { useState } from "react"
-import { set } from "zod"
+import { useEffect, useState, useMemo } from "react"
 
-export default function createAppointmentForm({
-    label,
-    client,
-    setClient,
-    date,
-    setDate,
-    servicesSelected,
-    setServicesSelected,
-    profesional,
-    setProfesional,
-    hour,
-    setHour
+export default function CreateAppointmentForm({
+  label = "Guardar",
+  client,
+  setClient,
+  date,
+  setDate,
+  servicesSelected,
+  setServicesSelected,
+  profesional,
+  setProfesional,
+  hour,
+  setHour,
+  appointment,
+  mode = "create",
 }) {
+  const { business } = useBusiness()
+  const { clients } = useClient()
+  const { services } = useService()
+  const { setAppointments } = useAppointment()
+  const { closeDrawer } = useDrawer()
+  const { token, user } = useUser()
 
-    const { business } = useBusiness()
-    const { clients } = useClient()
-    const { services } = useService()
-    const { setAppointments } = useAppointment()
-    const { closeDrawer } = useDrawer()
-    const { token, user } = useUser()
+  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState(appointment?.status ?? "SCHEDULED")
+  const [serviceUsers, setServiceUsers] = useState({})
 
-    const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    if (!appointment) {
+      return
+    }
 
+    const appointmentClientId =
+      appointment?.businessClientId ?? appointment?.businessClient?.id ?? appointment?.businessClient?.client?.id
 
-    async function handlesubmit(e){
-        e.preventDefault();
+    setClient(appointmentClientId)
+    setDate(appointment?.date ? new Date(appointment.date) : undefined)
+    setHour(appointment?.startTime ?? undefined)
 
-        // Esto funciona teoricamente bien pero el problema bien cuando imaginando que se agendó una cita a las 12
-        // y los servicios en total duran 3 horas no hay forma de bloquear el tiempo que se vaya a tardar el personal
-        // una solucion superficial es que el selector de minutos vaya de 20 en 20/30 o asi pero eso no resuelve
-        // realmente el problema, la solucion real es asignar obligatoriamente un empleado a cada cita, que cada empleado
-        // tenga su propio horario y que se bloquee el tiempo que se va a tardar en terminar una cita,
-        // esto conllevaria un desafio tecnico aunque por otro lado ofrece mas valor agregado ya que aparte de ser un sistema
-        // gestor de citas tambien empezaria a entrar en un sistema de gestion de personal
+    const selectedServices = appointment?.services?.map((item) => item?.service?.id ?? item?.serviceId) ?? []
+    setServicesSelected(selectedServices)
 
-        // console.log(client)
-        // console.log(new Date(date).toJSON().split("T")[0] + "T" + hourPicked + ":00")
-        // console.log(servicesSelected)
+    const defaultProfessional =
+      appointment?.services?.[0]?.user?.id ?? appointment?.services?.[0]?.userId ?? profesional
+    setProfesional(defaultProfessional)
 
-        // aqui el problema es que si por ejemplo van una hora a comer o en general hay una hora (entre el horario establecido)
-        // en el que no estan disponibles no quitamos esa hora, solo se recibe hora de apertura y cierre
+    setStatus(appointment?.status ?? "SCHEDULED")
 
-        const servicesQuery = []
-        for (const id of servicesSelected) {
-            servicesQuery.push({serviceId: id, userId: profesional})
+    const prefilledUsers = {}
+    appointment?.services?.forEach((item) => {
+      const serviceId = item?.service?.id ?? item?.serviceId
+      const userId = item?.user?.id ?? item?.userId ?? defaultProfessional
+      if (serviceId) {
+        prefilledUsers[serviceId] = userId
+      }
+    })
+    setServiceUsers(prefilledUsers)
+  }, [appointment])
+
+  useEffect(() => {
+    if (!profesional) {
+      return
+    }
+
+    setServiceUsers((prev) => {
+      const next = { ...prev }
+      servicesSelected.forEach((serviceId) => {
+        if (!next[serviceId]) {
+          next[serviceId] = profesional
         }
+      })
+      return next
+    })
+  }, [servicesSelected, profesional])
 
-        const appointmentData = {
-            date: new Date(date).toJSON().split("T")[0],
-            businessClientId: client,
-            services: servicesQuery,
-            businessId: business.id,
-            user: user.id,
-            startTime: hour
-        }
-        const createAppointment = async () => {
-                const headers = {
-                    "Authorization": token  
-                } 
+  const updateServiceUser = (serviceId, userId) => {
+    setServiceUsers((prev) => ({
+      ...prev,
+      [serviceId]: userId,
+    }))
+  }
 
-                try {
-                    setLoading(true)
-                    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/create`, appointmentData, { headers })
-                    toast.success(data?.msg || "Cita creada exitosamente")
-                    setAppointments(prev => [...prev, data.appointment])
-                } catch (error) {
-                    console.log(error)
-                    console.log(data?.msg)
-                    toast.error(data?.msg || "Error al crear la cita")
-                }finally {
-                    setTimeout(() => {
-                        closeDrawer()
-                        setLoading(false)
-                        setClient(undefined)
-                        setDate(undefined)
-                        setProfesional(undefined)
-                        setHour(undefined)
-                        setServicesSelected([])
-                    }, 1000);
-                }
-            }
-            createAppointment()
+  async function handlesubmit(e) {
+    e.preventDefault()
+
+    if (!date || !client || servicesSelected.length === 0 || !hour) {
+      toast.error("Completa todos los campos obligatorios antes de continuar")
+      return
+    }
+
+    const servicesQuery = servicesSelected.map((serviceId) => ({
+      serviceId,
+      userId: serviceUsers[serviceId] || profesional,
+    }))
+
+    const appointmentData = {
+      date: new Date(date).toJSON().split("T")[0],
+      businessClientId: client,
+      services: servicesQuery,
+      businessId: business.id,
+      user: user.id,
+      startTime: hour,
+    }
+
+    if (mode === "edit") {
+      appointmentData.status = status
+      if (appointment?.id) {
+        appointmentData.appointmentId = appointment.id
+      }
+    }
+
+    const headers = {
+      Authorization: token,
+    }
+
+    try {
+      setLoading(true)
+      const request =
+        mode === "edit" && appointment?.id
+          ? 
+          axios.put(`${process.env.NEXT_PUBLIC_API_URL}/appointment/update`, appointmentData, {
+              headers,
+            })
+          : 
+          axios.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/create`, appointmentData, {
+              headers,
+            })
+
+      const { data } = await request
+      toast.success(data?.msg || (mode === "edit" ? "Cita actualizada exitosamente" : "Cita creada exitosamente"))
+
+      if (mode !== "edit") {
+        setAppointments((prev) => [...prev, data.appointment])
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error(error?.response?.data?.msg || (mode === "edit" ? "Error al actualizar la cita" : "Error al crear la cita"))
+    } finally {
+      setTimeout(() => {
+        closeDrawer()
+        setLoading(false)
+        if (mode !== "edit") {
+          setClient(undefined)
+          setDate(undefined)
+          setProfesional(undefined)
+          setHour(undefined)
+          setServicesSelected([])
+          setServiceUsers({})
         }
-                
+      }, 800)
+    }
+  }
+
+  const selectedClient = client || appointment?.businessClientId || appointment?.businessClient?.id
+  const selectedProfessional = profesional || appointment?.services?.[0]?.user?.id || appointment?.services?.[0]?.userId
+
+  const servicesMap = useMemo(() => {
+    return Object.fromEntries(
+      services.map(service => [service.id, service])
+    )
+  }, [services])
 
   return (
-    <form className={cn("grid items-start gap-6")} onSubmit={ event => handlesubmit(event)}>
+    <form className={cn("grid items-start gap-6")} onSubmit={handlesubmit}>
+      <div className="grid gap-3">
+        <Label htmlFor="cliente">Cliente</Label>
+        <Select
+          name="cliente"
+          id="cliente"
+          value={selectedClient}
+          onValueChange={(value) => setClient(value)}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Seleccionar cliente" />
+          </SelectTrigger>
+          <SelectContent>
+            {clients?.map((clientItem) => (
+              <SelectItem key={clientItem.id} value={clientItem.id}>
+                {clientItem?.client?.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
-        <div className="grid gap-3">
-            <Label htmlFor="cliente">Cliente</Label>
+      <div className="grid gap-3">
+        <Label htmlFor="fecha">Fecha</Label>
+        <DateTimePicker date={date} setDate={setDate} />
+      </div>
 
-            <Select name="cliente" id="cliente" onValueChange={(value) => setClient(value)}>
-                <SelectTrigger  className="w-full">
-                    <SelectValue placeholder="Seleccionar cliente" />
-                </SelectTrigger>
-                <SelectContent>
-                    {clients?.map((client) => (
-                        <SelectItem key={client.id} value={client.id}>{client?.client?.name}</SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
-        </div>
-        <div className="grid gap-3">
-            <Label htmlFor="fecha">Fecha</Label>
-            {/* <Input id="username" defaultValue="@shadcn" /> */}
-            <DateTimePicker date={date} setDate={setDate}  />
-        </div>
-        <div className="grid gap-3">
-            <Label htmlFor="servicio">Servicios</Label>
-            {/* <Input id="username" defaultValue="@shadcn" /> */}
-            {/* <DateTimePicker date={date} setDate={setDate}  /> */}
-            <ServiceCard services={services} servicesSelected={servicesSelected} setServicesSelected={setServicesSelected} />
-        </div>
-        {!date || servicesSelected.length === 0 ? null : (
-            <>
+      <div className="grid gap-3">
+        <Label htmlFor="servicio">Servicios</Label>
+        <ServiceCard services={services} servicesSelected={servicesSelected} setServicesSelected={setServicesSelected} />
+      </div>
 
-            {/* lO QUE TENEMOS QUE HACER ES PRIMERO SOLO MOSTRAR LOS PROFESIONALES QUE PUEDEN HACER LOS SERVICIOS SELECCIONADOS */}
+      {mode === "edit" && (
+        <div className="grid gap-3">
+          <Label htmlFor="status">Estado</Label>
+          <Select name="status" id="status" value={status} onValueChange={(value) => setStatus(value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Seleccionar estado" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="SCHEDULED">Agendada</SelectItem>
+              <SelectItem value="CONFIRMED">Confirmada</SelectItem>
+              <SelectItem value="COMPLETED">Completada</SelectItem>
+              <SelectItem value="CANCELED">Cancelada</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
+      {!date || servicesSelected.length === 0 ? null : (
+        <>
+          {servicesSelected.length > 0 && (
             
+            <div className="space-y-4">
+              {servicesSelected.map((serviceId) => {
+                const service = servicesMap[serviceId]
 
-            <div className="grid gap-3">
-                <Label htmlFor="profesional">Profesional</Label>
+                return (
+                  <div key={serviceId} className="grid gap-3 rounded-lg border border-neutral-800 bg-neutral-950 p-4">
+                    <Label>{service?.name}</Label>
 
-                <Select name="profesional" id="profesional" onValueChange={(value) => setProfesional(value)}>
-                    <SelectTrigger  className="w-full">
-                        <SelectValue placeholder="Seleccionar profesional" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {/* <SelectItem key="automatic" value="automatic">Seleccionar Automaticamente</SelectItem> */}
-                        {business?.users.map((user) => (
-                            <SelectItem key={user.id} value={user.id}>{user?.name}</SelectItem>
+                    <Select
+                      value={serviceUsers[serviceId] || selectedProfessional}
+                      onValueChange={(value) => updateServiceUser(serviceId, value)}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Seleccionar usuario" />
+                      </SelectTrigger>
+
+                      <SelectContent>
+                        {service?.users?.map(item => (
+                          <SelectItem
+                            key={`${serviceId}-${item.user.id}`}
+                            value={item.user.id}
+                          >
+                            {item.user.name}
+                          </SelectItem>
                         ))}
-                    </SelectContent>
-                </Select>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )
+              })}
             </div>
-            {!date || servicesSelected.length === 0 ? <></> :
-                <div className="grid gap-3">
-                    <Label htmlFor="hora">Horarios disponibles:</Label>
-                    
-                    <Schedule date={date} servicesSelected={servicesSelected} setHour={setHour} hour={hour} userId={profesional} />
-                </div>
-            }
+          )}
 
-            {/* {!date || servicesSelected.length === 0 || !hour ? <Button type="submit" disabled >Guardar cambios</Button> : <Button type="submit" >Guardar cambios</Button>} */}
-            <Button className="cursor-pointer" type="submit" disabled={loading} >
-                {label}
-            </Button>
-            </>
-        )}
+          <div className="grid gap-3">
+            <Label htmlFor="hora">Horarios disponibles:</Label>
+            <Schedule date={date} servicesSelected={servicesSelected} setHour={setHour} hour={hour} userId={profesional} appointmentId={appointment?.id} />
+          </div>
+
+          <Button className="cursor-pointer" type="submit" disabled={loading}>
+            {label}
+          </Button>
+        </>
+      )}
     </form>
   )
 }

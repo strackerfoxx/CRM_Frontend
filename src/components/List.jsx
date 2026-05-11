@@ -12,8 +12,7 @@ import Link from "next/link";
 import "@/css/list.css"
 
 export default function List({appointments}) {
-    // const [date, setDate] = useState(new Date());
-    const [date, setDate] = useState();
+    const [date, setDate] = useState(new Date())
     const { token } = useUser()
     const [filteredAppointments, setFilteredAppointments] = useState(appointments);
 
@@ -29,11 +28,10 @@ export default function List({appointments}) {
         setFilteredAppointments(data.appointments)
       }
       if(date && token){ 
-        getAppointmentsByDate(new Date(date).toISOString())
+        getAppointmentsByDate(new Date(date).toISOString().split("T")[0])
       }else{
         setFilteredAppointments(appointments)
       }
-
     }, [date])
     
 

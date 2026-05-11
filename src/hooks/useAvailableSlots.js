@@ -1,7 +1,7 @@
 import axios from "axios"
 
 
-export async function useAvailableSlots({ date, servicesSelected, business, token, userId }) {
+export async function useAvailableSlots({ date, servicesSelected, business, token, userId, excludeAppointmentId = undefined }) {
   if (!date || servicesSelected.length === 0 || !business || !token) return []
     const headers = {
         "Authorization": token
@@ -23,7 +23,8 @@ export async function useAvailableSlots({ date, servicesSelected, business, toke
     const data = { 
       businessId: business.id,
       services, 
-      date: date.toISOString().split('T')[0]
+      date: date.toISOString().split('T')[0],
+      excludeAppointmentId
     }
 
     const {data: validSlots} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/availability/slots`, data, { headers })

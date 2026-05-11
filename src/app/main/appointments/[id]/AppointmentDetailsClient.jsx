@@ -7,18 +7,28 @@ import axios from "axios";
 
 import { dateReseter } from "@/middleware/dateReseter";
 import { useUser } from "@/hooks/useUser";
+import { useDrawer } from "@/hooks/useDrawer";
 
 import MessageSender from "@/components/appointmentOverview/MessageSender";
 import PaymentSummary from "@/components/appointmentOverview/PaymentSummary";
 import InfoCard from "@/components/appointmentOverview/InfoCard";
 import OverviewHeader from "@/components/OverviewHeader";
+import Drawer from "@/components/Drawer";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AppointmentDetailsClient() {
   const { token, isLoaded } = useUser();
+  const { closeDrawer, setOpen } = useDrawer();
+
   const [appointment, setAppointment] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  
+  const [client, setClient] = useState(undefined);
+  const [date, setDate] = useState(undefined);
+  const [servicesSelected, setServicesSelected] = useState([]);
+  const [profesional, setProfesional] = useState(undefined);
+  const [hour, setHour] = useState(undefined);
   
   const id = useParams()?.id
   
@@ -73,6 +83,10 @@ export default function AppointmentDetailsClient() {
     };
   }, [id, token, isLoaded]);
 
+  const handleEditClick = () => {
+    setOpen(true);
+  };
+
   if (!isLoading && (error || !appointment)) {
     return (
       <div className="flex min-h-screen w-full flex-col font-display">
@@ -114,10 +128,27 @@ export default function AppointmentDetailsClient() {
     );
   }
 
-
   return (
     <div className="flex min-h-screen w-full flex-col font-display">
       <OverviewHeader />
+
+      <Drawer
+        title="Editar cita"
+        description="Modifica los detalles de la cita. Haz click en guardar cuando termines."
+        label="Actualizar cita"
+        mode="edit"
+        appointment={appointment}
+        client={client}
+        setClient={setClient}
+        date={date}
+        setDate={setDate}
+        servicesSelected={servicesSelected}
+        setServicesSelected={setServicesSelected}
+        profesional={profesional}
+        setProfesional={setProfesional}
+        hour={hour}
+        setHour={setHour}
+      />
 
       <main className="flex flex-1 justify-center p-4 sm:p-6 md:p-8 mt-15">
         <div className="w-full max-w-4xl">
@@ -161,7 +192,10 @@ export default function AppointmentDetailsClient() {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-2 rounded-lg bg-blue-600 px-8 py-2.5 text-sm font-semibold text-white hover:bg-blue-600/90 cursor-pointer">
+              <button
+                onClick={handleEditClick}
+                className="flex items-center gap-2 rounded-lg bg-blue-600 px-8 py-2.5 text-sm font-semibold text-white hover:bg-blue-600/90 cursor-pointer"
+              >
                 <span>Editar Cita</span>
               </button>
             </div>
@@ -184,6 +218,24 @@ export default function AppointmentDetailsClient() {
                   title="Hora"
                   value={dateReseter(appointment.startTime, "hh:mm")}
                 />
+              </div>
+
+              <div className="mt-6 rounded-lg border border-neutral-800 bg-neutral-950 p-4">
+                <h3 className="mb-4 text-lg font-semibold text-white">Servicios Asignados</h3>
+                <div className="space-y-3">
+                  {appointment.services?.map((service) => (
+                    <div key={service.id} className="flex items-center justify-between rounded-md border border-neutral-700 bg-neutral-900 p-3">
+                      <div>
+                        <p className="font-medium text-white">{service.service?.name}</p>
+                        <p className="text-sm text-neutral-400">${service.service?.price} • {service.service?.durationMin} min</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium text-blue-400">{service.user?.name || "Sin asignar"}</p>
+                        <p className="text-xs text-neutral-500">Profesional</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 

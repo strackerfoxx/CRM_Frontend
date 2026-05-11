@@ -77,7 +77,7 @@ const ClientProvider = ({children}) => {
                 }
             }
             
-            // getClients()
+            getClients()
         }
     }, [token])
     
