@@ -3,11 +3,21 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { format, parseISO, startOfMonth, endOfMonth } from "date-fns"
-import { Calendar } from "@/components/ui/calendar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import {
+  addMonths,
+  subMonths,
+  startOfWeek,
+  endOfWeek,
+  eachDayOfInterval,
+  isSameMonth,
+  isSameDay,
+  isToday
+} from "date-fns"
 
 const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
 
@@ -96,47 +106,73 @@ export default function CalendarView() {
     fetchDayMetrics(date)
   }
 
-  // Custom Day component to show appointment count
-  const CustomDayButton = (props) => {
-    const { day, modifiers, className } = props
+  const handlePrevMonth = () => setCurrentMonth(subMonths(currentMonth, 1))
+  const handleNextMonth = () => setCurrentMonth(addMonths(currentMonth, 1))
 
-    // Default day rendering for empty dates
-    if (!day || !day.date) {
-        return <button {...props} className={className}></button>
-    }
+  // Custom Calendar rendering logic
+  const renderCalendarDays = () => {
+    const monthStart = startOfMonth(currentMonth)
+    const monthEnd = endOfMonth(monthStart)
+    const startDate = startOfWeek(monthStart)
+    const endDate = endOfWeek(monthEnd)
 
-    const dateStr = format(day.date, 'yyyy-MM-dd')
-    const dayMetric = metrics?.dailyMetrics?.find(m => m.date === dateStr)
+    const dateFormat = "d"
+    const days = eachDayOfInterval({
+        start: startDate,
+        end: endDate
+    })
 
-    // Base styles
-    let baseClass = className + " relative h-14 w-full flex flex-col items-center justify-start pt-1"
+    return days.map((day, i) => {
+      const dateStr = format(day, 'yyyy-MM-dd')
+      const dayMetric = metrics?.dailyMetrics?.find(m => m.date === dateStr)
+      const isCurrentMonth = isSameMonth(day, monthStart)
 
-    // Add background color if it has saturation
-    if (dayMetric) {
-      // Very basic color mapping based on standard tailwind colors or provided 'color'
-      const colorMap = {
-        'blue': 'bg-blue-500/20 hover:bg-blue-500/30 text-blue-500',
-        'green': 'bg-green-500/20 hover:bg-green-500/30 text-green-500',
-        'red': 'bg-red-500/20 hover:bg-red-500/30 text-red-500',
-        'yellow': 'bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-500',
+      let containerClass = "relative h-16 w-full max-w-16 aspect-square rounded-full mx-auto flex flex-col items-center justify-center p-1 transition-colors hover:bg-neutral-800"
+
+      if (!isCurrentMonth) {
+        containerClass += " text-muted-foreground opacity-50"
+      } else if (isSameDay(day, selectedDate)) {
+        containerClass += " bg-blue-600 text-white hover:bg-blue-700"
+      } else if (isToday(day)) {
+        containerClass += " bg-accent text-accent-foreground"
+      } else if (dayMetric) {
+        const colorMap = {
+          'blue': 'bg-blue-500/20 hover:bg-blue-500/30 text-blue-500',
+          'green': 'bg-green-500/20 hover:bg-green-500/30 text-green-500',
+          'red': 'bg-red-500/20 hover:bg-red-500/30 text-red-500',
+          'yellow': 'bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-500',
+        }
+        containerClass += " " + (colorMap[dayMetric.color] || 'bg-primary/20 text-primary')
+      } else {
+        containerClass += " hover:bg-accent"
       }
-      baseClass += " " + (colorMap[dayMetric.color] || 'bg-primary/20 text-primary')
-    }
 
-    return (
-      <button
-        {...props}
-        className={baseClass}
-        onClick={() => handleDayClick(day.date)}
-      >
-        <span className="text-sm font-medium">{day.date.getDate()}</span>
-        {dayMetric && (
-          <span className="text-[10px] mt-1 font-bold">
-            {dayMetric.count} cita{dayMetric.count !== 1 ? 's' : ''}
-          </span>
-        )}
-      </button>
-    )
+      return (
+        <div key={day.toString()} className="flex justify-center items-center py-2">
+          <button
+            type="button"
+            className={containerClass}
+            onClick={() => handleDayClick(day)}
+          >
+            <span className="text-sm font-medium">{format(day, dateFormat)}</span>
+            {dayMetric && (
+              <span className="text-[10px] mt-1 font-bold leading-none">
+                {dayMetric.count} cita{dayMetric.count !== 1 ? 's' : ''}
+              </span>
+            )}
+          </button>
+        </div>
+      )
+    })
+  }
+
+  const renderDaysOfWeek = () => {
+    const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+    return days.map((day) => (
+      <div key={day} className="text-center text-muted-foreground font-medium text-sm py-2">
+        {day}
+      </div>
+    ))
   }
 
   const getStatusBorderColor = (status) => {
@@ -174,6 +210,70 @@ export default function CalendarView() {
     }
   }
 
+  const organizeAppointments = (appointments) => {
+    if (!appointments || !appointments.length) return { sorted: [], maxColumns: 0 };
+    const sorted = appointments.map(a => ({...a})).sort((a, b) => {
+      const tA = a.startTime.split(':').map(Number);
+      const tB = b.startTime.split(':').map(Number);
+      return (tA[0] * 60 + tA[1]) - (tB[0] * 60 + tB[1]);
+    });
+
+    const columns = [];
+    let lastEventEnding = null;
+    let maxColumns = 1;
+
+    const packEvents = () => {
+      const numColumns = columns.length;
+      if (numColumns > maxColumns) {
+        maxColumns = numColumns;
+      }
+      columns.forEach((col, i) => {
+        col.forEach(event => {
+          // Fixed width logic instead of percentage to support any number of columns
+          const columnWidth = 180;
+          event._layout = {
+            left: i * (columnWidth + 10), // 10px gap
+            width: columnWidth
+          };
+        });
+      });
+      columns.length = 0;
+    };
+
+    sorted.forEach(ev => {
+      const start = ev.startTime.split(':').map(Number);
+      const end = ev.endTime.split(':').map(Number);
+      ev._startMins = start[0] * 60 + start[1];
+      ev._endMins = end[0] * 60 + end[1];
+
+      if (lastEventEnding !== null && ev._startMins >= lastEventEnding) {
+        packEvents();
+        lastEventEnding = null;
+      }
+
+      let placed = false;
+      for (let i = 0; i < columns.length; i++) {
+        const col = columns[i];
+        if (col[col.length - 1]._endMins <= ev._startMins) {
+          col.push(ev);
+          placed = true;
+          break;
+        }
+      }
+      if (!placed) {
+        columns.push([ev]);
+      }
+
+      if (lastEventEnding === null || ev._endMins > lastEventEnding) {
+        lastEventEnding = ev._endMins;
+      }
+    });
+
+    if (columns.length > 0) packEvents();
+
+    return { sorted, maxColumns };
+  }
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Calendario de Citas</h1>
@@ -192,26 +292,32 @@ export default function CalendarView() {
             </Badge>
           </div>
 
-          <Calendar
-            mode="single"
-            selected={selectedDate}
-            onSelect={handleDayClick}
-            onMonthChange={setCurrentMonth}
-            className="rounded-md border bg-card w-full max-w-4xl"
-            classNames={{
-              months: "w-full",
-              month: "w-full space-y-4",
-              table: "w-full border-collapse space-y-1",
-              head_row: "flex w-full",
-              head_cell: "text-muted-foreground rounded-md w-full font-normal text-[0.8rem]",
-              row: "flex w-full mt-2",
-              cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20 w-full",
-              day: "h-14 w-full p-0 font-normal aria-selected:opacity-100"
-            }}
-            components={{
-              DayButton: CustomDayButton
-            }}
-          />
+          <div className="rounded-md border bg-card w-full p-4 overflow-hidden">
+            <div className="flex items-center justify-between mb-4">
+              <button
+                onClick={handlePrevMonth}
+                className="p-2 hover:bg-accent rounded-full transition-colors"
+                aria-label="Mes anterior"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <h2 className="text-lg font-medium">
+                {format(currentMonth, 'MMMM yyyy')}
+              </h2>
+              <button
+                onClick={handleNextMonth}
+                className="p-2 hover:bg-accent rounded-full transition-colors"
+                aria-label="Siguiente mes"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-7 gap-y-2">
+              {renderDaysOfWeek()}
+              {renderCalendarDays()}
+            </div>
+          </div>
         </div>
       )}
 
@@ -250,36 +356,50 @@ export default function CalendarView() {
               </div>
 
               <ScrollArea className="flex-1 pr-4">
-                <div className="relative w-full min-h-[720px] mt-4">
-                  {/* Background grid for time slots (08:00 to 20:00 = 12 hours * 60px = 720px) */}
-                  {generateTimeSlots().map((time, i) => (
-                    <div
-                      key={time}
-                      className="absolute w-full flex items-start border-t border-border/50 text-xs text-muted-foreground"
-                      style={{ top: `${i * 60}px`, height: '60px' }}
-                    >
-                      <span className="w-12 -mt-2 pr-2 text-right bg-background">{time}</span>
-                      <div className="flex-1 h-full border-l border-border/50 pl-2"></div>
-                    </div>
-                  ))}
+                <div className="relative w-full min-h-[720px] mt-4 overflow-x-auto">
+                  {(() => {
+                    const { sorted, maxColumns } = organizeAppointments(dayMetrics.appointments);
+                    // Ensure minimum width of 100% or calculated width based on columns
+                    const containerMinWidth = Math.max(100, (maxColumns * 190) + 60); // 180 + 10 gap + 60 left padding
 
-                  {/* Appointments Blocks */}
-                  <div className="absolute left-14 right-0 top-0 bottom-0">
-                    {dayMetrics.appointments?.map((apt, i) => {
-                      const pos = calculatePosition(apt.startTime, apt.endTime)
-                      return (
-                        <div
-                          key={i}
-                          className={`absolute w-full bg-card p-2 rounded-md border-l-4 shadow-sm overflow-hidden ${getStatusBorderColor(apt.status)}`}
-                          style={pos}
-                        >
-                          <div className="text-xs font-bold truncate">{apt.startTime} - {apt.endTime}</div>
-                          <div className="text-sm truncate">{apt.clientName}</div>
-                          <div className="text-xs text-muted-foreground truncate">{apt.employeeName}</div>
+                    return (
+                      <div className="relative min-h-[720px]" style={{ minWidth: `${containerMinWidth}px` }}>
+                        {/* Background grid for time slots (08:00 to 20:00 = 12 hours * 60px = 720px) */}
+                        {generateTimeSlots().map((time, i) => (
+                          <div
+                            key={time}
+                            className="absolute w-full flex items-start border-t border-border/50 text-xs text-muted-foreground"
+                            style={{ top: `${i * 60}px`, height: '60px' }}
+                          >
+                            <span className="w-12 -mt-2 pr-2 text-right bg-background sticky left-0 z-10">{time}</span>
+                            <div className="flex-1 h-full border-l border-border/50 pl-2"></div>
+                          </div>
+                        ))}
+
+                        {/* Appointments Blocks */}
+                        <div className="absolute left-14 right-0 top-0 bottom-0">
+                          {sorted?.map((apt, i) => {
+                            const pos = calculatePosition(apt.startTime, apt.endTime)
+                            return (
+                              <div
+                                key={i}
+                                className={`absolute bg-card p-2 rounded-md border-l-4 shadow-sm overflow-hidden ${getStatusBorderColor(apt.status)}`}
+                                style={{
+                                  ...pos,
+                                  left: `${apt._layout?.left || 0}px`,
+                                  width: `${apt._layout?.width || 180}px`
+                                }}
+                              >
+                                <div className="text-xs font-bold truncate">{apt.startTime} - {apt.endTime}</div>
+                                <div className="text-sm truncate">{apt.clientName}</div>
+                                <div className="text-xs text-muted-foreground truncate">{apt.employeeName}</div>
+                              </div>
+                            )
+                          })}
                         </div>
-                      )
-                    })}
-                  </div>
+                      </div>
+                    )
+                  })()}
                 </div>
               </ScrollArea>
             </div>
