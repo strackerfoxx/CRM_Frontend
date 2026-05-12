@@ -109,7 +109,7 @@ export default function CalendarView() {
     const dayMetric = metrics?.dailyMetrics?.find(m => m.date === dateStr)
 
     // Base styles
-    let baseClass = className + " relative h-14 w-full flex flex-col items-center justify-start pt-1"
+    let baseClass = className.replace('w-full', '') + " relative h-14 w-14 rounded-full mx-auto flex flex-col items-center justify-center pt-1"
 
     // Add background color if it has saturation
     if (dayMetric) {
@@ -174,6 +174,64 @@ export default function CalendarView() {
     }
   }
 
+  const organizeAppointments = (appointments) => {
+    if (!appointments || !appointments.length) return [];
+    const sorted = appointments.map(a => ({...a})).sort((a, b) => {
+      const tA = a.startTime.split(':').map(Number);
+      const tB = b.startTime.split(':').map(Number);
+      return (tA[0] * 60 + tA[1]) - (tB[0] * 60 + tB[1]);
+    });
+
+    const columns = [];
+    let lastEventEnding = null;
+
+    const packEvents = () => {
+      const numColumns = columns.length;
+      columns.forEach((col, i) => {
+        col.forEach(event => {
+          event._layout = {
+            left: (i / numColumns) * 100,
+            width: (1 / numColumns) * 100
+          };
+        });
+      });
+      columns.length = 0;
+    };
+
+    sorted.forEach(ev => {
+      const start = ev.startTime.split(':').map(Number);
+      const end = ev.endTime.split(':').map(Number);
+      ev._startMins = start[0] * 60 + start[1];
+      ev._endMins = end[0] * 60 + end[1];
+
+      if (lastEventEnding !== null && ev._startMins >= lastEventEnding) {
+        packEvents();
+        lastEventEnding = null;
+      }
+
+      let placed = false;
+      for (let i = 0; i < columns.length; i++) {
+        const col = columns[i];
+        if (col[col.length - 1]._endMins <= ev._startMins) {
+          col.push(ev);
+          placed = true;
+          break;
+        }
+      }
+      if (!placed) {
+        columns.push([ev]);
+      }
+
+      if (lastEventEnding === null || ev._endMins > lastEventEnding) {
+        lastEventEnding = ev._endMins;
+      }
+    });
+
+    if (columns.length > 0) packEvents();
+
+    return sorted;
+  }
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Calendario de Citas</h1>
@@ -197,7 +255,7 @@ export default function CalendarView() {
             selected={selectedDate}
             onSelect={handleDayClick}
             onMonthChange={setCurrentMonth}
-            className="rounded-md border bg-card w-full max-w-4xl"
+            className="rounded-md border bg-card w-full"
             classNames={{
               months: "w-full",
               month: "w-full space-y-4",
@@ -265,13 +323,17 @@ export default function CalendarView() {
 
                   {/* Appointments Blocks */}
                   <div className="absolute left-14 right-0 top-0 bottom-0">
-                    {dayMetrics.appointments?.map((apt, i) => {
+                    {organizeAppointments(dayMetrics.appointments)?.map((apt, i) => {
                       const pos = calculatePosition(apt.startTime, apt.endTime)
                       return (
                         <div
                           key={i}
-                          className={`absolute w-full bg-card p-2 rounded-md border-l-4 shadow-sm overflow-hidden ${getStatusBorderColor(apt.status)}`}
-                          style={pos}
+                          className={`absolute bg-card p-2 rounded-md border-l-4 shadow-sm overflow-hidden ${getStatusBorderColor(apt.status)}`}
+                          style={{
+                            ...pos,
+                            left: `${apt._layout?.left || 0}%`,
+                            width: `${apt._layout?.width || 100}%`
+                          }}
                         >
                           <div className="text-xs font-bold truncate">{apt.startTime} - {apt.endTime}</div>
                           <div className="text-sm truncate">{apt.clientName}</div>
