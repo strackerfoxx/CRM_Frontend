@@ -131,20 +131,22 @@ export default function CalendarView() {
 
       if (!isCurrentMonth) {
         containerClass += " text-muted-foreground opacity-50"
-      } else if (isSameDay(day, selectedDate)) {
-        containerClass += " bg-blue-600 text-white hover:bg-blue-700"
-      } else if (isToday(day)) {
-        containerClass += " bg-accent text-accent-foreground"
-      } else if (dayMetric) {
-        const colorMap = {
-          'blue': 'bg-blue-500/20 hover:bg-blue-500/30 text-blue-500',
-          'green': 'bg-green-500/20 hover:bg-green-500/30 text-green-500',
-          'red': 'bg-red-500/20 hover:bg-red-500/30 text-red-500',
-          'yellow': 'bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-500',
-        }
-        containerClass += " " + (colorMap[dayMetric.color] || 'bg-primary/20 text-primary')
       } else {
-        containerClass += " hover:bg-accent"
+        if (dayMetric) {
+          const colorMap = {
+            'blue': 'bg-blue-500/20 hover:bg-blue-500/30 text-blue-500',
+            'green': 'bg-green-500/20 hover:bg-green-500/30 text-green-500',
+            'red': 'bg-red-500/20 hover:bg-red-500/30 text-red-500',
+            'yellow': 'bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-500',
+          }
+          containerClass += " " + (colorMap[dayMetric.color] || 'bg-primary/20 text-primary')
+        } else {
+          containerClass += " hover:bg-accent"
+        }
+
+        if (isSameDay(day, selectedDate) || isToday(day)) {
+          containerClass += " border-2 border-gray-500"
+        }
       }
 
       return (
@@ -355,8 +357,8 @@ export default function CalendarView() {
                 ))}
               </div>
 
-              <ScrollArea className="flex-1 pr-4">
-                <div className="relative w-full min-h-[720px] mt-4 overflow-x-auto">
+              <div className="flex-1 overflow-auto pr-4 relative">
+                <div className="relative w-full min-h-[720px] mt-4">
                   {(() => {
                     const { sorted, maxColumns } = organizeAppointments(dayMetrics.appointments);
                     // Ensure minimum width of 100% or calculated width based on columns
@@ -401,7 +403,7 @@ export default function CalendarView() {
                     )
                   })()}
                 </div>
-              </ScrollArea>
+              </div>
             </div>
           ) : (
             <div className="p-4 text-center text-muted-foreground">
