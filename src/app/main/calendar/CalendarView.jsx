@@ -6,7 +6,6 @@ import { format, parseISO, startOfMonth, endOfMonth } from "date-fns"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import {
   addMonths,
@@ -127,24 +126,29 @@ export default function CalendarView() {
       const dayMetric = metrics?.dailyMetrics?.find(m => m.date === dateStr)
       const isCurrentMonth = isSameMonth(day, monthStart)
 
-      let containerClass = "relative h-16 w-full max-w-16 aspect-square rounded-full mx-auto flex flex-col items-center justify-center p-1 transition-colors hover:bg-neutral-800"
+      let containerClass = "relative h-16 w-full max-w-16 aspect-square rounded-full mx-auto flex flex-col items-center justify-center p-1 transition-colors hover:bg-neutral-800 border-2 border-transparent"
+
+      const colorMap = {
+        'blue': 'bg-blue-500/20 hover:bg-blue-500/30 text-blue-500',
+        'green': 'bg-green-500/20 hover:bg-green-500/30 text-green-500',
+        'red': 'bg-red-500/20 hover:bg-red-500/30 text-red-500',
+        'yellow': 'bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-500',
+      }
 
       if (!isCurrentMonth) {
         containerClass += " text-muted-foreground opacity-50"
-      } else if (isSameDay(day, selectedDate)) {
-        containerClass += " bg-blue-600 text-white hover:bg-blue-700"
-      } else if (isToday(day)) {
-        containerClass += " bg-accent text-accent-foreground"
-      } else if (dayMetric) {
-        const colorMap = {
-          'blue': 'bg-blue-500/20 hover:bg-blue-500/30 text-blue-500',
-          'green': 'bg-green-500/20 hover:bg-green-500/30 text-green-500',
-          'red': 'bg-red-500/20 hover:bg-red-500/30 text-red-500',
-          'yellow': 'bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-500',
-        }
-        containerClass += " " + (colorMap[dayMetric.color] || 'bg-primary/20 text-primary')
       } else {
-        containerClass += " hover:bg-accent"
+        if (dayMetric) {
+          containerClass += " " + (colorMap[dayMetric.color] || 'bg-primary/20 text-primary')
+        } else {
+          containerClass += " hover:bg-accent"
+        }
+
+        if (isSameDay(day, selectedDate)) {
+          containerClass += " border-gray-400 !border-2"
+        } else if (isToday(day)) {
+          containerClass += " border-gray-600 !border-2"
+        }
       }
 
       return (
@@ -322,7 +326,7 @@ export default function CalendarView() {
       )}
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] flex flex-col">
+        <DialogContent className="max-w-[95vw] md:max-w-4xl lg:max-w-6xl max-h-[90vh] flex flex-col">
           <DialogHeader>
             <DialogTitle>
               Detalles del {selectedDate ? format(selectedDate, 'dd/MM/yyyy') : ''}
@@ -355,8 +359,8 @@ export default function CalendarView() {
                 ))}
               </div>
 
-              <ScrollArea className="flex-1 pr-4">
-                <div className="relative w-full min-h-[720px] mt-4 overflow-x-auto">
+              <div className="flex-1 overflow-auto pr-2 pb-4">
+                <div className="relative w-full min-h-[720px] mt-4">
                   {(() => {
                     const { sorted, maxColumns } = organizeAppointments(dayMetrics.appointments);
                     // Ensure minimum width of 100% or calculated width based on columns
@@ -401,7 +405,7 @@ export default function CalendarView() {
                     )
                   })()}
                 </div>
-              </ScrollArea>
+              </div>
             </div>
           ) : (
             <div className="p-4 text-center text-muted-foreground">
