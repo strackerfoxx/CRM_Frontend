@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react"
 import axios from "axios"
+import Link from "next/link"
 import { format, parseISO, startOfMonth, endOfMonth } from "date-fns"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -19,7 +20,8 @@ import {
   isToday
 } from "date-fns"
 
-const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
+import { useUser } from "@/hooks/useUser"
+import { useBusiness } from "@/hooks/useBusiness"
 
 // Function to format minutes to Xh Ym
 function formatMinutes(minutes) {
@@ -38,6 +40,10 @@ export default function CalendarView() {
   const [dayMetrics, setDayMetrics] = useState(null)
   const [dayLoading, setDayLoading] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [timeSlots, setTimeSlots] = useState([])
+
+  const { token } = useUser()
+  const { business } = useBusiness()
 
   useEffect(() => {
     fetchMonthMetrics(currentMonth)
@@ -49,62 +55,53 @@ export default function CalendarView() {
       const startDate = format(startOfMonth(date), 'yyyy-MM-dd')
       const endDate = format(endOfMonth(date), 'yyyy-MM-dd')
 
-      const response = await axios.get(`${NEXT_PUBLIC_API_URL}/appointment/calendar-metrics`, {
-        params: { startDate, endDate }
-      })
+      const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/appointment/calendar-metrics?startDate=${startDate}&endDate=${endDate}`,
+            {
+                headers: {
+                  Authorization: token,
+                },
+            }
+          )
 
-      setMetrics(response.data)
+      setMetrics(data)
     } catch (error) {
       console.error("Error fetching calendar metrics:", error)
-      // Mock data for development if endpoint fails
-      setMetrics({
-        totalAppointments: 10,
-        dailyMetrics: [
-          { date: "2026-05-06", count: 1, color: "blue" },
-          { date: "2026-05-09", count: 1, color: "blue" },
-          { date: "2026-05-13", count: 3, color: "blue" },
-          { date: "2026-05-14", count: 2, color: "blue" },
-          { date: "2026-05-15", count: 1, color: "blue" },
-          { date: "2026-05-16", count: 2, color: "blue" }
-        ]
-      })
     } finally {
       setLoading(false)
     }
   }
 
   const fetchDayMetrics = async (date) => {
-    setDayLoading(true)
-    try {
-      const formattedDate = format(date, 'yyyy-MM-dd')
-      const response = await axios.get(`${NEXT_PUBLIC_API_URL}/appointment/day-metrics`, {
-        params: { date: formattedDate }
-      })
-      setDayMetrics(response.data)
-    } catch (error) {
-      console.error("Error fetching day metrics:", error)
-      // Mock data for development if endpoint fails
-      setDayMetrics({
-        appointments: [
-          { startTime: "09:00", endTime: "10:05", status: "SCHEDULED", clientName: "Diego Castle", employeeName: "Marcos - Manicurista" },
-          { startTime: "09:20", endTime: "12:10", status: "CONFIRMED", clientName: "Alex Edu", employeeName: "Ana" },
-          { startTime: "10:20", endTime: "11:20", status: "COMPLETED", clientName: "Sotodiego", employeeName: "Marcos - Manicurista" }
-        ],
-        revenue: 4908,
-        employeeOccupancy: { "Marcos - Manicurista": 120, "Ana": 150 },
-        deadTime: 350
-      })
-    } finally {
-      setDayLoading(false)
-    }
-  }
+  setDayLoading(true)
 
-  const handleDayClick = (date) => {
-    if (!date) return
-    setSelectedDate(date)
-    setIsModalOpen(true)
-    fetchDayMetrics(date)
+  try {
+    const formattedDate = new Date(date)
+      .toISOString()
+      .split("T")[0]
+
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/appointment/day-metrics`,
+      {
+        params: {
+          date: formattedDate,
+        },
+
+        headers: {
+          Authorization: token,
+        },
+      }
+    )
+
+    setDayMetrics(response.data)
+
+  } catch (error) {
+    console.log(error.response?.data)
+    console.log(error.response?.status)
+
+  } finally {
+    setDayLoading(false)
   }
+}
 
   const handlePrevMonth = () => setCurrentMonth(subMonths(currentMonth, 1))
   const handleNextMonth = () => setCurrentMonth(addMonths(currentMonth, 1))
@@ -127,8 +124,8 @@ export default function CalendarView() {
       const dayMetric = metrics?.dailyMetrics?.find(m => m.date === dateStr)
       const isCurrentMonth = isSameMonth(day, monthStart)
 
-      let containerClass = "relative h-16 w-full max-w-16 aspect-square rounded-full mx-auto flex flex-col items-center justify-center p-1 transition-colors hover:bg-neutral-800"
-
+      // let containerClass = "relative h-16 w-full max-w-16 aspect-square rounded-full mx-auto flex flex-col items-center justify-center p-1 transition-colors hover:bg-neutral-800"
+      let containerClass = "relative h-16 w-full max-w-16 aspect-square rounded-full mx-auto flex flex-col items-center justify-center p-1 transition-colors hover:bg-neutral-800 border-2 border-transparent"
       if (!isCurrentMonth) {
         containerClass += " text-muted-foreground opacity-50"
       } else if (isSameDay(day, selectedDate)) {
@@ -143,8 +140,23 @@ export default function CalendarView() {
           'yellow': 'bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-500',
         }
         containerClass += " " + (colorMap[dayMetric.color] || 'bg-primary/20 text-primary')
-      } else {
-        containerClass += " hover:bg-accent"
+
+      // if (!isCurrentMonth) {
+      //   containerClass += " text-muted-foreground opacity-50"
+      // } else {
+      //   if (dayMetric) {
+      //     containerClass += " " + (colorMap[dayMetric.color] || 'bg-primary/20 text-primary')
+      //   } else {
+      //     containerClass += " hover:bg-accent"
+      //   }
+        
+      //   if (isSameDay(day, selectedDate)) {
+      //     containerClass += " border-gray-400 !border-2"
+      //   } else if (isToday(day)) {
+      //     containerClass += " border-gray-600 !border-2"
+      //   } else {
+      //   containerClass += " hover:bg-accent"
+      //   }
       }
 
       return (
@@ -186,12 +198,64 @@ export default function CalendarView() {
   }
 
   // Generate timeline slots (08:00 to 20:00)
-  const generateTimeSlots = () => {
-    const slots = []
-    for (let i = 8; i <= 20; i++) {
-      slots.push(`${i.toString().padStart(2, '0')}:00`)
+  // const generateTimeSlots = () => {
+  //   const slots = []
+  //   for (let i = 8; i <= 20; i++) {
+  //     slots.push(`${i.toString().padStart(2, '0')}:00`)
+  //   }
+  //   console.log(slots)
+  //   return slots
+  // }
+  const generateTimeSlots = (date) => {
+    if (!business?.businessHours) return []
+
+    const daysMap = {
+      0: "sunday",
+      1: "monday",
+      2: "tuesday",
+      3: "wednesday",
+      4: "thursday",
+      5: "friday",
+      6: "saturday",
     }
-    return slots
+
+    const dayName = daysMap[new Date(date).getDay()]
+    const dayConfig = business.businessHours[dayName]
+
+    // cerrado ese día
+    if (!dayConfig || dayConfig.closed) return []
+
+    const interval = 60
+
+    const [openHour, openMinute] = dayConfig.open.split(":").map(Number)
+    const [closeHour, closeMinute] = dayConfig.close.split(":").map(Number)
+    console.log({openHour, openMinute, closeHour, closeMinute})
+
+    const slots = []
+
+    const current = new Date(date)
+    current.setHours(openHour, openMinute, 0, 0)
+
+    const end = new Date(date)
+    end.setHours(closeHour + 1, closeMinute, 0, 0)
+
+    while (current < end) {
+      const hours = current.getHours().toString().padStart(2, "0")
+      const minutes = current.getMinutes().toString().padStart(2, "0")
+
+      slots.push(`${hours}:${minutes}`)
+
+      current.setMinutes(current.getMinutes() + interval)
+    }
+    return setTimeSlots(slots)
+  }
+
+    const handleDayClick = (date) => {
+    if (!date) return
+    setSelectedDate(date)
+    setIsModalOpen(true)
+    fetchDayMetrics(date)
+    generateTimeSlots(date)
   }
 
   // Calculate top position and height based on startTime and endTime
@@ -276,18 +340,13 @@ export default function CalendarView() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Calendario de Citas</h1>
+      <h1 className="text-4xl sm:text-5xl lg:text-5xl font-extrabold leading-tight mb-8 sm:mb-12 break-words overflow-hidden">Calendario de Citas</h1>
+      
 
-      {loading ? (
-        <div className="space-y-4">
-          <Skeleton className="h-8 w-64" />
-          <Skeleton className="h-[400px] w-full" />
-        </div>
-      ) : (
         <div className="space-y-6">
           <div className="flex items-center gap-4 bg-neutral-900 p-4 rounded-lg w-fit">
-            <span className="text-lg font-medium">Total Citas del Mes:</span>
-            <Badge variant="secondary" className="text-lg px-3 py-1">
+            <span className="text-md font-medium">Total Citas del Mes:</span>
+            <Badge variant="secondary" className="text-md px-3 py-1">
               {metrics?.totalAppointments || 0}
             </Badge>
           </div>
@@ -319,10 +378,9 @@ export default function CalendarView() {
             </div>
           </div>
         </div>
-      )}
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] flex flex-col">
+        <DialogContent className="max-w-[95vw] md:max-w-4xl lg:max-w-6xl max-h-[90vh] flex flex-col">
           <DialogHeader>
             <DialogTitle>
               Detalles del {selectedDate ? format(selectedDate, 'dd/MM/yyyy') : ''}
@@ -355,9 +413,9 @@ export default function CalendarView() {
                 ))}
               </div>
 
-              <ScrollArea className="flex-1 pr-4">
-                <div className="relative w-full min-h-[720px] mt-4 overflow-x-auto">
-                  {(() => {
+              <div className="flex-1 overflow-auto pr-2 pb-4">
+                <div className="relative w-full min-h-[720px] mt-4">
+                 {(() => {
                     const { sorted, maxColumns } = organizeAppointments(dayMetrics.appointments);
                     // Ensure minimum width of 100% or calculated width based on columns
                     const containerMinWidth = Math.max(100, (maxColumns * 190) + 60); // 180 + 10 gap + 60 left padding
@@ -365,7 +423,7 @@ export default function CalendarView() {
                     return (
                       <div className="relative min-h-[720px]" style={{ minWidth: `${containerMinWidth}px` }}>
                         {/* Background grid for time slots (08:00 to 20:00 = 12 hours * 60px = 720px) */}
-                        {generateTimeSlots().map((time, i) => (
+                        {timeSlots.map((time, i) => (
                           <div
                             key={time}
                             className="absolute w-full flex items-start border-t border-border/50 text-xs text-muted-foreground"
@@ -381,19 +439,21 @@ export default function CalendarView() {
                           {sorted?.map((apt, i) => {
                             const pos = calculatePosition(apt.startTime, apt.endTime)
                             return (
-                              <div
-                                key={i}
-                                className={`absolute bg-card p-2 rounded-md border-l-4 shadow-sm overflow-hidden ${getStatusBorderColor(apt.status)}`}
-                                style={{
-                                  ...pos,
-                                  left: `${apt._layout?.left || 0}px`,
-                                  width: `${apt._layout?.width || 180}px`
-                                }}
-                              >
-                                <div className="text-xs font-bold truncate">{apt.startTime} - {apt.endTime}</div>
-                                <div className="text-sm truncate">{apt.clientName}</div>
-                                <div className="text-xs text-muted-foreground truncate">{apt.employeeName}</div>
-                              </div>
+                              <Link href={`/main/appointments/${apt.id}`} passHref key={i}>
+                                <div
+                                  className={`absolute bg-card p-2 rounded-md border-l-4 shadow-sm overflow-hidden ${getStatusBorderColor(apt.status)}`}
+                                  style={{
+                                    ...pos,
+                                    left: `${apt._layout?.left || 0}px`,
+                                    width: `${apt._layout?.width || 180}px`
+                                  }}
+                                >
+                                  {console.log(apt)}
+                                  <div className="text-xs font-bold truncate">{apt.startTime} - {apt.endTime}</div>
+                                  <div className="text-sm truncate">{apt.clientName}</div>
+                                  <div className="text-xs text-muted-foreground truncate">{apt.employeeName}</div>
+                                </div>
+                              </Link>
                             )
                           })}
                         </div>
@@ -401,7 +461,7 @@ export default function CalendarView() {
                     )
                   })()}
                 </div>
-              </ScrollArea>
+              </div>
             </div>
           ) : (
             <div className="p-4 text-center text-muted-foreground">

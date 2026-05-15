@@ -52,7 +52,7 @@ const items = [
   },
   {
     title: "Equipo",
-    url: "/main/users",
+    url: "/main/profesionals",
     icon: Users,
   },
 ]
@@ -63,7 +63,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
         <div className="relative flex items-center justify-between px-2 text-center text-xl font-bold">
-          <SidebarGroupLabel>Foxx CRM</SidebarGroupLabel>
+          <SidebarGroupLabel>Aera</SidebarGroupLabel>
 
           <SidebarTrigger
             className="absolute top-2 right-1 size-6 transition-opacity group-data-[collapsible=icon]:opacity-100 group-data-[collapsible=icon]:visible"

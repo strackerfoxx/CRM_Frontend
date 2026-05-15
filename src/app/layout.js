@@ -6,6 +6,7 @@ import { ClientProvider } from "./context/ClientProvider";
 import { ServiceProvider } from "./context/ServiceProvider";
 import { TeamProvider } from "./context/TeamProvider";
 import { DrawerProvider } from "./context/DrawerProvider";
+import { ProfesionalProvider } from "./context/ProfesionalsProvider";
 import "./globals.css";
 
 export const metadata = {
@@ -24,7 +25,9 @@ export default function RootLayout({ children }) {
                   <AppointmentProvider>
                     <ClientProvider>
                       <DrawerProvider>
-                        <Providers>{children}</Providers>
+                        <ProfesionalProvider>
+                          <Providers>{children}</Providers>
+                        </ProfesionalProvider>
                       </DrawerProvider>
                     </ClientProvider>
                   </AppointmentProvider>

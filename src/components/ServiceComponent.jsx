@@ -21,7 +21,7 @@ const serviceSchema = z.object({
   cleaningTimeMin: z.number({ invalid_type_error: "Tiempo de limpieza inválido" }).min(0, "El tiempo de limpieza no puede ser negativo"),
   isActive: z.boolean(),
   users: z.array(z.union([z.string(), z.number()])).min(1, "Al menos un profesional debe ser seleccionado"),
-  // selectedStaff: z.array(z.object({ id: z.union([z.string(), z.number()]), })).optional(),
+  selectedStaff: z.array(z.object({ id: z.union([z.string(), z.number()]), })).optional()
 })
 
 export default function ServiceComponent({

@@ -17,7 +17,11 @@ export default function MainPage() {
   return (
     <>
       <div className="flex justify-between items-center mt-5 mx-7">
-        <h1 className="scroll-m-20 text-start text-3xl font-bold tracking-tight text-balance">Citas de hoy</h1>
+        <h1 className="text-4xl sm:text-5xl lg:text-5xl font-extrabold leading-tight sm:mb-12 break-words overflow-hidden">Citas de hoy
+          <br />
+          no dejar que el mismo cliente cree varias citas, si el cliente ya tiene una cita creada, mostrar un mensaje de error y no permitir crear la cita.
+          crear endpoint para traer los profesionales disponibles para cada servicio en lugar de solo mostrar todos los asociados al servicio
+        </h1>
         <Drawer title="Crear cita" description="Crea una cita nueva. Haz click en guardar cuando termines." label="Crear cita"
           client={client} 
           setClient={setClient} 
