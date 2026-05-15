@@ -132,9 +132,9 @@ export default function ClientDetailsClient() {
       {isLoading ? (
         <Skeleton className="h-10 w-36 rounded-3xl bg-neutral-800" />
       ) : (
-        <button className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">
+        <Link href={`/main/clients/edit/${id}`} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">
           Editar cliente
-        </button>
+        </Link>
       )}
     </div>
 
