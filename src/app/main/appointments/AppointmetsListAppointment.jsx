@@ -19,6 +19,7 @@ export default function AppointmetsListAppointment() {
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(null)
     const [totalResults, setTotalResults] = useState(null)
+    const [loading, setLoading] = useState(true)
     const [date, setDate] = useState({
         from: new Date(new Date().setDate(new Date().getDate() - 7)),
         to: new Date(),
@@ -27,36 +28,25 @@ export default function AppointmetsListAppointment() {
     const { token } = useUser()
     const { services } = useService()
 
-    // useEffect(() => {
-      
-    //     const getAppointments = async () => {
-    //         const { data } = await axios.get(
-    //         `${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-params?startDate=${new Date(date.from).toISOString().split('T')[0]}&endDate=${new Date(date.to).toISOString().split('T')[0]}&page=${page}&limit=20&`,
-    //         {
-    //             headers: {
-    //             Authorization: token,
-    //             },
-    //         }
-    //         );
-    //         setAppointments(data?.appointments ?? [])
-    //         setTotalPages(data?.totalPages ?? null)
-    //         setTotalResults(data?.total ?? null)
-    //     }
-    //     // getAppointments() 
-    // }, [])
-
     async function onSubmit() {
-        const { data } = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-params?startDate=${new Date(date.from).toISOString().split('T')[0]}&endDate=${new Date(date.to).toISOString().split('T')[0]}${status !== 'all' ? `&status=${status}` : ''}${category ? `&category=${category}` : ''}${service ? `&service=${service}` : ''}${search ? `&search=${search}` : ''}&page=${page}&limit=20`,
-            {
-                headers: {
-                Authorization: token,
-                },
-            }
-        );
-        setAppointments(data?.appointments ?? [])
-        setTotalPages(data?.totalPages ?? null)
-        setTotalResults(data?.total ?? null)
+        setLoading(true)
+        try {
+            const { data } = await axios.get(
+                `${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-params?startDate=${new Date(date.from).toISOString().split('T')[0]}&endDate=${new Date(date.to).toISOString().split('T')[0]}${status !== 'all' ? `&status=${status}` : ''}${category ? `&category=${category}` : ''}${service ? `&service=${service}` : ''}${search ? `&search=${search}` : ''}&page=${page}&limit=20`,
+                {
+                    headers: {
+                    Authorization: token,
+                    },
+                }
+            );
+            setAppointments(data?.appointments ?? [])
+            setTotalPages(data?.totalPages ?? null)
+            setTotalResults(data?.total ?? null)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -89,7 +79,7 @@ export default function AppointmetsListAppointment() {
             onSubmit={onSubmit}
         />
 
-        <AppointmentsList appointments={appointments} />
+        <AppointmentsList appointments={appointments} loading={loading} />
 
         <Pagination 
             page={page}
