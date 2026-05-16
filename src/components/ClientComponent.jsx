@@ -8,6 +8,8 @@ import { useBusiness } from "@/hooks/useBusiness"
 import OverviewHeader from "@/components/OverviewHeader"
 import { Skeleton } from "@/components/ui/skeleton"
 
+import { useClient } from "@/hooks/useClients"
+
 const clientSchema = z.object({
   id: z.union([z.string(), z.number()]).optional(),
   name: z.string().trim().min(1, "El nombre del cliente es requerido"),
@@ -17,8 +19,6 @@ const clientSchema = z.object({
 })
 
 export default function ClientComponent({
-  id,
-  editMode = false,
   name,
   setName,
   phone,
@@ -31,20 +31,16 @@ export default function ClientComponent({
   const { token } = useUser()
   const { business } = useBusiness()
   const [isLoading, setIsLoading] = useState(false)
+  const { refetchClients } = useClient()
 
   const handleSave = async () => {
     setIsLoading(true)
     try {
       const payload = {
+        businessId: business?.id,
         name,
         phone,
         email: email || undefined,
-      }
-
-      if (editMode) {
-        payload.id = id
-      } else {
-        payload.businessId = business?.id
       }
 
       const validation = clientSchema.safeParse(payload)
@@ -59,32 +55,25 @@ export default function ClientComponent({
         return
       }
 
-      const url = editMode
-        ? `${process.env.NEXT_PUBLIC_API_URL}/client/update-client`
-        : `${process.env.NEXT_PUBLIC_API_URL}/client/create`
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/client/create`
 
-      if (editMode) {
-        await axios.put(url, validation.data, {
-          headers: {
-            Authorization: token,
-          },
-        })
-      } else {
+
         await axios.post(url, validation.data, {
           headers: {
             Authorization: token,
           },
         })
-      }
-      toast.success(editMode ? "Cliente actualizado" : "Cliente creado")
+      toast.success("Cliente creado")
       setTimeout(() => {
         router.back()
       }, 1000);
+
     } catch (error) {
       console.error("Error guardando cliente:", error)
       toast.error("No se pudo guardar el cliente. Intenta de nuevo.")
     } finally {
         setIsLoading(false)
+        refetchClients()
     }
   }
 

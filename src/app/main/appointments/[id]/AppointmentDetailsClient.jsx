@@ -31,21 +31,9 @@ export default function AppointmentDetailsClient() {
   const [hour, setHour] = useState(undefined);
   
   const id = useParams()?.id
-  
-  useEffect(() => {
-    if (!isLoaded) {
-      return;
-    }
 
-    if (!token) {
-      setError("No se encontró una sesión activa.");
-      setIsLoading(false);
-      return;
-    }
-
-    let isActive = true;
-
-    const getAppointment = async () => {
+  const getAppointment = async () => {
+      let isActive = true;
       try {
         setIsLoading(true);
         const { data } = await axios.get(
@@ -74,13 +62,24 @@ export default function AppointmentDetailsClient() {
           setIsLoading(false);
         }
       }
+      return () => {
+        isActive = false;
+      };
     };
+  
+  useEffect(() => {
+    if (!isLoaded) {
+      return;
+    }
+
+    if (!token) {
+      setError("No se encontró una sesión activa.");
+      setIsLoading(false);
+      return;
+    }
 
     getAppointment();
     
-    return () => {
-      isActive = false;
-    };
   }, [id, token, isLoaded]);
 
   const handleEditClick = () => {
@@ -148,6 +147,7 @@ export default function AppointmentDetailsClient() {
         setProfesional={setProfesional}
         hour={hour}
         setHour={setHour}
+        getAppointment={getAppointment}
       />
 
       <main className="flex flex-1 justify-center p-4 sm:p-6 md:p-8 mt-15">

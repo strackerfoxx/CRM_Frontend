@@ -18,6 +18,7 @@ export default function Drawer({
   setProfesional,
   hour,
   setHour,
+  getAppointment
 }) {
   return (
     <div>
@@ -37,6 +38,7 @@ export default function Drawer({
           setProfesional={setProfesional}
           hour={hour}
           setHour={setHour}
+          getAppointment={getAppointment}
         />
       </DrawerDialog>
     </div>

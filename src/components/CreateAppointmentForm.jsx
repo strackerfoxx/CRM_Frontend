@@ -42,6 +42,7 @@ export default function CreateAppointmentForm({
   hour,
   setHour,
   appointment,
+  getAppointment,
   mode = "create",
 }) {
   const { business } = useBusiness()
@@ -157,6 +158,7 @@ export default function CreateAppointmentForm({
             })
 
       const { data } = await request
+      getAppointment()
       toast.success(data?.msg || (mode === "edit" ? "Cita actualizada exitosamente" : "Cita creada exitosamente"))
 
       if (mode !== "edit") {
@@ -166,7 +168,6 @@ export default function CreateAppointmentForm({
       console.error(error)
       toast.error(error?.response?.data?.msg || (mode === "edit" ? "Error al actualizar la cita" : "Error al crear la cita"))
     } finally {
-      setTimeout(() => {
         closeDrawer()
         setLoading(false)
         if (mode !== "edit") {
@@ -177,7 +178,6 @@ export default function CreateAppointmentForm({
           setServicesSelected([])
           setServiceUsers({})
         }
-      }, 800)
     }
   }
 
