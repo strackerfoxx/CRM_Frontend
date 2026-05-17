@@ -1,4 +1,4 @@
-import AppointmetsListAppointment from "./AppointmetsListAppointment"
+import AppointmetsListAppointment from "./AppointmetsList"
 export default function Appointments() {
   return (
      <>

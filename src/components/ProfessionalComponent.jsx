@@ -8,6 +8,7 @@ import { useUser } from "@/hooks/useUser"
 import OverviewHeader from "@/components/OverviewHeader"
 
 const professionalSchema = z.object({
+  id: z.union([z.string(), z.number()]).optional(),
   name: z.string().trim().min(1, "El nombre es requerido"),
   email: z.string().trim().email("Debe ser un email válido"),
   role: z.string().trim().min(1, "El rol es requerido"),
@@ -72,7 +73,7 @@ export default function ProfessionalComponent({
         : `${process.env.NEXT_PUBLIC_API_URL}/user/create`
 
       if (editMode) {
-        await axios.put(url, validation.data, {
+        await axios.patch(url, validation.data, {
           headers: {
             Authorization: token,
           },

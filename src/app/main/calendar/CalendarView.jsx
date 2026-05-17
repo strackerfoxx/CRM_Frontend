@@ -441,7 +441,7 @@ export default function CalendarView() {
                             return (
                               <Link href={`/main/appointments/${apt.id}`} passHref key={i}>
                                 <div
-                                  className={`absolute bg-card p-2 rounded-md border-l-4 shadow-sm overflow-hidden ${getStatusBorderColor(apt.status)}`}
+                                  className={`absolute bg-card p-2 rounded-md border-l-4 shadow-sm overflow-hidden cursor-pointer ${getStatusBorderColor(apt.status)}`}
                                   style={{
                                     ...pos,
                                     left: `${apt._layout?.left || 0}px`,

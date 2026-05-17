@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Children } from 'react'
 import { statusOptions } from './AppointmentFilterBar'
 import { DatePickerWithRange } from './DateTimePickerRange'
 
-export default function SearchBarComponent({ search, setSearch, onSubmit }) {
+export default function SearchBarComponent({ search, setSearch, onSubmit, children }) {
   return (
     <>
         <div className='m-5 p-5 bg-neutral-900 rounded-2xl '>
@@ -28,6 +28,8 @@ export default function SearchBarComponent({ search, setSearch, onSubmit }) {
                     <button type="button" onClick={onSubmit} className="bg-blue-600 p-2 rounded-lg font-semibold px-4 cursor-pointer w-full md:w-48 mt-5 md:mt-0 hidden lg:block">Buscar citas</button>
                 </div>
             </div>
+
+            {children}
 
             <button type="button" onClick={onSubmit} className="bg-blue-600 p-2 rounded-lg font-semibold px-4 cursor-pointer w-full md:w-48 mt-5 md:mt-0 hidden md:block lg:hidden mb-5">Buscar citas</button>
 

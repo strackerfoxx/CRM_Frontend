@@ -5,7 +5,6 @@ export const statusOptions = [
   { value: 'completed', label: ' completada' },
   { value: 'confirmed', label: 'confirmada' },
   { value: 'scheduled', label: 'agendada' },
-  { value: 'cancelled', label: 'cancelada' },
 ]
 
 export default function AppointmentFilterBar(
@@ -25,7 +24,7 @@ export default function AppointmentFilterBar(
   }) {
   return (
     <>
-        <div className='m-5 p-5 bg-neutral-900 rounded-2xl '>
+        <div className='m-[10%] md:m-5 p-5 bg-neutral-900 rounded-2xl '>
 
             {/* Search and Date Range */}
             <div className='md:flex flex-1 gap-5 md:flex-row flex-col items-center justify-between mb-5'>
@@ -55,7 +54,7 @@ export default function AppointmentFilterBar(
  
             {/* Filters */}
             <div className=' md:flex flex-1 '>
-                <div className='flex justify-between gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 md:w-48 w-full mr-1 mb-4 md:mb-0 h-10'>
+                {/* <div className='flex justify-between gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 md:w-48 w-full mr-1 mb-4 md:mb-0 h-10'>
                     <span className='text-gray-600 font-semibold'>Categoría</span>
                     <select
                       name="category"
@@ -70,18 +69,17 @@ export default function AppointmentFilterBar(
                         <option value="facial">facial</option>
                         <option value="masajes">masajes</option>
                     </select>
-                </div>
-                <div className='flex justify-between overflow-hidden gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 md:w-64 w-full mb-4 md:mb-0 h-10'>
+                </div> */}
+                <div className='flex justify-between overflow-hidden gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 w-[220px] mb-4 md:mb-0 h-10'>
                     <span className='text-gray-600 font-semibold'>Servicio</span>
                     <select
                       name="service"
                       id="service"
                       value={service}
-                      onChange={(e) => setService(e.target.value)}
                       className="bg-black text-white items-center w-lg"
                       onSelect={e => setService(e.target.value)}
                     >
-                        <option value={undefined}>Selecciona un servicio</option>
+                        <option value="">Selecciona un servicio</option>
                         {services.map(s => (
                           <option value={s.id} key={s.id}>{s.name}</option>
                         ))}
