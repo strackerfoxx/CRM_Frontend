@@ -4,6 +4,7 @@ import { useProfessionals } from "@/hooks/useProfessionals";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import Pagination from "@/components/Pagination";
+import SearchBarComponent from "@/components/SearchBarComponent";
 import "@/css/list.css"
 
 export default function Profesionals() {
@@ -16,53 +17,45 @@ export default function Profesionals() {
     const [totalResults, setTotalResults] = useState(0);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchSimulatedData = async () => {
-            setLoading(true);
+    const fetchProfessionals = async () => {
+        setLoading(true);
 
-            // Artificial delay to simulate network request
-            await new Promise(resolve => setTimeout(resolve, 500));
+        // Artificial delay to simulate network request
+        await new Promise(resolve => setTimeout(resolve, 500));
 
-            let currentProfessionals = [...professionals];
+        let currentProfessionals = [...professionals];
 
-            if (searchTerm !== "") {
-                currentProfessionals = currentProfessionals.filter(u => {
-                    return u?.name?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
-                           u?.phone?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
-                           u?.email?.toLowerCase()?.includes(searchTerm.toLowerCase());
-                });
-            }
-
-            const sortedProfessionals = currentProfessionals.sort((a, b) => {
-                return new Date(b.createdAt) - new Date(a.createdAt);
+        if (searchTerm !== "") {
+            currentProfessionals = currentProfessionals.filter(u => {
+                return u?.name?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
+                        u?.phone?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
+                        u?.email?.toLowerCase()?.includes(searchTerm.toLowerCase());
             });
+        }
 
-            const limit = 20;
-            const total = sortedProfessionals.length;
-            const totalPagesCalculated = Math.ceil(total / limit);
+        const sortedProfessionals = currentProfessionals.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+        });
 
-            // Basic pagination logic
-            const startIndex = (page - 1) * limit;
-            const endIndex = startIndex + limit;
-            const paginatedProfessionals = sortedProfessionals.slice(startIndex, endIndex);
+        const limit = 20;
+        const total = sortedProfessionals.length;
+        const totalPagesCalculated = Math.ceil(total / limit);
 
-            setTotalResults(total);
-            setTotalPages(totalPagesCalculated);
-            setFilteredProfessionals(paginatedProfessionals);
-            setLoading(false);
-        };
+        // Basic pagination logic
+        const startIndex = (page - 1) * limit;
+        const endIndex = startIndex + limit;
+        const paginatedProfessionals = sortedProfessionals.slice(startIndex, endIndex);
 
-        const delayDebounceFn = setTimeout(() => {
-            fetchSimulatedData();
-        }, 300);
-
-        return () => clearTimeout(delayDebounceFn);
-    }, [searchTerm, page, professionals]);
-
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-        setPage(1); // Reset to page 1 on new search
+        setTotalResults(total);
+        setTotalPages(totalPagesCalculated);
+        setFilteredProfessionals(paginatedProfessionals);
+        setLoading(false);
+        setPage(1);
     };
+
+    useEffect(() => {
+        fetchProfessionals();
+    }, [page, professionals]);
 
   return (
     <>
@@ -73,14 +66,7 @@ export default function Profesionals() {
             </div>
             <button className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear Profesional</button>
         </div>
-        <div className="m-7 flex text-center items-center gap-3 px-3 bg-neutral-800 rounded-lg border border-neutral-700 text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-
-            <input type="text" name="user" id="user" onChange={handleSearchChange} value={searchTerm}
-            placeholder="Buscar profesionales por nombre, telefono o correo..." className="w-full p-2" />
-        </div>
+        <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={fetchProfessionals}/>
         <div className="m-5">
             <div className="bg-neutral-900 rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}

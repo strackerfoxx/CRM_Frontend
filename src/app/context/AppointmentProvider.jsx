@@ -8,26 +8,29 @@ const AppointmentProvider = ({children}) => {
     const [appointments, setAppointments] = useState([])
     const { token } = useUser()
 
-    const getAppointments = async () => {
-        const headers = {
-            "Authorization": token
-        }
-        try {
-            const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-params?startDate=${new Date()}&page=1&limit=20`, { headers })
-            setAppointments(data.appointments)
-            console.log("Appointments fetched:", data.appointments)
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
-
     useEffect(() => {
-        if(token) {getAppointments()}
+        if(token){
+             const getAppointments = async () => {
+                const headers = {
+                    "Authorization": token
+                }
+                try {
+                    const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-params?startDate=${new Date()}&page=1&limit=20`, { headers })
+                    setAppointments(data.appointments)
+                    console.log("Appointments fetched:", data.appointments)
+                } catch (error) {
+                    console.log(error.message)
+                }
+            }
+            
+            getAppointments()
+
+        }
     }, [token])
     
 
     return (
-        <AppointmentContext.Provider value={{ appointments, setAppointments, getAppointments }} >
+        <AppointmentContext.Provider value={{ appointments, setAppointments }} >
             {children}
         </AppointmentContext.Provider>
     )

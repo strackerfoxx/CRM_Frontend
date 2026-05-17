@@ -7,10 +7,14 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import "@/css/list.css"
+import SearchBarComponent from "@/components/SearchBarComponent";
+import Pagination from "@/components/Pagination";
 
 export default function Services() {
     const { services, refetchServices } = useService();
     const [searchTerm, setSearchTerm] = useState("");
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(null);
     const [filteredServices, setFilteredServices] = useState(services);
     const router = useRouter();
 
@@ -37,14 +41,7 @@ export default function Services() {
             <Link href="/main/services/create" className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear servicio</Link>
             {/* <button onClick={() => refetchServices()} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear servicio</button> */}
         </div>
-        <div className="m-7 flex text-center items-center gap-3 px-3 bg-neutral-800 rounded-lg border border-neutral-700 text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-
-            <input type="text" name="client" id="client" onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Buscar servicios por nombre..." className="w-full p-2" />
-        </div>
+        <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={refetchServices}/>
         <div className="m-5">
             <div className="bg-neutral-900 rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}
@@ -82,6 +79,11 @@ export default function Services() {
                 )) }
             </div>
         </div>
+        <Pagination
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
+        />
     </>
   )
 }

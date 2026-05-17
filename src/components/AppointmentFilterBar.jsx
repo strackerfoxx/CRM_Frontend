@@ -1,10 +1,11 @@
 import { DatePickerWithRange } from '@/components/DateTimePickerRange'
 
-const statusOptions = [
-  { value: 'all', label: 'All' },
-  { value: 'confirmed', label: 'Confirmed' },
-  { value: 'scheduled', label: 'Scheduled' },
-  { value: 'cancelled', label: 'Cancelled' },
+export const statusOptions = [
+  { value: '', label: 'All' },
+  { value: 'completed', label: ' completada' },
+  { value: 'confirmed', label: 'confirmada' },
+  { value: 'scheduled', label: 'agendada' },
+  { value: 'cancelled', label: 'cancelada' },
 ]
 
 export default function AppointmentFilterBar(
@@ -28,7 +29,7 @@ export default function AppointmentFilterBar(
 
             {/* Search and Date Range */}
             <div className='md:flex flex-1 gap-5 md:flex-row flex-col items-center justify-between mb-5'>
-                <div className="flex text-center items-center gap-3 px-3 bg-black rounded-lg border border-neutral-800 text-white w-full mb-5 md:mb-0">
+                <div className="flex text-center items-center gap-2 px-3 bg-black rounded-lg border border-neutral-800 text-white w-full mb-5 md:mb-0">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
@@ -54,7 +55,7 @@ export default function AppointmentFilterBar(
  
             {/* Filters */}
             <div className=' md:flex flex-1 '>
-                <div className='flex justify-between gap-3 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 md:w-48 w-full mr-5 mb-4 md:mb-0 h-10'>
+                <div className='flex justify-between gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 md:w-48 w-full mr-1 mb-4 md:mb-0 h-10'>
                     <span className='text-gray-600 font-semibold'>Categoría</span>
                     <select
                       name="category"
@@ -70,7 +71,7 @@ export default function AppointmentFilterBar(
                         <option value="masajes">masajes</option>
                     </select>
                 </div>
-                <div className='flex justify-between overflow-hidden gap-3 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 md:w-64 w-full mb-4 md:mb-0 h-10'>
+                <div className='flex justify-between overflow-hidden gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 md:w-64 w-full mb-4 md:mb-0 h-10'>
                     <span className='text-gray-600 font-semibold'>Servicio</span>
                     <select
                       name="service"
@@ -89,7 +90,7 @@ export default function AppointmentFilterBar(
 
                 <div className="mx-5 w-px bg-gray-600 hidden lg:block"></div>
 
-                <div className="lg:flex items-center gap-2 lg:mt-0 mt-10 hidden lg:visible">
+                <div className="lg:flex items-center gap-1 lg:mt-0 mt-10 hidden lg:visible">
                     {statusOptions.map((option) => {
                       const isActive = status === option.value
                       return (
@@ -107,7 +108,7 @@ export default function AppointmentFilterBar(
             </div>
 
             {/* Status filters */}
-            <div className="items-center gap-2 lg:mt-0 md:mt-5 mt-10 lg:hidden">
+            <div className="items-center gap-1 lg:mt-0 md:mt-5 mt-10 lg:hidden">
                 {statusOptions.map((option) => {
                   const isActive = status === option.value
                   return (

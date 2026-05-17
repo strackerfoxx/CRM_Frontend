@@ -5,6 +5,7 @@ import { useUser } from "@/hooks/useUser"
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import Pagination from "@/components/Pagination";
+import SearchBarComponent from "@/components/SearchBarComponent";
 import "@/css/list.css"
 
 export default function Clients() {
@@ -28,7 +29,7 @@ export default function Clients() {
         setLoading(true);
         try {
             const { data } = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/client/get-client-by-params?search=${searchTerm}&page=${page}&limit=20`,
+                `${process.env.NEXT_PUBLIC_API_URL}/client/get-client-by-params?page=${page}&limit=20`,
                 {
                     headers: {
                         Authorization: token,
@@ -60,14 +61,15 @@ export default function Clients() {
             </div>
             <Link href="/main/clients/create" className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear cliente</Link>
         </div>
-        <div className="m-7 flex text-center items-center gap-3 px-3 bg-neutral-800 rounded-lg border border-neutral-700 text-white">
+        {/* <div className="m-7 flex text-center items-center gap-3 px-3 bg-neutral-800 rounded-lg border border-neutral-700 text-white">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
 
             <input type="text" name="client" id="client" onChange={handleSearchChange} value={searchTerm}
             placeholder="Buscar clientes por nombre, telefono o correo..." className="w-full p-2" />
-        </div>
+        </div> */}
+        <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={fetchClients}/>
         <div className="m-5">
             <div className="bg-neutral-900 rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}

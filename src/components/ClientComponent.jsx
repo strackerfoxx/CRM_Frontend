@@ -95,10 +95,10 @@ export default function ClientComponent({
 
           <div>
             <h2 className="text-3xl sm:text-5xl font-extrabold leading-tight">
-              {editMode ? "Editar Cliente" : "Nuevo Cliente"}
+              {"Nuevo Cliente"}
             </h2>
             <p className="mt-3 sm:mt-4 text-neutral-400 max-w-lg text-sm sm:text-base">
-              {editMode ? "Edita los detalles de tu cliente." : "Crea un nuevo cliente."}
+              {"Crea un nuevo cliente."}
             </p>
           </div>
 
@@ -113,7 +113,7 @@ export default function ClientComponent({
               disabled={isLoading}
               className="px-5 sm:px-10 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase bg-blue-600 rounded-xl text-white hover:bg-blue-800 transition cursor-pointer
               disabled:bg-blue-600/50">
-              {isLoading ? "Guardando..." : editMode ? "Actualizar" : "Guardar"}
+              {isLoading ? "Guardando..." : "Guardar"}
             </button>
           </div>
         </div>
