@@ -13,23 +13,40 @@ import Pagination from "@/components/Pagination";
 export default function ServicesList() {
     const { services, refetchServices } = useService();
     const [searchTerm, setSearchTerm] = useState("");
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(null);
+
     const [filteredServices, setFilteredServices] = useState(services);
     const router = useRouter();
 
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(null);
+    const [totalResults, setTotalResults] = useState(0);
+    const [loading, setLoading] = useState(true);
+
+    const getServices = async () => {
+        setLoading(true); 
+        try {
+            const { data } = await axios.get(
+                `${process.env.NEXT_PUBLIC_API_URL}/client/get-client-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}`,
+                {
+                    headers: {
+                        Authorization: token,
+                    },
+                }
+            );
+            setClientsList(data?.clients ?? []);
+            setTotalPages(data?.totalPages ?? null);
+            setTotalResults(data?.total ?? 0);
+        } catch (error) {
+            console.error(error);
+            setClientsList([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        if (services.length === 0) return setFilteredServices([]);
-
-        if (searchTerm === "") return setFilteredServices(services);
-
-        const filtered = services.filter(s => {
-            return s?.name?.toLowerCase()?.includes(searchTerm.toLowerCase())
-                //    s.client?.phone?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
-                //    s.client?.email?.toLowerCase()?.includes(searchTerm.toLowerCase());
-        });
-        setFilteredServices(filtered);
-    }, [searchTerm, services])
+        getServices();
+    }, [page]);
 
   return (
     <>
@@ -41,7 +58,7 @@ export default function ServicesList() {
             <Link href="/main/services/create" className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear servicio</Link>
             {/* <button onClick={() => refetchServices()} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear servicio</button> */}
         </div>
-        <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={refetchServices}/>
+        <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={getServices}/>
         <div className="m-5">
             <div className="bg-neutral-900 rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}

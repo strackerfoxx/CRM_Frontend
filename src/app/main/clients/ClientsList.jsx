@@ -12,6 +12,7 @@ export default function ClientsList() {
     const { token } = useUser();
     const [clientsList, setClientsList] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(null);
     const [totalResults, setTotalResults] = useState(0);
