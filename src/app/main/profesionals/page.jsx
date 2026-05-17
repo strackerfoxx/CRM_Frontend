@@ -64,7 +64,7 @@ export default function Profesionals() {
                 <h1 className="scroll-m-20 text-start text-4xl font-bold tracking-tight text-balance" >Profesionales</h1>
                 <span className="text-neutral-400 mx-7 mt-3">Total de profesionales: {totalResults}</span>
             </div>
-            <button className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear Profesional</button>
+            <Link href="/main/profesionals/create" className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear Profesional</Link>
         </div>
         <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={fetchProfessionals}/>
         <div className="m-5">
