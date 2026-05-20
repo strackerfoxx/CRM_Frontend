@@ -7,81 +7,47 @@
 - Network:       http://192.168.0.2:3000
 
 ✓ Starting...
-✓ Ready in 1548ms
-○ Compiling /main/profesionals/create ...
+✓ Ready in 727ms
+○ Compiling / ...
 null
- GET /main/profesionals/create 200 in 7.8s (compile: 6.8s, render: 1062ms)
+ GET / 200 in 6.0s (compile: 5.4s, render: 631ms)
+○ Compiling /main/settings ...
 null
-null
-null
-null
-null
- GET /main/profesionals/undefined/service/get-services 404 in 2.7s (compile: 1538ms, render: 1129ms)
- GET /main/profesionals/undefined/client/get-clients 404 in 2.7s (compile: 1676ms, render: 1001ms)
- GET /main/profesionals/undefined/appointment/get-appointments-by-params?startDate=Sat%20May%2016%202026%2009:47:52%20GMT+0000%20(Coordinated%20Universal%20Time)&page=1&limit=20 404 in 2.7s (compile: 1792ms, render: 885ms)
- GET /main/profesionals/undefined/user/get-all-users 404 in 2.7s (compile: 1873ms, render: 824ms)
- GET /main/profesionals/undefined/user/get-all-users 404 in 2.7s (compile: 1617ms, render: 1058ms)
-null
- GET /main/profesionals/edit/cmjxq09740001vkfkef3c4dhd 200 in 3.0s (compile: 2.9s, render: 120ms)
+ GET /main/settings 200 in 5.2s (compile: 4.0s, render: 1227ms)
 null
 null
 null
 null
 null
 null
- GET /main/profesionals/edit/undefined/user/get-user-by-id?id=cmjxq09740001vkfkef3c4dhd 404 in 340ms (compile: 29ms, render: 311ms)
- GET /main/profesionals/edit/undefined/user/get-all-users 404 in 322ms (compile: 63ms, render: 259ms)
- GET /main/profesionals/edit/undefined/client/get-clients 404 in 272ms (compile: 66ms, render: 206ms)
- GET /main/profesionals/edit/undefined/appointment/get-appointments-by-params?startDate=Sat%20May%2016%202026%2009:47:56%20GMT+0000%20(Coordinated%20Universal%20Time)&page=1&limit=20 404 in 270ms (compile: 83ms, render: 187ms)
- GET /main/profesionals/edit/undefined/service/get-services 404 in 272ms (compile: 100ms, render: 172ms)
- GET /main/profesionals/edit/undefined/user/get-all-users 404 in 271ms (compile: 125ms, render: 147ms)
+ GET / 200 in 60ms (compile: 8ms, render: 53ms)
 null
- GET /main/profesionals/edit/undefined/user/get-user-by-id?id=cmjxq09740001vkfkef3c4dhd 404 in 67ms (compile: 10ms, render: 58ms)
-null
- GET /main/profesionals/cmjxq09740001vkfkef3c4dhd 200 in 1692ms (compile: 1554ms, render: 138ms)
+ GET /main 200 in 49ms (compile: 15ms, render: 34ms)
+ GET /main/settings 200 in 290ms (compile: 6ms, render: 285ms)
 null
 null
 null
 null
 null
+ GET /main/undefined/business/get-business-by-id 404 in 171ms (compile: 110ms, render: 61ms)
+ GET /main/undefined/service/get-services 404 in 220ms (compile: 70ms, render: 151ms)
+ GET /main/undefined/appointment/get-appointments-by-params?startDate=Wed%20May%2020%202026%2005:07:37%20GMT+0000%20(Coordinated%20Universal%20Time)&page=1&limit=20 404 in 224ms (compile: 53ms, render: 171ms)
+ GET /main/undefined/user/get-all-users 404 in 276ms (compile: 12ms, render: 264ms)
+ GET /main/undefined/client/get-clients 404 in 272ms (compile: 49ms, render: 222ms)
 null
- GET /main/profesionals/undefined/service/get-services 404 in 294ms (compile: 95ms, render: 199ms)
- GET /main/profesionals/undefined/appointment/get-appointments-by-params?startDate=Sat%20May%2016%202026%2009:48:00%20GMT+0000%20(Coordinated%20Universal%20Time)&page=1&limit=20 404 in 297ms (compile: 79ms, render: 218ms)
- GET /main/profesionals/undefined/user/get-user-by-id?id=cmjxq09740001vkfkef3c4dhd 404 in 305ms (compile: 30ms, render: 275ms)
- GET /main/profesionals/undefined/user/get-all-users 404 in 304ms (compile: 46ms, render: 258ms)
- GET /main/profesionals/undefined/user/get-all-users 404 in 297ms (compile: 199ms, render: 98ms)
- GET /main/profesionals/undefined/client/get-clients 404 in 304ms (compile: 62ms, render: 242ms)
+ GET / 200 in 63ms (compile: 5ms, render: 58ms)
 null
- GET /main/profesionals/undefined/user/get-user-by-id?id=cmjxq09740001vkfkef3c4dhd 404 in 64ms (compile: 13ms, render: 51ms)
-null
- GET /main/profesionals/cmjxq09740001vkfkef3c4dhd 200 in 157ms (compile: 34ms, render: 122ms)
+ GET /main 200 in 75ms (compile: 17ms, render: 58ms)
+ GET /main/settings 200 in 315ms (compile: 6ms, render: 309ms)
 null
 null
 null
 null
 null
 null
- GET /main/profesionals/undefined/user/get-user-by-id?id=cmjxq09740001vkfkef3c4dhd 404 in 353ms (compile: 30ms, render: 323ms)
- GET /main/profesionals/undefined/user/get-all-users 404 in 352ms (compile: 75ms, render: 276ms)
- GET /main/profesionals/undefined/client/get-clients 404 in 351ms (compile: 93ms, render: 257ms)
- GET /main/profesionals/undefined/appointment/get-appointments-by-params?startDate=Sat%20May%2016%202026%2009:48:37%20GMT+0000%20(Coordinated%20Universal%20Time)&page=1&limit=20 404 in 351ms (compile: 114ms, render: 237ms)
- GET /main/profesionals/undefined/service/get-services 404 in 349ms (compile: 206ms, render: 143ms)
- GET /main/profesionals/undefined/user/get-all-users 404 in 348ms (compile: 227ms, render: 121ms)
-null
- GET /main/profesionals/undefined/user/get-user-by-id?id=cmjxq09740001vkfkef3c4dhd 404 in 70ms (compile: 11ms, render: 59ms)
-null
- GET /main/profesionals/cmjxq09740001vkfkef3c4dhd 200 in 131ms (compile: 29ms, render: 102ms)
-null
-null
-null
-null
-null
-null
- GET /main/profesionals/undefined/user/get-all-users 404 in 342ms (compile: 17ms, render: 325ms)
- GET /main/profesionals/undefined/user/get-user-by-id?id=cmjxq09740001vkfkef3c4dhd 404 in 345ms (compile: 40ms, render: 305ms)
- GET /main/profesionals/undefined/client/get-clients 404 in 254ms (compile: 28ms, render: 226ms)
- GET /main/profesionals/undefined/appointment/get-appointments-by-params?startDate=Sat%20May%2016%202026%2009:49:27%20GMT+0000%20(Coordinated%20Universal%20Time)&page=1&limit=20 404 in 282ms (compile: 67ms, render: 215ms)
- GET /main/profesionals/undefined/service/get-services 404 in 282ms (compile: 85ms, render: 197ms)
- GET /main/profesionals/undefined/user/get-all-users 404 in 274ms (compile: 125ms, render: 149ms)
-null
- GET /main/profesionals/undefined/user/get-user-by-id?id=cmjxq09740001vkfkef3c4dhd 404 in 63ms (compile: 11ms, render: 52ms)
+ GET /main/undefined/business/get-business-by-id 404 in 252ms (compile: 90ms, render: 162ms)
+ GET /main/undefined/service/get-services 404 in 254ms (compile: 72ms, render: 182ms)
+ GET /main/undefined/client/get-clients 404 in 348ms (compile: 53ms, render: 295ms)
+ GET /main/undefined/appointment/get-appointments-by-params?startDate=Wed%20May%2020%202026%2005:07:53%20GMT+0000%20(Coordinated%20Universal%20Time)&page=1&limit=20 404 in 343ms (compile: 92ms, render: 251ms)
+ GET /main/undefined/user/get-all-users 404 in 90ms (compile: 25ms, render: 65ms)
+ GET /main/undefined/user/get-all-users 404 in 354ms (compile: 16ms, render: 338ms)

@@ -149,10 +149,10 @@ const BusinessProvider = ({ children }) => {
                     const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/business/get-business-by-id`, { headers })
                     setBusiness(data)
                 } catch (error) {
-                    console.log(error.message)
+                    console.error(error.message)
                 }
             }
-            // getBusiness()
+            getBusiness()
 
         }
     }, [token])

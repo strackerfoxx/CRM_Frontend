@@ -1,4 +1,4 @@
-import { Calendar, Users, ClipboardClock, Handshake, ChevronUp, LayoutDashboard, FileBox } from "lucide-react"
+import { Calendar, Users, ClipboardClock, Handshake, ChevronUp, LayoutDashboard, FileBox, Settings } from "lucide-react"
 import Link from "next/link"
 
 import {
@@ -54,6 +54,11 @@ const items = [
     title: "Equipo",
     url: "/main/profesionals",
     icon: Users,
+  },
+  {
+    title: "Configuración",
+    url: "/main/settings",
+    icon: Settings,
   },
 ]
 
