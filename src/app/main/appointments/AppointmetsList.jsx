@@ -51,7 +51,7 @@ export default function AppointmetsListAppointment() {
 
     useEffect(() => {
         onSubmit()
-    }, [page])
+    }, [page, status, service])
 
   return (
      <>

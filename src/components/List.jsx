@@ -61,7 +61,7 @@ export default function List({appointments}) {
                   : appointment.status === "COMPLETED" ? "Completada" : "Confirmada"}
               </div>
             </div>
-            <div className="col-user">{appointment.businessClient.client.name}</div>
+            <div className="col-user">{appointment?.businessClient?.client?.name}</div>
             <div className="col-services">{appointment?.services?.[0]?.service?.name || "-"}</div>
           </Link>
         ))}

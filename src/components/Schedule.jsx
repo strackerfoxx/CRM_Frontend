@@ -18,21 +18,19 @@ export default function Schedule({ date, servicesSelected, hour, setHour, userId
   }
 
   useEffect(() => {
-    if(!token) return
+    if (!token) return
     setIsLoading(true)
     async function fetchSlots() {
-      setSlots(await useAvailableSlots({ date, servicesSelected, business, token, userId, excludeAppointmentId: appointmentId }))
+      const availableSlots = await useAvailableSlots({ date, servicesSelected, business, token, userId, excludeAppointmentId: appointmentId })
+      setSlots(availableSlots)
+      setIsLoading(false)
     }
     fetchSlots()
-    
-    setIsLoading(false)
-  }, [servicesSelected, date, userId, token])
+  }, [servicesSelected, date, userId, token, business, appointmentId])
   
-
-  if (slots.length === 0) {
+  if (!isLoading && slots.length === 0) {
     return <h1>No hay horarios disponibles</h1>
   }
-
 
   return (
     <div>

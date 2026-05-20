@@ -1,26 +1,17 @@
 "use client"
 import { useState, useEffect } from "react";
-import { useProfessionals } from "@/hooks/useProfessionals";
+import axios from "axios";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import Pagination from "@/components/Pagination";
 import SearchBarComponent from "@/components/SearchBarComponent";
-import "@/css/list.css"
-import axios from "axios";
-import { useUser } from "@/hooks/useUser";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { useUser } from "@/hooks/useUser";
+import "@/css/list.css"
 
 export default function UsersListUsers() {
     const { token } = useUser()
 
-    const { professionals } = useProfessionals();
     const [searchTerm, setSearchTerm] = useState("");
     const [role, setRole] = useState(undefined);
     const [filteredProfessionals, setFilteredProfessionals] = useState([]);
@@ -34,7 +25,7 @@ export default function UsersListUsers() {
         setLoading(true);
 
         try {
-            const {data} = await axios(`${process.env.NEXT_PUBLIC_API_URL}/user/get-users-by-params?page=1&limit=20${searchTerm ? `&search=${searchTerm}` : ""}${role ? `&role=${role}` : ""}`,
+            const {data} = await axios(`${process.env.NEXT_PUBLIC_API_URL}/user/get-users-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}${role ? `&role=${role}` : ""}`,
                 {
                     headers: {
                         Authorization: token,
@@ -65,14 +56,14 @@ export default function UsersListUsers() {
             <Link href="/main/profesionals/create" className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear Profesional</Link>
         </div>
         <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={getUsers}>
-            <div className='flex justify-between gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 w-[200px] mr-1 mb-4 md:mb-0 h-10'>
+            <div className='flex justify-between gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 w-[220px] mr-1 mb-4 md:mb-0 h-10'>
                 <span className='text-gray-600 font-semibold'>Rol</span>
                 <select
                     name="role"
                     id="role"
                     value={role}
                     onChange={e => setRole(e.target.value)}
-                    className="bg-black text-white items-center w-28 text-center"
+                    className="bg-black text-white items-center w-full text-center"
                 >
                     
                     <option value="">Selecciona el rol</option>

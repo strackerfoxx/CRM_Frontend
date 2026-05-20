@@ -158,11 +158,13 @@ export default function CreateAppointmentForm({
             })
 
       const { data } = await request
-      getAppointment()
+      
       toast.success(data?.msg || (mode === "edit" ? "Cita actualizada exitosamente" : "Cita creada exitosamente"))
 
       if (mode !== "edit") {
         setAppointments((prev) => [...prev, data.appointment])
+      }else{
+        getAppointment()
       }
     } catch (error) {
       console.error(error)

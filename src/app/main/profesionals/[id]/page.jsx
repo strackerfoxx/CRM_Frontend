@@ -52,7 +52,6 @@ export default function ProfessionalDetailsClient() {
                 },
               }
           )
-          console.log("Schedules Data", schedulesRes.data);
           setSchedules(schedulesRes.data || [])
 
         } catch (error) {
@@ -167,7 +166,7 @@ export default function ProfessionalDetailsClient() {
                 {[
                   { label: "Email", value: professional?.email || "N/A" },
                   { label: "Teléfono", value: professional?.phone || "N/A" },
-                  { label: "Rol", value: professional?.role || "N/A", highlight: true },
+                  { label: "Rol", value: professional?.role === "ADMIN" ? "Administrador" : "Empleado", highlight: true },
                   { label: "Días Asignados", value: schedules?.length || 0 }
                 ].map((item, i) => (
                   <div

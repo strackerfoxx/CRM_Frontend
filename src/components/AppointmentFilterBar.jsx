@@ -76,8 +76,8 @@ export default function AppointmentFilterBar(
                       name="service"
                       id="service"
                       value={service}
+                      onChange={e => setService(e.target.value)}
                       className="bg-black text-white items-center w-lg"
-                      onSelect={e => setService(e.target.value)}
                     >
                         <option value="">Selecciona un servicio</option>
                         {services.map(s => (

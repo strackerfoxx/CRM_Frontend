@@ -41,6 +41,7 @@ export default function CalendarView() {
   const [dayLoading, setDayLoading] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [timeSlots, setTimeSlots] = useState([])
+  const [timelineStart, setTimelineStart] = useState({ hour: 8, minute: 0 })
 
   const { token } = useUser()
   const { business } = useBusiness()
@@ -229,7 +230,6 @@ export default function CalendarView() {
 
     const [openHour, openMinute] = dayConfig.open.split(":").map(Number)
     const [closeHour, closeMinute] = dayConfig.close.split(":").map(Number)
-    console.log({openHour, openMinute, closeHour, closeMinute})
 
     const slots = []
 
@@ -237,9 +237,9 @@ export default function CalendarView() {
     current.setHours(openHour, openMinute, 0, 0)
 
     const end = new Date(date)
-    end.setHours(closeHour + 1, closeMinute, 0, 0)
+    end.setHours(closeHour, closeMinute, 0, 0)
 
-    while (current < end) {
+    while (current <= end) {
       const hours = current.getHours().toString().padStart(2, "0")
       const minutes = current.getMinutes().toString().padStart(2, "0")
 
@@ -247,6 +247,8 @@ export default function CalendarView() {
 
       current.setMinutes(current.getMinutes() + interval)
     }
+
+    setTimelineStart({ hour: openHour, minute: openMinute })
     return setTimeSlots(slots)
   }
 
@@ -263,11 +265,9 @@ export default function CalendarView() {
     const [startH, startM] = startTime.split(':').map(Number)
     const [endH, endM] = endTime.split(':').map(Number)
 
-    // Assuming timeline starts at 08:00
-    const startOffsetMinutes = (startH - 8) * 60 + startM
+    const startOffsetMinutes = (startH * 60 + startM) - (timelineStart.hour * 60 + timelineStart.minute)
     const durationMinutes = (endH * 60 + endM) - (startH * 60 + startM)
 
-    // 1 minute = 1 pixel for easy math (60px per hour)
     return {
       top: `${startOffsetMinutes}px`,
       height: `${durationMinutes}px`
@@ -417,11 +417,12 @@ export default function CalendarView() {
                 <div className="relative w-full min-h-[720px] mt-4">
                  {(() => {
                     const { sorted, maxColumns } = organizeAppointments(dayMetrics.appointments);
+                    const gridHeight = timeSlots.length * 60
                     // Ensure minimum width of 100% or calculated width based on columns
                     const containerMinWidth = Math.max(100, (maxColumns * 190) + 60); // 180 + 10 gap + 60 left padding
 
                     return (
-                      <div className="relative min-h-[720px]" style={{ minWidth: `${containerMinWidth}px` }}>
+                      <div className="relative" style={{ minWidth: `${containerMinWidth}px`, minHeight: `${gridHeight}px` }}>
                         {/* Background grid for time slots (08:00 to 20:00 = 12 hours * 60px = 720px) */}
                         {timeSlots.map((time, i) => (
                           <div

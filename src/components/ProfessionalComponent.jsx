@@ -4,6 +4,7 @@ import axios from "axios"
 import { toast, Toaster } from "sonner"
 import { z } from "zod"
 import { useUser } from "@/hooks/useUser"
+import { useBusiness } from "@/hooks/useBusiness"
 
 import OverviewHeader from "@/components/OverviewHeader"
 
@@ -36,7 +37,58 @@ export default function ProfessionalComponent({
 }) {
   const router = useRouter()
   const { token } = useUser()
+  const { business } = useBusiness()
   const [isLoading, setIsLoading] = useState(false)
+
+  const DAYS_OF_WEEK = [
+    { key: 'monday', label: 'Lunes' },
+    { key: 'tuesday', label: 'Martes' },
+    { key: 'wednesday', label: 'Miércoles' },
+    { key: 'thursday', label: 'Jueves' },
+    { key: 'friday', label: 'Viernes' },
+    { key: 'saturday', label: 'Sábado' },
+    { key: 'sunday', label: 'Domingo' },
+  ]
+
+  const getAvailableDays = () => {
+    if (!business?.businessHours) return DAYS_OF_WEEK
+    return DAYS_OF_WEEK.filter(day => !business.businessHours[day.key]?.closed)
+  }
+
+  const getBusinessHours = (day) => {
+    if (!business?.businessHours || !business.businessHours[day]) {
+      return { open: '00:00', close: '23:59' }
+    }
+    return business.businessHours[day]
+  }
+
+  const validateScheduleHours = (dayOfWeek, startTime, endTime) => {
+    const businessHours = getBusinessHours(dayOfWeek)
+    if (businessHours.closed) return { valid: false, error: 'Este día está cerrado' }
+    
+    if (startTime < businessHours.open) {
+      return { valid: false, error: `La hora de inicio no puede ser antes de ${businessHours.open}` }
+    }
+    if (endTime > businessHours.close) {
+      return { valid: false, error: `La hora de fin no puede ser después de ${businessHours.close}` }
+    }
+    if (startTime >= endTime) {
+      return { valid: false, error: 'La hora de inicio debe ser anterior a la hora de fin' }
+    }
+    return { valid: true }
+  }
+
+  const addSchedule = () => {
+    const defaultDay = getAvailableDays()[0]?.key || 'monday'
+    const businessHours = getBusinessHours(defaultDay)
+    const newSchedule = {
+      dayOfWeek: defaultDay,
+      startTime: businessHours.open,
+      endTime: businessHours.close,
+      isNew: true,
+    }
+    setSchedules([...schedules, newSchedule])
+  }
 
   const handleSave = async () => {
     setIsLoading(true)
@@ -81,9 +133,26 @@ export default function ProfessionalComponent({
 
         if (schedules && schedules.length > 0) {
             for (const schedule of schedules) {
-                 if (schedule.id) {
+                const validation = validateScheduleHours(schedule.dayOfWeek, schedule.startTime, schedule.endTime)
+                if (!validation.valid) {
+                  toast.error(`${schedule.dayOfWeek}: ${validation.error}`)
+                  setIsLoading(false)
+                  return
+                }
+                if (schedule.id) {
                      await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/user/update-schedule`, {
                          id: schedule.id,
+                         dayOfWeek: schedule.dayOfWeek,
+                         startTime: schedule.startTime,
+                         endTime: schedule.endTime
+                     }, {
+                         headers: {
+                             Authorization: token,
+                         }
+                     })
+                 } else if (schedule.isNew) {
+                     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/create-schedule`, {
+                         userId: id,
                          dayOfWeek: schedule.dayOfWeek,
                          startTime: schedule.startTime,
                          endTime: schedule.endTime
@@ -111,6 +180,22 @@ export default function ProfessionalComponent({
       toast.error("No se pudo guardar el profesional. Intenta de nuevo.")
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleDelete = async (id) => {
+    console.log("Horario eliminado:", id)
+    try {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/user/delete-schedule`, {
+        data: { id },
+        headers: {
+          Authorization: token,
+        },
+      })
+      
+      toast.success("Horario eliminado correctamente")
+    } catch (error) {
+      toast.error("No se pudo eliminar el horario. Intenta de nuevo.")
     }
   }
 
@@ -209,26 +294,55 @@ export default function ProfessionalComponent({
             </div>
           </Section>
 
-          {editMode && schedules.length > 0 && (
+          {editMode && (
               <Section title="Horarios" index="02">
                 <div className="space-y-4">
-                  {schedules.map((schedule, index) => (
-                    <div key={schedule.id || index} className="grid grid-cols-3 gap-4 items-center bg-[#0e0e0e] p-4 rounded-xl">
-                       <div className="font-bold capitalize">{schedule.dayOfWeek}</div>
-                       <Input
-                            label="Hora Inicio"
-                            type="time"
-                            value={schedule.startTime}
-                            onChange={(e) => handleScheduleChange(index, "startTime", e.target.value)}
-                        />
-                        <Input
-                            label="Hora Fin"
-                            type="time"
-                            value={schedule.endTime}
-                            onChange={(e) => handleScheduleChange(index, "endTime", e.target.value)}
-                        />
-                    </div>
-                  ))}
+                  {schedules && schedules.length > 0 && schedules.map((schedule, index) => {
+                    const businessHours = getBusinessHours(schedule.dayOfWeek)
+                    const availableDays = getAvailableDays()
+                    return (
+                      <div key={schedule.id || `new-${index}`} className="grid grid-cols-4 gap-4 items-end bg-[#0e0e0e] p-4 rounded-xl">
+                         <Select
+                            label="Día"
+                            value={schedule.dayOfWeek}
+                            onChange={(e) => handleScheduleChange(index, "dayOfWeek", e.target.value)}
+                            options={availableDays.map(day => ({ value: day.key, label: day.label }))}
+                         />
+                         <Input
+                              label="Hora Inicio"
+                              type="time"
+                              value={schedule.startTime}
+                              min="08:00"
+                              max="18:00"
+                              onChange={(e) => handleScheduleChange(index, "startTime", e.target.value)}
+                          />
+                          <Input
+                              label="Hora Fin"
+                              type="time"
+                              min="09:00"
+                              max="18:00"
+                              value={schedule.endTime}
+                              onChange={(e) => handleScheduleChange(index, "endTime", e.target.value)}
+                          />
+                          <button
+                            onClick={() => {
+                              handleDelete(schedule.id)
+                              const newSchedules = schedules.filter((_, i) => i !== index)
+                              setSchedules(newSchedules)
+                            }}
+                            className="px-4 py-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600/30 transition text-sm font-semibold"
+                          >
+                            Eliminar
+                          </button>
+                      </div>
+                    )
+                  })}
+                  <button
+                    onClick={addSchedule}
+                    className="w-full mt-4 px-4 py-3 bg-blue-600/20 text-blue-400 border border-blue-600/30 rounded-lg hover:bg-blue-600/30 transition font-semibold"
+                  >
+                    + Agregar Horario
+                  </button>
                 </div>
               </Section>
           )}

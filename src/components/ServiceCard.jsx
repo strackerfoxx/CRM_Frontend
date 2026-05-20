@@ -22,7 +22,7 @@ export default function FieldChoiceCard({services, servicesSelected, setServices
   return (
     <div className="w-full">
       <FieldGroup>
-        <FieldSet className="h-[10rem] border rounded-lg bg-neutral-900 overflow-y-auto gap-3 p-4">
+        <FieldSet className="max-h-[15rem] border rounded-lg bg-neutral-900 overflow-y-auto gap-3 p-4">
             {services && services.map((service) => (
                 <FieldLabel htmlFor={service.id} key={service.id} className="cursor-pointer hover:bg-neutral-800 rounded-md">
                 <Field orientation="horizontal" className="items-center gap-3">
