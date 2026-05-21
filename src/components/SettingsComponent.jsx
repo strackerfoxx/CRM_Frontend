@@ -7,6 +7,7 @@ import OverviewHeader from "./OverviewHeader"
 import { useUser } from "@/hooks/useUser"
 import { useBusiness } from "@/hooks/useBusiness"
 import { Skeleton } from "@/components/ui/skeleton"
+import BlockedTimesSection from "./BlockedTimesSection"
 
 export default function SettingsComponent() {
   const router = useRouter()
@@ -271,6 +272,10 @@ export default function SettingsComponent() {
                 )
               })}
             </div>
+          </Section>
+
+          <Section title="Bloqueo de horario" index="04" className="rounded-xl">
+             <BlockedTimesSection />
           </Section>
 
         </div>
