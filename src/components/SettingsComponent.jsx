@@ -156,7 +156,7 @@ export default function SettingsComponent() {
           </div>
         </div>
 
-        <div className="px-4 sm:px-10 py-10 sm:py-12 max-w-5xl mx-auto space-y-10 sm:space-y-14 rounded-2xl">
+        <div className="px-4 py-10 sm:py-12 mx-auto space-y-10 sm:space-y-14 rounded-2xl">
           <Section title="Información básica" index="01" className="rounded-xl">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <Input
@@ -230,14 +230,19 @@ export default function SettingsComponent() {
                   <div key={key} className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-center bg-[#0e0e0e] p-4 rounded-xl">
                     <div className="font-semibold">{label}</div>
 
-                    <div className="flex items-center gap-2">
-                        <label className="text-sm text-neutral-400">Cerrado</label>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm text-neutral-400">Abierto</span>
+                      <label className="relative inline-flex items-center cursor-pointer">
                         <input
-                            type="checkbox"
-                            checked={daySchedule.closed}
-                            onChange={e => handleBusinessHourChange(key, 'closed', e.target.checked)}
-                            className="w-4 h-4"
+                          type="checkbox"
+                          checked={daySchedule.closed}
+                          onChange={e => handleBusinessHourChange(key, 'closed', e.target.checked)}
+                          className="sr-only peer"
                         />
+                        <div className="w-12 h-6 rounded-full bg-emerald-500  transition-colors duration-200 peer-checked:bg-red-500">
+                          <div className="absolute top-1 left-1 h-4 w-4 rounded-full bg-white shadow transition-transform duration-200 peer-checked:translate-x-6" />
+                        </div>
+                      </label>
                     </div>
 
                     {!daySchedule.closed && (
