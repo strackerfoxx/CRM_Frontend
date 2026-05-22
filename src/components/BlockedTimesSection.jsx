@@ -4,6 +4,7 @@ import axios from "axios"
 import { toast } from "sonner"
 import { useUser } from "@/hooks/useUser"
 import { useProfessionals } from "@/hooks/useProfessionals"
+import { dateReseter } from "@/middleware/dateReseter" 
 
 export default function BlockedTimesSection() {
     const { token } = useUser()
@@ -200,7 +201,7 @@ export default function BlockedTimesSection() {
                     {blockedTimes.map((bt) => (
                         <div key={bt.id || bt._id} className="bg-[#0e0e0e] p-4 rounded-xl flex justify-between items-center">
                             <div>
-                                <p className="font-semibold">{bt.date}</p>
+                                <p className="font-semibold">{dateReseter(bt.date, "dd-mm-yyy")}</p>
                                 <p className="text-sm text-neutral-400">
                                     {bt.start} - {bt.end}
                                 </p>

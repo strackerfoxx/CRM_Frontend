@@ -55,6 +55,7 @@ export default function CreateAppointmentForm({
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState(appointment?.status ?? "SCHEDULED")
   const [serviceUsers, setServiceUsers] = useState({})
+  const [availableUsers, setAvailableUsers] = useState({})
 
   useEffect(() => {
     if (!appointment) {
@@ -192,6 +193,45 @@ export default function CreateAppointmentForm({
     )
   }, [services])
 
+  useEffect(() => {
+    async function getAvailableUsers(services) {
+      const headers = {
+        Authorization: token,
+      }
+      const usersData = {
+          services,
+          startTime: hour,
+          date: new Date(date).toJSON().split("T")[0],
+          businessId: business.id
+      }
+      try {
+        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/availability/users`, usersData, {
+              headers,
+            }
+        )
+        const usersByService = data.reduce((acc, item) => {
+          if (item?.serviceId) {
+            acc[item.serviceId] = item.availableUsers ?? []
+          }
+          return acc
+        }, {})
+        setAvailableUsers(usersByService)
+      } catch (error) {
+        console.error(error)
+        toast.error(error?.response?.data?.msg || ("Error al cargar los usuarios disponibles"))
+      }
+    }
+
+    if(servicesSelected.length !== 0 && hour){
+      const services = servicesSelected.map(serviceId => (
+        {
+          serviceId
+        }
+      ))
+      getAvailableUsers(services)
+    }
+  }, [servicesSelected, hour])
+
   return (
     <form className={cn("grid items-start gap-6")} onSubmit={handlesubmit}>
       <div className="grid gap-3">
@@ -242,8 +282,16 @@ export default function CreateAppointmentForm({
         </div>
       )}
 
+              
       {!date || servicesSelected.length === 0 ? null : (
         <>
+
+          <div className="grid gap-3">
+            <Label htmlFor="hora">Horarios disponibles:</Label>
+            <Schedule date={date} servicesSelected={servicesSelected} setHour={setHour} hour={hour} userId={profesional} appointmentId={appointment?.id} />
+          </div>
+
+          
           {servicesSelected.length > 0 && (
             
             <div className="space-y-4">
@@ -263,12 +311,12 @@ export default function CreateAppointmentForm({
                       </SelectTrigger>
 
                       <SelectContent>
-                        {service?.users?.map(item => (
+                        {availableUsers[serviceId]?.map((user) => (
                           <SelectItem
-                            key={`${serviceId}-${item.user.id}`}
-                            value={item.user.id}
+                            key={`${serviceId}-${user.id}`}
+                            value={user.id}
                           >
-                            {item.user.name}
+                            {user.name}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -278,11 +326,6 @@ export default function CreateAppointmentForm({
               })}
             </div>
           )}
-
-          <div className="grid gap-3">
-            <Label htmlFor="hora">Horarios disponibles:</Label>
-            <Schedule date={date} servicesSelected={servicesSelected} setHour={setHour} hour={hour} userId={profesional} appointmentId={appointment?.id} />
-          </div>
 
           <Button className="cursor-pointer" type="submit" disabled={loading}>
             {label}
