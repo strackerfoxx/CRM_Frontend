@@ -25,15 +25,15 @@ export default function SearchBarComponent({ search, setSearch, onSubmit, childr
                     />
                 </div>
                 <div className='md:flex justify-between gap-3 items-center'>
-                    <button type="button" onClick={onSubmit} className="bg-blue-600 p-2 rounded-lg font-semibold px-4 cursor-pointer w-full md:w-48 mt-5 md:mt-0 hidden lg:block">Buscar citas</button>
+                    <button type="button" onClick={onSubmit} className="bg-blue-600 p-2 rounded-lg font-semibold px-4 cursor-pointer w-full md:w-48 mt-5 md:mt-0 hidden lg:block">Buscar</button>
                 </div>
             </div>
 
             {children}
 
-            <button type="button" onClick={onSubmit} className="bg-blue-600 p-2 rounded-lg font-semibold px-4 cursor-pointer w-full md:w-48 mt-5 md:mt-0 hidden md:block lg:hidden mb-5">Buscar citas</button>
+            <button type="button" onClick={onSubmit} className="bg-blue-600 p-2 rounded-lg font-semibold px-4 cursor-pointer w-full md:w-48 mt-5 hidden md:block lg:hidden mb-5">Buscar</button>
 
-            <button type="button" onClick={onSubmit} className="bg-blue-600 p-2 rounded-lg font-semibold px-4 cursor-pointer w-full md:w-48  mt-5 md:mt-0 md:hidden">Buscar citas</button>
+            <button type="button" onClick={onSubmit} className="bg-blue-600 p-2 rounded-lg font-semibold px-4 cursor-pointer w-full md:w-48  mt-5 md:mt-0 md:hidden">Buscar</button>
         </div>
     </>
   )

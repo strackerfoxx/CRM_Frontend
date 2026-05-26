@@ -25,7 +25,7 @@ const UserProvider = ({ children }) => {
                     console.log(error.message)
                 }
             }
-            // getUser()
+            getUser()
         }
         setIsLoaded(true)
     }, [])

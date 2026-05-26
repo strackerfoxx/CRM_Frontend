@@ -391,9 +391,11 @@ function Select({ label, options, ...props }) {
         {...props}
         className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none text-sm rounded-lg mt-2 text-white"
       >
-        <option value="">Selecciona un rol</option>
+        <option value="">Selecciona</option>
         {options.map((opt) => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
+            <option key={opt.value} value={opt.value}>{opt.label}
+              {console.log("Opción:", opt.value, opt.label)}
+            </option>
         ))}
       </select>
     </div>

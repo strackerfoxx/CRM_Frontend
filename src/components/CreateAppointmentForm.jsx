@@ -230,7 +230,7 @@ export default function CreateAppointmentForm({
       ))
       getAvailableUsers(services)
     }
-  }, [servicesSelected, hour])
+  }, [servicesSelected, hour, date])
 
   return (
     <form className={cn("grid items-start gap-6")} onSubmit={handlesubmit}>
