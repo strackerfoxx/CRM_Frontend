@@ -75,7 +75,7 @@ export default function UsersListUsers() {
         <div className="m-5">
             <div className="bg-neutral-900 rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}
-                <div className="grid grid-cols-4 header text-neutral-400 font-semibold mb-2 border-b pb-2 p-5">
+                <div className="hidden md:grid grid-cols-4 header text-neutral-400 font-semibold mb-2 border-b pb-2 p-5">
                     <span>Nombre</span>
                     <span>Rol</span>
                     <span>Email</span>
@@ -84,7 +84,7 @@ export default function UsersListUsers() {
 
                 {loading ? (
                     Array.from({ length: 5 }).map((_, i) => (
-                        <div key={i} className="grid grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl">
+                        <div key={i} className="grid grid-cols-1 md:grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl">
                             <Skeleton className="h-6 w-32 bg-neutral-700" />
                             <Skeleton className="h-6 w-24 bg-neutral-700" />
                             <Skeleton className="h-6 w-40 bg-neutral-700" />
@@ -95,12 +95,12 @@ export default function UsersListUsers() {
                     <>
                         {filteredProfessionals.map((p) => (
                             <Link href={`/main/profesionals/${p.id}`} key={p.id}
-                                className="grid grid-cols-4 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
+                                className="grid grid-cols-1 md:grid-cols-4 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
                             >
-                                <div className="col-name overflow-hidden">{p.name}</div>
-                                <div className="col-phone overflow-hidden">{p.role}</div>
-                                <div className="col-email overflow-hidden">{p.email}</div>
-                                <div className="col-created overflow-hidden">{p.createdAt?.split("T")[0]}</div>
+                                <div className="col-name overflow-hidden truncate">{p.name}</div>
+                                <div className="col-phone overflow-hidden truncate">{p.role}</div>
+                                <div className="col-email overflow-hidden truncate">{p.email}</div>
+                                <div className="col-created overflow-hidden truncate">{p.createdAt?.split("T")[0]}</div>
                             </Link>
                         ))}
                         {filteredProfessionals.length === 0 && (

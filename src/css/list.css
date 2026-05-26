@@ -35,10 +35,13 @@
 
 /* Espaciado y estilo de cada celda */
 .list-grid > div,
-.list-grid > span {
+.list-grid > span,
+.list-grid-actions > div,
+.list-grid-actions > span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-width: 0;
 }
 
 /* Separador más sutil */

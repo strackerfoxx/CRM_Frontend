@@ -10,7 +10,7 @@ export default function AppointmentsList({ appointments, loading }) {
         <div className="m-5">
             <div className="bg-neutral-900 rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}
-                <div className="grid grid-cols-5 header text-neutral-400 font-semibold mb-2 border-b pb-2 p-5 rounded-b-xl">
+                <div className="hidden md:grid grid-cols-5 header text-neutral-400 font-semibold mb-2 border-b pb-2 p-5 rounded-b-xl">
                     <span>Cliente</span>
                     <span>Telefono</span>
                     <span>status</span>
@@ -20,7 +20,7 @@ export default function AppointmentsList({ appointments, loading }) {
 
                 {loading ? (
                     Array.from({ length: 5 }).map((_, i) => (
-                        <div key={i} className="grid grid-cols-5 item px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl">
+                        <div key={i} className="grid grid-cols-1 md:grid-cols-5 item px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl">
                             <Skeleton className="h-6 w-32 bg-neutral-700" />
                             <Skeleton className="h-6 w-24 bg-neutral-700" />
                             <Skeleton className="h-6 w-24 rounded-3xl bg-neutral-700" />
@@ -32,10 +32,10 @@ export default function AppointmentsList({ appointments, loading }) {
                     <>
                         {appointments.map((a) => (
                             <Link href={`/main/appointments/${a.id}`} key={a.id}
-                                className="grid grid-cols-5 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
+                                className="grid grid-cols-1 md:grid-cols-5 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
                             >
-                                <div className="col-name overflow-hidden">{a.businessClient.client.name}</div>
-                                <div className="col-phone overflow-hidden">{a.businessClient.client.phone}</div>
+                                <div className="col-name overflow-hidden truncate">{a.businessClient.client.name}</div>
+                                <div className="col-phone overflow-hidden truncate">{a.businessClient.client.phone}</div>
                                 <div
                                     className={` text-sm text-center py-1 rounded-3xl w-24 ${a.status === "SCHEDULED" ? "bg-amber-400/60 text-white border border-amber-400 h-7"
                                     : a.status === "CANCELED" ? "bg-red-900/60 text-white border border-red-500 h-7"
@@ -44,8 +44,8 @@ export default function AppointmentsList({ appointments, loading }) {
                                     : a.status === "CANCELED" ? "Cancelada"
                                     : a.status === "COMPLETED" ? "Completada" : "Confirmada"}
                                 </div>
-                                <div className="col-created overflow-hidden">{dateReseter(a.date, "dd-mm-yyy")}</div>
-                                <div className="col-category overflow-hidden"></div>
+                                <div className="col-created overflow-hidden truncate">{dateReseter(a.date, "dd-mm-yyy")}</div>
+                                <div className="col-category overflow-hidden truncate"></div>
                             </Link>
                         ))}
                         {appointments.length === 0 && (

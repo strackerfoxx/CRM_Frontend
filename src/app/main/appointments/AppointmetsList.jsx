@@ -9,6 +9,7 @@ import { useService } from '@/hooks/useService'
 import AppointmentFilterBar from '@/components/AppointmentFilterBar'
 import AppointmentsList from '@/components/AppointmentsList' 
 import Pagination from '@/components/Pagination'
+import Drawer from '@/components/Drawer'
 
 export default function AppointmetsListAppointment() {
     const [appointments, setAppointments] = useState([])
@@ -24,6 +25,13 @@ export default function AppointmetsListAppointment() {
         from: new Date(new Date().setDate(new Date().getDate() - 7)),
         to: new Date(),
     })
+
+    // States for Drawer
+    const [client, setClient] = useState(undefined)
+    const [appointmentDate, setAppointmentDate] = useState(undefined)
+    const [servicesSelected, setServicesSelected] = useState([])
+    const [profesional, setProfesional] = useState(undefined)
+    const [hour, setHour] = useState(undefined)
 
     const { token } = useUser()
     const { services } = useService()
@@ -55,12 +63,27 @@ export default function AppointmetsListAppointment() {
 
   return (
      <>
-        <div className="flex items-center mt-5 mx-7 mb-5 md:mb-0">
-            <div className="flex flex-1 justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-5 mx-7 mb-5 md:mb-0 gap-4">
+            <div className="flex items-center">
                 <h1 className="scroll-m-20 text-start text-4xl font-bold tracking-tight text-balance">Citas</h1>
                 <span className="text-neutral-400 mx-7 mt-3">Total de citas: {totalResults}</span>
             </div>
-            <button className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 cursor-pointer">Crear cita</button>
+            <Drawer
+                title="Crear cita"
+                description="Crea una cita nueva. Haz click en guardar cuando termines."
+                label="Crear cita"
+                client={client}
+                setClient={setClient}
+                date={appointmentDate}
+                setDate={setAppointmentDate}
+                servicesSelected={servicesSelected}
+                setServicesSelected={setServicesSelected}
+                profesional={profesional}
+                setProfesional={setProfesional}
+                hour={hour}
+                setHour={setHour}
+                getAppointment={onSubmit}
+            />
         </div>
         
         <AppointmentFilterBar 
