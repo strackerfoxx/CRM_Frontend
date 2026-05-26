@@ -33,7 +33,7 @@ export function DrawerDialog({children, title, description}) {
         <DialogTrigger asChild>
           <Button className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 text-white hover:bg-blue-700 cursor-pointer" >{title}</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[625px] bg-neutral-900 max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-[625px] bg-neutral-900 max-h-[90vh] h-fit overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>
@@ -51,14 +51,16 @@ export function DrawerDialog({children, title, description}) {
       <DrawerTrigger asChild>
         <Button variant="outline">{title}</Button>
       </DrawerTrigger>
-      <DrawerContent className="bg-neutral-900">
+      <DrawerContent className="bg-neutral-900 max-h-[90vh]">
         <DrawerHeader className="text-left">
           <DialogTitle>{title}</DialogTitle>
             <DialogDescription>
               {description}
             </DialogDescription>
         </DrawerHeader>
-        {children}
+        <div className="overflow-y-auto px-4 pb-4">
+          {children}
+        </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancelar</Button>
