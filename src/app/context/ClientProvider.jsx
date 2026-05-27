@@ -18,7 +18,7 @@ const ClientProvider = ({children}) => {
                     const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/client/get-clients`, { headers })
                     setClients(data.clients)
                 } catch (error) {
-                    console.log(error.message)
+                    console.error(error.message)
                 }
             }
             
@@ -34,7 +34,7 @@ const ClientProvider = ({children}) => {
             const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/client/get-clients`, { headers })
             setClients(data.clients)
         } catch (error) {
-            console.log(error.message)
+            console.error(error.message)
         }
     }
 

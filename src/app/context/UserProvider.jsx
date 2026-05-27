@@ -22,7 +22,7 @@ const UserProvider = ({ children }) => {
                     const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/user/get-user-by-id`, { headers })
                     setUser({name: data?.user?.name, email: data?.user?.email, id: data?.user?._id})
                 } catch (error) {
-                    console.log(error.message)
+                    console.error(error.message)
                 }
             }
             getUser()
