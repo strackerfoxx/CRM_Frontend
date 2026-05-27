@@ -96,8 +96,8 @@ export default function CalendarView() {
     setDayMetrics(response.data)
 
   } catch (error) {
-    console.log(error.response?.data)
-    console.log(error.response?.status)
+    console.error(error.response?.data)
+    console.error(error.response?.status)
 
   } finally {
     setDayLoading(false)

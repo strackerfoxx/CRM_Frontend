@@ -18,7 +18,7 @@ const ProfesionalProvider = ({children}) => {
                     const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/user/get-all-users`, { headers })
                     setProfessionals(data)
                 } catch (error) {
-                    console.log(error.message)
+                    console.error(error.message)
                 }
             }
             

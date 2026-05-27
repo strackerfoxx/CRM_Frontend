@@ -56,7 +56,7 @@ export default function LoginForm() {
 
         router.push("/main")
       } catch (error) {
-        console.log(error?.response?.data?.msg || "Email o Contraseña incorrectos")
+        console.error(error?.response?.data?.msg || "Email o Contraseña incorrectos")
         toast.error(error?.response?.data?.msg || "Email o Contraseña incorrectos")
       }
     }

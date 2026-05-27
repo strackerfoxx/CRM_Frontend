@@ -18,7 +18,7 @@ const ServiceProvider = ({children}) => {
                     const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/service/get-services`, { headers })
                     setServices(data.services)
                 } catch (error) {
-                    console.log(error.message)
+                    console.error(error.message)
                 }
             }
             
@@ -34,7 +34,7 @@ const ServiceProvider = ({children}) => {
             const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/service/get-services`, { headers })
             setServices(data.services)
         } catch (error) {
-            console.log(error.message)
+            console.error(error.message)
         }
     }
 
