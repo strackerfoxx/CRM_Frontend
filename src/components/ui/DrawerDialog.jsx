@@ -33,14 +33,16 @@ export function DrawerDialog({children, title, description}) {
         <DialogTrigger asChild>
           <Button className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 text-white hover:bg-blue-700 cursor-pointer" >{title}</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[625px] bg-neutral-900 max-h-[90vh] overflow-y-auto flex flex-col">
+        <DialogContent className="sm:max-w-[625px] bg-neutral-900 max-h-[90vh] flex flex-col">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>
               {description}
             </DialogDescription>
           </DialogHeader>
+          <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4">
           {children}
+        </div>
         </DialogContent>
       </Dialog>
     )
@@ -51,21 +53,21 @@ export function DrawerDialog({children, title, description}) {
       <DrawerTrigger asChild>
         <Button variant="outline">{title}</Button>
       </DrawerTrigger>
-      <DrawerContent className="bg-neutral-900 max-h-[10vh] flex flex-col">
+      <DrawerContent className="bg-neutral-900 flex flex-col">
         <DrawerHeader className="text-left">
           <DialogTitle>{title}</DialogTitle>
             <DialogDescription>
               {description}
             </DialogDescription>
         </DrawerHeader>
-        <div className="overflow-y-auto px-4 pb-4">
+        <div className="flex-1 min-h-0 px-4 pb-4">
           {children}
         </div>
-        <DrawerFooter className="pt-2">
+        {/* <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancelar</Button>
           </DrawerClose>
-        </DrawerFooter>
+        </DrawerFooter> */}
       </DrawerContent>
     </Drawer>
   )
