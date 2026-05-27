@@ -60,10 +60,20 @@ export default function ServicesList() {
         getServices();
     }, [page]);
 
-    const handleDelete = (id) => {
-        // Fake request
-        console.log("Eliminando servicio", id);
-        toast.success("El servicio se eliminó correctamente");
+    const handleDelete = async (deleteId) => {
+        try {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/service/delete-service`, {
+                data: { id: deleteId },
+                headers: {
+                    Authorization: token,
+                },
+            });
+            toast.success("El servicio se eliminó correctamente");
+            getServices();
+        } catch (error) {
+            console.error("Error al eliminar servicio:", error);
+            toast.error("Error al eliminar el servicio");
+        }
     }
 
   return (

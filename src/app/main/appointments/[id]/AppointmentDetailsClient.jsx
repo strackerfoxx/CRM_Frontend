@@ -15,10 +15,14 @@ import InfoCard from "@/components/appointmentOverview/InfoCard";
 import OverviewHeader from "@/components/OverviewHeader";
 import Drawer from "@/components/Drawer";
 import { Skeleton } from "@/components/ui/skeleton";
+import { DeleteModal } from "@/components/modals/DeleteModal";
+import { toast, Toaster } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function AppointmentDetailsClient() {
   const { token, isLoaded } = useUser();
   const { closeDrawer, setOpen } = useDrawer();
+  const router = useRouter();
 
   const [appointment, setAppointment] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -86,6 +90,22 @@ export default function AppointmentDetailsClient() {
     setOpen(true);
   };
 
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/appointment/delete-appointment`, {
+        data: { id },
+        headers: {
+          Authorization: token,
+        },
+      });
+      toast.success("La cita se eliminó correctamente");
+      router.push("/main/appointments");
+    } catch (error) {
+      console.error("Error al eliminar la cita:", error);
+      toast.error("Error al eliminar la cita");
+    }
+  };
+
   if (!isLoading && (error || !appointment)) {
     return (
       <div className="flex min-h-screen w-full flex-col font-display">
@@ -129,6 +149,7 @@ export default function AppointmentDetailsClient() {
 
   return (
     <div className="flex min-h-screen w-full flex-col font-display">
+      <Toaster position="top-center" richColors />
       <OverviewHeader />
 
       <div className="mt-10 md:mt-0"></div>
@@ -199,6 +220,12 @@ export default function AppointmentDetailsClient() {
               >
                 <span>Editar Cita</span>
               </button>
+              <DeleteModal
+                title="¿Eliminar cita?"
+                description="Esta acción es permanente e irreversible. ¿Estás seguro de que quieres eliminar esta cita?"
+                onDelete={handleDelete}
+                triggerLabel="Eliminar"
+              />
             </div>
           </div>
 
