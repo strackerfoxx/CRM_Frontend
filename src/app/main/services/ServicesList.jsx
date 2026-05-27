@@ -90,7 +90,7 @@ export default function ServicesList() {
         <div className="m-5">
             <div className="bg-neutral-900 rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}
-                <div className="list-grid-actions text-neutral-400 font-semibold mb-2 border-b pb-2 p-5">
+                <div className="hidden sm:grid list-grid-actions text-neutral-400 font-semibold mb-2 border-b pb-2 p-5">
                     <span>Nombre</span>
                     <span>Precio</span>
                     <span>Duración</span>
@@ -98,7 +98,7 @@ export default function ServicesList() {
 
                 {loading ? (
                     Array.from({ length: 5 }).map((_, i) => (
-                        <div key={i} className="grid grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl">
+                        <div key={i} className="grid grid-cols-1 sm:grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl">
                             <Skeleton className="h-6 w-32 bg-neutral-700" />
                             <Skeleton className="h-6 w-24 bg-neutral-700" />
                             <Skeleton className="h-6 w-40 bg-neutral-700" />
@@ -111,9 +111,9 @@ export default function ServicesList() {
                             <Link href={`/main/services/${s.id}`} key={s.id} 
                                 className="list-grid-actions item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
                             > 
-                                <div className="col-name overflow-hidden text-lg">{s.name}</div>
-                                <div className="col-price overflow-hidden">${s.price.toFixed(2)}</div>
-                                <div className="col-duration overflow-hidden">{s.durationMin} minutos</div>
+                                <div className="col-name overflow-hidden truncate text-lg">{s.name}</div>
+                                <div className="col-price overflow-hidden truncate">${s.price.toFixed(2)}</div>
+                                <div className="col-duration overflow-hidden truncate">{s.durationMin} minutos</div>
                                 <div className="col-actions overflow-hidden flex gap-3 items-center bg-neutral-700 rounded-lg p-1 justify-center w-9">
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
