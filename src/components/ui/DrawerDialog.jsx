@@ -51,14 +51,14 @@ export function DrawerDialog({children, title, description}) {
       <DrawerTrigger asChild>
         <Button variant="outline">{title}</Button>
       </DrawerTrigger>
-      <DrawerContent className="bg-neutral-900 max-h-[90vh]">
+      <DrawerContent className="bg-neutral-900 max-h-[90vh] flex flex-col">
         <DrawerHeader className="text-left">
           <DialogTitle>{title}</DialogTitle>
             <DialogDescription>
               {description}
             </DialogDescription>
         </DrawerHeader>
-        <div className="overflow-y-auto px-4 pb-4">
+        <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4">
           {children}
         </div>
         <DrawerFooter className="pt-2">
