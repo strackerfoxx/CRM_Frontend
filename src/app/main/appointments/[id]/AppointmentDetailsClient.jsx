@@ -131,6 +131,7 @@ export default function AppointmentDetailsClient() {
     <div className="flex min-h-screen w-full flex-col font-display">
       <OverviewHeader />
 
+      <div className="mt-10 md:mt-0"></div>
       <Drawer
         title="Editar cita"
         description="Modifica los detalles de la cita. Haz click en guardar cuando termines."

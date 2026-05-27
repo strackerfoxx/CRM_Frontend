@@ -21,7 +21,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { toast, Toaster } from "sonner"
 import { z } from "zod"
 
-import Link from "next/link"
+import { redirect } from "next/navigation"
+import { useEffect } from "react";
 import { useRouter } from "next/navigation"
 
 export default function LoginForm() {
@@ -60,37 +61,11 @@ export default function LoginForm() {
       }
     }
 
-  // async function onSubmit(data) {
-
-  //   try {
-  //     const { data: response } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, data, {
-  //       withCredentials: true, // Permite recibir cookies httpOnly (refreshToken)
-  //     })
-
-  //     const { accessToken, user } = response
-
-  //     // Guardar accessToken en localStorage
-  //     saveAccessToken(accessToken)
-
-  //     // Guardar usuario en localStorage y actualizar context
-  //     saveUser(user)
-  //     setUser(user)
-  //     setToken(`Bearer ${accessToken}`)
-
-  //     toast.success("Login exitoso!", {
-  //       description: `Redireccionando...`,
-  //     })
-
-  //     router.push("/main")
-  //   } catch (error) {
-  //     console.log(error?.response?.data?.msg || "Email o Contraseña incorrectos")
-  //     toast.error(error?.response?.data?.msg || "Email o Contraseña incorrectos")
-  //   }
-  // }
-
-  if(isLoaded && token) {
-    return router.push("/main")
-  }
+  useEffect(() => {
+    if(isLoaded && token) {
+        return redirect("/main")
+    }
+  }, [isLoaded, token])
 
   if(isLoaded && !token) {
     return (

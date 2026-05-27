@@ -64,6 +64,11 @@ export default function List({appointments}) {
             <div className="col-services">{appointment?.services?.[0]?.service?.name || "-"}</div>
           </Link>
         ))}
+        {filteredAppointments.length === 0 && (
+          <div className="text-center text-neutral-500 py-10">
+            No hay citas para esta fecha.
+          </div>
+        )}
       </div>
 
        <Calendar

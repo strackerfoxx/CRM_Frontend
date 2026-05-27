@@ -55,8 +55,6 @@
     grid-template-columns: 1fr; 
     gap: 6px;
   }
-  .header { 
-    display: none; /* oculta encabezado en móvil si quieres */
-  }
+  
   .list-grid > div { white-space: normal; } /* permitir wrapping en filas apiladas */
 }
