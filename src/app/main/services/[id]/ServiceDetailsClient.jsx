@@ -19,10 +19,12 @@ import {
 } from "lucide-react"
 import { DeleteModal } from "@/components/modals/DeleteModal";
 import { toast, Toaster } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function ServiceDetailsClient() {
   const { id } = useParams();
   const { token, isLoaded } = useUser()
+  const router = useRouter()
   const [ service, setService ] = useState({})
   const [ isLoading, setIsLoading ] = useState(true)
 
@@ -52,10 +54,20 @@ export default function ServiceDetailsClient() {
       getService()
     }, [id, token, isLoaded])
 
-    const handleDelete = () => {
-      // Fake request
-      console.log("Eliminando servicio", id);
-      toast.success("El servicio se eliminó correctamente");
+    const handleDelete = async () => {
+      try {
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/service/delete-service`, {
+          data: { id },
+          headers: {
+            Authorization: token,
+          },
+        });
+        toast.success("El servicio se eliminó correctamente");
+        router.push("/main/services");
+      } catch (error) {
+        console.error("Error al eliminar servicio:", error);
+        toast.error("Error al eliminar el servicio");
+      }
     }
 
   return (

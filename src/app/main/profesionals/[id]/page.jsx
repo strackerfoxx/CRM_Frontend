@@ -20,10 +20,12 @@ import {
 } from "lucide-react"
 import { DeleteModal } from "@/components/modals/DeleteModal";
 import { toast, Toaster } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function ProfessionalDetailsClient() {
   const { id } = useParams();
   const { token, isLoaded } = useUser()
+  const router = useRouter()
   const [ professional, setProfessional ] = useState({})
   const [ schedules, setSchedules ] = useState([])
   const [ isLoading, setIsLoading ] = useState(true)
@@ -67,10 +69,20 @@ export default function ProfessionalDetailsClient() {
       getProfessional()
     }, [id, token, isLoaded])
 
-    const handleDelete = () => {
-      // Fake request
-      console.log("Eliminando profesional", id);
-      toast.success("El profesional se eliminó correctamente");
+    const handleDelete = async () => {
+      try {
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/user/delete-user`, {
+          data: { id },
+          headers: {
+            Authorization: token,
+          },
+        });
+        toast.success("El profesional se eliminó correctamente");
+        router.push("/main/profesionals");
+      } catch (error) {
+        console.error("Error al eliminar profesional:", error);
+        toast.error("Error al eliminar el profesional");
+      }
     }
 
   return (

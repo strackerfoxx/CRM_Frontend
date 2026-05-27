@@ -17,9 +17,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import Link from "next/link";
 import { DeleteModal } from "@/components/modals/DeleteModal";
+import { useRouter } from "next/navigation";
 
 export default function ClientDetailsClient() {
   const { token, isLoaded } = useUser()
+  const router = useRouter()
   const [ date, setDate ] = useState()
   const [ appointments, setAppointments ] = useState([])
   const [ notes, setNotes ] = useState([])
@@ -105,10 +107,20 @@ export default function ClientDetailsClient() {
 
     }, [date])
     
-    const handleDelete = () => {
-      // Fake request
-      console.log("Eliminando cliente", id);
-      toast.success("El cliente se eliminó correctamente");
+    const handleDelete = async () => {
+      try {
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/client/delete-client`, {
+          data: { id },
+          headers: {
+            Authorization: token,
+          },
+        });
+        toast.success("El cliente se eliminó correctamente");
+        router.push("/main/clients");
+      } catch (error) {
+        console.error("Error al eliminar cliente:", error);
+        toast.error("Error al eliminar el cliente");
+      }
     }
 
   return (
