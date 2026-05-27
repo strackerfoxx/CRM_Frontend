@@ -23,7 +23,7 @@ export function DeleteModal({ title = "¿Eliminar?", description = "Esta acción
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive" className="bg-red-600 hover:bg-red-700 text-white rounded-3xl p-2 px-4 font-semibold flex items-center gap-2 cursor-pointer">
+        <Button className="bg-red-600 hover:bg-red-700 text-white rounded-3xl py-5 px-4 font-semibold flex items-center gap-2 cursor-pointer">
           <Trash2 className="h-4 w-4" />
           {triggerLabel}
         </Button>
@@ -42,11 +42,11 @@ export function DeleteModal({ title = "¿Eliminar?", description = "Esta acción
         </DialogHeader>
         <DialogFooter className="mt-6 flex flex-row gap-3 w-full sm:flex-row sm:justify-between sm:space-x-0">
           <DialogClose asChild>
-            <Button variant="outline" className="flex-1 bg-transparent border-neutral-700 text-white hover:bg-neutral-800 w-full">
+            <Button variant="outline" className="flex-1 bg-transparent border-neutral-700 text-white hover:bg-neutral-800 w-full cursor-pointer">
               Cancelar
             </Button>
           </DialogClose>
-          <Button variant="destructive" onClick={handleDelete} className="flex-1 bg-red-600 hover:bg-red-700 text-white w-full">
+          <Button onClick={handleDelete} className="flex-1 bg-red-600 hover:bg-red-700 text-white w-full cursor-pointer">
             Eliminar
           </Button>
         </DialogFooter>

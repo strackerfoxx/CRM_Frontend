@@ -6,7 +6,7 @@ const UserContext = createContext()
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [token, setToken] = useState(null)
-    const [isLoaded, setIsLoaded] = useState(false) 
+    const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
       if (localStorage.getItem("user")) {
@@ -29,8 +29,39 @@ const UserProvider = ({ children }) => {
         }
         setIsLoaded(true)
     }, [])
+
+    const clearSession = () => {
+        localStorage.removeItem("user")
+        setToken(null)
+        setUser(null)
+    }
+
+    const logout = async () => {
+        // try {
+        //     const storedUser = localStorage.getItem("user")
+        //     const rawToken = token || (storedUser ? JSON.parse(storedUser).token : null)
+        //     if (rawToken) {
+        //         const bearerToken = rawToken.startsWith("Bearer ") ? rawToken : `Bearer ${rawToken}`
+        //         await axios.post(
+        //             `${process.env.NEXT_PUBLIC_API_URL}/user/logout`,
+        //             {},
+        //             {
+        //                 headers: {
+        //                     Authorization: bearerToken,
+        //                 },
+        //                 withCredentials: true,
+        //             }
+        //         )
+        //     }
+        // } catch (error) {
+        //     console.error("Logout error:", error)
+        // }
+            clearSession()
+        
+    }
+
     return (
-        <UserContext.Provider value={{ token, setToken, isLoaded, user, setUser }}>
+        <UserContext.Provider value={{ token, setToken, isLoaded, user, setUser, logout }}>
             {children}
         </UserContext.Provider>
     )

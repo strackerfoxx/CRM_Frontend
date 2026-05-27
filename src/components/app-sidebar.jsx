@@ -1,5 +1,8 @@
+"use client"
+
 import { Calendar, Users, ClipboardClock, Handshake, ChevronUp, LayoutDashboard, FileBox, Settings } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 import {
   Sidebar,
@@ -22,6 +25,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+
+import { Button } from "@/components/ui/button"
+import { useLogout } from "@/hooks/useLogout"
 
 // Menu items.
 const items = [
@@ -63,6 +69,14 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const logout = useLogout()
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    await logout()
+    router.push("/")
+  }
+
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
@@ -109,7 +123,9 @@ export function AppSidebar() {
                     <span>Account</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <span>Sign out</span>
+                    <Button onClick={handleLogout} variant="outline" className="w-full">
+                      Sign out
+                    </Button>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

@@ -64,7 +64,6 @@ export default function ServiceComponent({
       return [...current, { id: staff.id, name: staff.name }]
     })
   }
-  console.log(selectedStaff.map((staff) => staff.id))
 
   const handleSave = async () => {
     setIsLoading(true)
@@ -80,10 +79,6 @@ export default function ServiceComponent({
         isActive,
         users: selectedStaff.map((staff) => staff.id),
       }
-
-      console.log('Payload siendo enviado:', payload)
-      console.log('Staff seleccionado:', selectedStaff)
-
       const validation = serviceSchema.safeParse(payload)
       if (!validation.success) {
         const message = validation.error.errors
@@ -94,8 +89,6 @@ export default function ServiceComponent({
         setIsLoading(false)
         return
       }
-
-      console.log('Datos validados:', validation.data)
 
       const url = editMode
         ? `${process.env.NEXT_PUBLIC_API_URL}/service/update`
@@ -108,7 +101,6 @@ export default function ServiceComponent({
           },
         })
         refetchServices()
-        console.log("Modo edición activado. Datos a enviar en PUT:", validation.data)
       } else {
         await axios.post(url, payload, {
           headers: {
