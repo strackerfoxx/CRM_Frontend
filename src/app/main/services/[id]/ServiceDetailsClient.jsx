@@ -38,7 +38,6 @@ export default function ServiceDetailsClient() {
               },
             }
           );
-          console.log(data)
           setService(data?.service ?? {})
         } catch (error) {
           console.error("Failed to fetch service:", error)
@@ -224,7 +223,6 @@ export default function ServiceDetailsClient() {
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-neutral-800 flex items-center justify-center">
                       <User className="text-neutral-500 w-5 h-5" />
                     </div>
-                    {console.log(user)}
                     <div className="min-w-0">
                       <p className="font-bold text-white truncate">
                         {user.user.name}

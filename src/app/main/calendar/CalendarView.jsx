@@ -449,7 +449,6 @@ export default function CalendarView() {
                                     width: `${apt._layout?.width || 180}px`
                                   }}
                                 >
-                                  {console.log(apt)}
                                   <div className="text-xs font-bold truncate">{apt.startTime} - {apt.endTime}</div>
                                   <div className="text-sm truncate">{apt.clientName}</div>
                                   <div className="text-xs text-muted-foreground truncate">{apt.employeeName}</div>

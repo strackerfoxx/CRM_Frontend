@@ -50,7 +50,6 @@ export default function List({appointments}) {
             className="list-grid item hover:bg-neutral-800 px-6 py-4 mt-2 border-b rounded-b-xl border-b-neutral-700"
           >
             <div className="col-time">{appointment.startTime}</div>
-            {console.log(appointment.date)}
             <div className="col-status">
               <div 
                 className={` text-sm text-center py-1 rounded-3xl w-24 ${appointment.status === "SCHEDULED" ? "bg-amber-400/60 text-white border border-amber-400 h-7"

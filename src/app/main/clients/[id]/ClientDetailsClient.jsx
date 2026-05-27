@@ -45,7 +45,6 @@ export default function ClientDetailsClient() {
             },
           }
         );
-        console.log(data?.client)
         setClient(data?.client ?? null)
       }
 
@@ -59,7 +58,6 @@ export default function ClientDetailsClient() {
           }
         );
         setAppointments(data?.appointments ?? [])
-        console.log(data?.appointments)
       }
       getClient()
       getAppointments()

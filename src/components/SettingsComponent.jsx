@@ -232,7 +232,7 @@ export default function SettingsComponent() {
                     <div className="font-semibold">{label}</div>
 
                     <div className="flex items-center gap-3">
-                      <span className="text-sm text-neutral-400">Cerrado</span>
+                      <span className="text-sm text-neutral-400">Abierto</span>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
@@ -240,9 +240,8 @@ export default function SettingsComponent() {
                           onChange={e => handleBusinessHourChange(key, 'closed', e.target.checked)}
                           className="sr-only peer"
                         />
-                        <div className="w-12 h-6 rounded-full bg-red-500 transition-colors duration-200 peer-checked:bg-emerald-500">
-                          <div className="absolute top-1 left-1 h-4 w-4 rounded-full bg-white shadow transition-transform duration-200 peer-checked:translate-x-6" />
-                        </div>
+                        <span className={`w-12 h-6 rounded-full transition-colors ${!daySchedule.closed ? 'bg-green-600' : 'bg-neutral-700'}`} />
+                        <span className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white shadow transform transition-transform ${!daySchedule.closed ? 'translate-x-6' : 'translate-x-0'}`} />
                       </label>
                     </div>
 

@@ -64,8 +64,7 @@ export default function EditService({ params }) {
       
       getService()
     }, [id, token, isLoaded])
-
-    // console.log(service)
+    
   return (
     <>
         <ServiceComponent 

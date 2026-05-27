@@ -40,7 +40,6 @@ export default function ProfessionalDetailsClient() {
               },
             }
           );
-          console.log("Professional Data", data);
           setProfessional(data || {})
 
           // Also fetch schedules

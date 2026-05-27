@@ -29,7 +29,6 @@ const UserProvider = ({ children }) => {
         }
         setIsLoaded(true)
     }, [])
-    console.log(user)
     return (
         <UserContext.Provider value={{ token, setToken, isLoaded, user, setUser }}>
             {children}

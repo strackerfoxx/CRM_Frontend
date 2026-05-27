@@ -184,7 +184,6 @@ export default function ProfessionalComponent({
   }
 
   const handleDelete = async (id) => {
-    console.log("Horario eliminado:", id)
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/user/delete-schedule`, {
         data: { id },
@@ -394,7 +393,6 @@ function Select({ label, options, ...props }) {
         <option value="">Selecciona</option>
         {options.map((opt) => (
             <option key={opt.value} value={opt.value}>{opt.label}
-              {console.log("Opción:", opt.value, opt.label)}
             </option>
         ))}
       </select>

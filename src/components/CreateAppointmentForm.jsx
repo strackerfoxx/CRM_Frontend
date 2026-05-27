@@ -327,9 +327,17 @@ export default function CreateAppointmentForm({
             </div>
           )}
 
-          <Button className="cursor-pointer" type="submit" disabled={loading}>
-            {label}
-          </Button>
+          {!client || !date || servicesSelected.length === 0 || !hour ? (
+            (
+            <Button className="cursor-pointer" type="submit" disabled={true}>
+              {label}
+            </Button>
+          )
+          ) : (
+            <Button className="cursor-pointer" type="submit" disabled={loading}>
+              {label}
+            </Button>
+          )}
         </>
       )}
     </form>
