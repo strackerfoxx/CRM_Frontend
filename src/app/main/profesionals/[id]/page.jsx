@@ -18,6 +18,8 @@ import {
   History,
   CalendarDays
 } from "lucide-react"
+import { DeleteModal } from "@/components/modals/DeleteModal";
+import { toast, Toaster } from "sonner";
 
 export default function ProfessionalDetailsClient() {
   const { id } = useParams();
@@ -65,9 +67,15 @@ export default function ProfessionalDetailsClient() {
       getProfessional()
     }, [id, token, isLoaded])
 
+    const handleDelete = () => {
+      // Fake request
+      console.log("Eliminando profesional", id);
+      toast.success("El profesional se eliminó correctamente");
+    }
+
   return (
     <div className="min-h-screen bg-black text-[#e2e2e2]">
-
+      <Toaster position="top-center" richColors />
       {/* HEADER */}
       <OverviewHeader />
 
@@ -151,9 +159,17 @@ export default function ProfessionalDetailsClient() {
                 <span className="text-xs uppercase tracking-[0.2em] text-neutral-500 mb-3 block">
                   Profesional Seleccionado
                 </span>
-                <Link href={`/main/profesionals/edit/${id}`} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 hover:bg-blue-700 cursor-pointer">
-                  Editar profesional
-                </Link>
+                <div className="flex gap-2">
+                  <Link href={`/main/profesionals/edit/${id}`} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 hover:bg-blue-700 cursor-pointer flex items-center justify-center">
+                    Editar profesional
+                  </Link>
+                  <DeleteModal
+                    title="¿Eliminar profesional?"
+                    description="Esta acción es permanente e irreversible. ¿Estás seguro de que quieres eliminar a este profesional?"
+                    onDelete={handleDelete}
+                    triggerLabel="Eliminar"
+                  />
+                </div>
               </div>
 
               <h1 className="text-4xl sm:text-6xl lg:text-6xl font-extrabold leading-tight mb-8 sm:mb-12 break-words overflow-hidden capitalize">

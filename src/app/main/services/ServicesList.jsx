@@ -15,6 +15,8 @@ import { useUser } from "@/hooks/useUser";
 import { useProfessionals } from "@/hooks/useProfessionals";
 import { useService } from "@/hooks/useService";
 import "@/css/list.css"
+import { DeleteModal } from "@/components/modals/DeleteModal";
+import { toast, Toaster } from "sonner";
 
 export default function ServicesList() {
     const { services, refetchServices } = useService();
@@ -58,8 +60,15 @@ export default function ServicesList() {
         getServices();
     }, [page]);
 
+    const handleDelete = (id) => {
+        // Fake request
+        console.log("Eliminando servicio", id);
+        toast.success("El servicio se eliminó correctamente");
+    }
+
   return (
     <>
+        <Toaster position="top-center" richColors />
         <div className="sm:flex justify-between items-center mt-5 mx-7">
             <div className="flex">
                 <h1 className="scroll-m-20 text-start text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight text-balance">Servicios</h1>
@@ -125,8 +134,13 @@ export default function ServicesList() {
                                             <DropdownMenuItem onClick={(e) => {e.stopPropagation(); router.push(`/main/services/edit/${s.id}`)}}>
                                                 Editar
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={(e) => {e.stopPropagation(); console.log("Eliminar servicio", s.id)}}>
-                                                Eliminar
+                                            <DropdownMenuItem onSelect={(e) => e.preventDefault()} onClick={(e) => e.stopPropagation()}>
+                                                <DeleteModal
+                                                    title="¿Eliminar servicio?"
+                                                    description="Esta acción es permanente e irreversible. ¿Estás seguro de que quieres eliminar este servicio?"
+                                                    onDelete={() => handleDelete(s.id)}
+                                                    triggerLabel="Eliminar"
+                                                />
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>

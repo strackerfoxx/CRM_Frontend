@@ -17,6 +17,8 @@ import {
   User,
   History,
 } from "lucide-react"
+import { DeleteModal } from "@/components/modals/DeleteModal";
+import { toast, Toaster } from "sonner";
 
 export default function ServiceDetailsClient() {
   const { id } = useParams();
@@ -50,9 +52,15 @@ export default function ServiceDetailsClient() {
       getService()
     }, [id, token, isLoaded])
 
+    const handleDelete = () => {
+      // Fake request
+      console.log("Eliminando servicio", id);
+      toast.success("El servicio se eliminó correctamente");
+    }
+
   return (
     <div className="min-h-screen bg-black text-[#e2e2e2]">
-
+      <Toaster position="top-center" richColors />
       {/* HEADER */}
       <OverviewHeader />
 
@@ -147,9 +155,17 @@ export default function ServiceDetailsClient() {
                 <span className="text-xs uppercase tracking-[0.2em] text-neutral-500 mb-3 block">
                   Servicio Seleccionado
                 </span>
-                <Link href={`/main/services/edit/${id}`} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 hover:bg-blue-700 cursor-pointer">
-                  Editar servicio
-                </Link>
+                <div className="flex gap-2">
+                  <Link href={`/main/services/edit/${id}`} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 hover:bg-blue-700 cursor-pointer flex items-center justify-center">
+                    Editar servicio
+                  </Link>
+                  <DeleteModal
+                    title="¿Eliminar servicio?"
+                    description="Esta acción es permanente e irreversible. ¿Estás seguro de que quieres eliminar este servicio?"
+                    onDelete={handleDelete}
+                    triggerLabel="Eliminar"
+                  />
+                </div>
               </div>
 
               <h1 className="text-4xl sm:text-6xl lg:text-6xl font-extrabold leading-tight mb-8 sm:mb-12 break-words overflow-hidden">
