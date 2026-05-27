@@ -12,10 +12,11 @@ import OverviewHeader from "@/components/OverviewHeader";
 import { Calendar } from "@/components/ui/calendar";
 import InfoCard from "@/components/appointmentOverview/InfoCard";
 import NotesComponent from "@/components/NotesComponent";
-import { Toaster } from "sonner";
+import { toast, Toaster } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import Link from "next/link";
+import { DeleteModal } from "@/components/modals/DeleteModal";
 
 export default function ClientDetailsClient() {
   const { token, isLoaded } = useUser()
@@ -104,6 +105,11 @@ export default function ClientDetailsClient() {
 
     }, [date])
     
+    const handleDelete = () => {
+      // Fake request
+      console.log("Eliminando cliente", id);
+      toast.success("El cliente se eliminó correctamente");
+    }
 
   return (
 <>
@@ -130,9 +136,17 @@ export default function ClientDetailsClient() {
       {isLoading ? (
         <Skeleton className="h-10 w-36 rounded-3xl bg-neutral-800" />
       ) : (
-        <Link href={`/main/clients/edit/${id}`} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">
-          Editar cliente
-        </Link>
+        <div className="flex gap-2">
+          <Link href={`/main/clients/edit/${id}`} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 flex items-center justify-center">
+            Editar cliente
+          </Link>
+          <DeleteModal
+            title="¿Eliminar cliente?"
+            description="Esta acción es permanente e irreversible. ¿Estás seguro de que quieres eliminar a este cliente?"
+            onDelete={handleDelete}
+            triggerLabel="Eliminar"
+          />
+        </div>
       )}
     </div>
 
