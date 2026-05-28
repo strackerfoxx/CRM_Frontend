@@ -1,5 +1,5 @@
 import axios from "axios"
-
+import { DateTime } from "luxon"
 
 export async function useAvailableSlots({ date, servicesSelected, business, token, userId, excludeAppointmentId = undefined }) {
   if (!date || servicesSelected.length === 0 || !business || !token) return []
@@ -20,11 +20,12 @@ export async function useAvailableSlots({ date, servicesSelected, business, toke
       }
     })
 
-    const data = { 
+    const data = {
       businessId: business.id,
-      services, 
+      services,
       date: date.toISOString().split('T')[0],
-      excludeAppointmentId
+      excludeAppointmentId,
+      currentTime: DateTime.now().toISO()
     }
 
     const {data: validSlots} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/availability/slots`, data, { headers })
