@@ -34,8 +34,10 @@ export default function ServiceComponent({
   setCategory,
   price,
   setPrice,
-  durationMin,
-  setDurationMin,
+  durationHours,
+  setDurationHours,
+  durationMinutes,
+  setDurationMinutes,
   description,
   setDescription,
   cleaningTimeMin,
@@ -73,7 +75,7 @@ export default function ServiceComponent({
         name,
         category,
         price: Number(price),
-        durationMin: Number(durationMin),
+        durationMin: Number(durationHours) * 60 + Number(durationMinutes),
         description,
         cleaningTimeMin: Number(cleaningTimeMin),
         isActive,
@@ -185,7 +187,7 @@ export default function ServiceComponent({
               /> */}
 
               <Input 
-                label="Precio (USD)" 
+                label="Precio" 
                 type="number" 
                 placeholder="250.00" 
                 className="rounded-xl"
@@ -195,14 +197,29 @@ export default function ServiceComponent({
                 onChange={e => setPrice(e.target.value)}
               />
               <Input 
-                label="Duración (min)" 
+                label="Horas" 
                 type="number" 
-                placeholder="60" 
+                placeholder="0" 
                 className="rounded-xl"
-                name="durationMin"
+                name="durationHours"
                 min={0}
-                value={durationMin}
-                onChange={e => setDurationMin(e.target.value)}
+                value={durationHours}
+                onChange={e => setDurationHours(e.target.value)}
+              />
+              <Input 
+                label="Minutos" 
+                type="number" 
+                placeholder="30" 
+                className="rounded-xl"
+                name="durationMinutes"
+                min={0}
+                max={59}
+                value={durationMinutes}
+                onChange={e => {
+                  const value = e.target.value
+                  if (Number(value) > 59) return
+                  setDurationMinutes(value)
+                }}
               />
             </div>
           </Section>
@@ -242,6 +259,7 @@ export default function ServiceComponent({
                   onChange={e => setCleaningTimeMin(e.target.value)}
                   className="w-20 bg-neutral-800 rounded-l-lg p-2 text-center"
                   min={0}
+                  onFocus={e => e.target.select()}
                 />
                 <span className="text-xs uppercase text-neutral-400">
                   min
@@ -326,12 +344,19 @@ function Section({ title, index, children }) {
   )
 }
 
-function Input({ label, ...props }) {
+function Input({ label, onFocus, ...props }) {
   return (
     <div className="space-y-1">
       <label className="label text-neutral-400">{label}</label>
       <input
         {...props}
+        onFocus={(e) => {
+          requestAnimationFrame(() => {
+            e.target.select();
+          });
+
+          onFocus?.(e);
+        }}
         className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none text-sm rounded-lg mt-2"
       />
     </div>

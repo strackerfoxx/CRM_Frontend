@@ -14,7 +14,8 @@ export default function CreateService({ params }) {
   const [name, setName] = useState("")
   const [category, setCategory] = useState("")
   const [price, setPrice] = useState(0)
-  const [durationMin, setDurationMin] = useState(0)
+  const [durationHours, setDurationHours] = useState(0)
+  const [durationMinutes, setDurationMinutes] = useState(0)
   const [description, setDescription] = useState("")
   const [cleaningTimeMin, setCleaningTimeMin] = useState(0)
   const [isActive, setIsActive] = useState(true)
@@ -32,8 +33,10 @@ export default function CreateService({ params }) {
           setCategory={setCategory}
           price={price}
           setPrice={setPrice}
-          durationMin={durationMin}
-          setDurationMin={setDurationMin}
+          durationHours={durationHours}
+          setDurationHours={setDurationHours}
+          durationMinutes={durationMinutes}
+          setDurationMinutes={setDurationMinutes}
           description={description}
           setDescription={setDescription}
           cleaningTimeMin={cleaningTimeMin}

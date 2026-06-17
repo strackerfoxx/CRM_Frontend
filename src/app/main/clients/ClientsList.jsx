@@ -61,7 +61,12 @@ export default function ClientsList() {
             <input type="text" name="client" id="client" onChange={handleSearchChange} value={searchTerm}
             placeholder="Buscar clientes por nombre, telefono o correo..." className="w-full p-2" />
         </div> */}
-        <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={getClients}/>
+        <SearchBarComponent
+            search={searchTerm}
+            setSearch={setSearchTerm}
+            onSubmit={getClients}
+            placeholder="Buscar clientes por nombre, telefono o correo..."
+        />
         <div className="m-5">
             <div className="bg-neutral-900 rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}

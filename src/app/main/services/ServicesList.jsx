@@ -87,7 +87,12 @@ export default function ServicesList() {
             <Link href="/main/services/create" className="block sm:inline-block w-full sm:w-auto text-center bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear servicio</Link>
             {/* <button onClick={() => refetchServices()} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear servicio</button> */}
         </div>
-        <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={getServices}>
+        <SearchBarComponent
+            search={searchTerm}
+            setSearch={setSearchTerm}
+            onSubmit={getServices}
+            placeholder="Buscar servicios por nombre, precio o duración..."
+        >
             <div className='flex justify-between gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 w-[220px] mr-1 mb-4 md:mb-0 h-10'>
                 <span className='text-gray-600 font-semibold'>Profesional</span>
                 <select

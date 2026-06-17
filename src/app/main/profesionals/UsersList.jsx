@@ -55,7 +55,12 @@ export default function UsersListUsers() {
             </div>
             <Link href="/main/profesionals/create" className="block sm:inline-block w-full sm:w-auto text-center bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear Profesional</Link>
         </div>
-        <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={getUsers}>
+        <SearchBarComponent
+            search={searchTerm}
+            setSearch={setSearchTerm}
+            onSubmit={getUsers}
+            placeholder="Buscar profesionales por nombre, rol o correo..."
+        >
             <div className='flex justify-between gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 w-[220px] mr-1 mb-4 md:mb-0 h-10'>
                 <span className='text-gray-600 font-semibold'>Rol</span>
                 <select

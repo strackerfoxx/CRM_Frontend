@@ -1,8 +1,5 @@
-import React, { Children } from 'react'
-import { statusOptions } from './AppointmentFilterBar'
-import { DatePickerWithRange } from './DateTimePickerRange'
 
-export default function SearchBarComponent({ search, setSearch, onSubmit, children }) {
+export default function SearchBarComponent({ search, setSearch, onSubmit, children, placeholder = "Buscar clientes por nombre, telefono o correo..." }) {
   return (
     <>
         <div className='m-5 p-5 bg-neutral-900 rounded-2xl '>
@@ -20,7 +17,7 @@ export default function SearchBarComponent({ search, setSearch, onSubmit, childr
                       id="client"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      placeholder="Buscar clientes por nombre, telefono o correo..."
+                      placeholder={placeholder}
                       className="w-full p-2"
                     />
                 </div>

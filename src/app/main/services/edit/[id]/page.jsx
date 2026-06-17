@@ -13,7 +13,8 @@ export default function EditService({ params }) {
   const [name, setName] = useState("")
   const [category, setCategory] = useState("")
   const [price, setPrice] = useState(0)
-  const [durationMin, setDurationMin] = useState(0)
+  const [durationHours, setDurationHours] = useState(0)
+  const [durationMinutes, setDurationMinutes] = useState(0)
   const [description, setDescription] = useState("")
   const [cleaningTimeMin, setCleaningTimeMin] = useState(0)
   const [isActive, setIsActive] = useState(true)
@@ -46,7 +47,9 @@ export default function EditService({ params }) {
           setName(data?.service?.name ?? "")
           setCategory(data?.service?.category ?? "")
           setPrice(data?.service?.price ?? 0)
-          setDurationMin(data?.service?.durationMin ?? 0)
+          const durationTotal = Number(data?.service?.durationMin ?? 0)
+          setDurationHours(Math.floor(durationTotal / 60))
+          setDurationMinutes(durationTotal % 60)
           setDescription(data?.service?.description ?? "")
           setCleaningTimeMin(data?.service?.cleaningTimeMin ?? 0)
           setIsActive(data?.service?.isActive ?? true)
@@ -77,8 +80,10 @@ export default function EditService({ params }) {
           setCategory={setCategory}
           price={price}
           setPrice={setPrice}
-          durationMin={durationMin}
-          setDurationMin={setDurationMin}
+          durationHours={durationHours}
+          setDurationHours={setDurationHours}
+          durationMinutes={durationMinutes}
+          setDurationMinutes={setDurationMinutes}
           description={description}
           setDescription={setDescription}
           cleaningTimeMin={cleaningTimeMin}
