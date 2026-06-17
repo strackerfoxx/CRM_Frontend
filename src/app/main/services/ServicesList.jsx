@@ -79,12 +79,12 @@ export default function ServicesList() {
   return (
     <>
         <Toaster position="top-center" richColors />
-        <div className="sm:flex justify-between items-center mt-5 mx-7">
-            <div className="flex">
+        <div className="block sm:flex justify-between items-center mt-5 mx-7">
+            <div className="block sm:flex">
                 <h1 className="scroll-m-20 text-start text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight text-balance">Servicios</h1>
-                <span className="text-neutral-400 mx-7 mt-3">Total de servicios: {totalResults}</span>
+                <span className="block text-neutral-400 sm:mx-7 mt-3 mb-4 sm:mb-0">Total de servicios: {totalResults}</span>
             </div>
-            <Link href="/main/services/create" className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear servicio</Link>
+            <Link href="/main/services/create" className="block sm:inline-block w-full sm:w-auto text-center bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear servicio</Link>
             {/* <button onClick={() => refetchServices()} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear servicio</button> */}
         </div>
         <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={getServices}>

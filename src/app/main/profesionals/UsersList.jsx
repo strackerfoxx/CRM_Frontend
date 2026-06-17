@@ -48,12 +48,12 @@ export default function UsersListUsers() {
 
   return (
     <>
-        <div className="flex justify-between items-center mt-5 mx-7">
-            <div className="flex">
+        <div className="block sm:flex justify-between items-center mt-5 mx-7">
+            <div className="block sm:flex">
                 <h1 className="scroll-m-20 text-start text-4xl font-bold tracking-tight text-balance" >Profesionales</h1>
-                <span className="text-neutral-400 mx-7 mt-3">Total de profesionales: {totalResults}</span>
+                <span className="block text-neutral-400 sm:mx-7 mt-3 mb-4 sm:mb-0">Total de profesionales: {totalResults}</span>
             </div>
-            <Link href="/main/profesionals/create" className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear Profesional</Link>
+            <Link href="/main/profesionals/create" className="block sm:inline-block w-full sm:w-auto text-center bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear Profesional</Link>
         </div>
         <SearchBarComponent search={searchTerm} setSearch={setSearchTerm} onSubmit={getUsers}>
             <div className='flex justify-between gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 w-[220px] mr-1 mb-4 md:mb-0 h-10'>

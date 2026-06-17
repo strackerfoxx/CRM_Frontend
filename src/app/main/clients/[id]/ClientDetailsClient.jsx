@@ -214,9 +214,9 @@ export default function ClientDetailsClient() {
     <NotesComponent notes={notes} setNotes={setNotes} id={id} isLoading={isLoading} />
 
     {/* Historial de citas */}
-    <div className="bg-neutral-900 rounded-md mt-10 mb-16">
-      <h3 className="text-lg font-semibold p-6">Historial de citas</h3>
-      <div className="grid grid-cols-4 header text-neutral-400 font-semibold mb-2 border-b border-neutral-800 pb-2 p-5">
+    <div className="bg-neutral-900 rounded-md mt-10 mb-16 overflow-x-auto">
+      <h3 className="text-lg font-semibold p-6 min-w-[600px]">Historial de citas</h3>
+      <div className="grid grid-cols-4 header text-neutral-400 font-semibold mb-2 border-b border-neutral-800 pb-2 p-5 min-w-[600px]">
         <span>Fecha</span>
         <span>Servicio</span>
         <span>Estado</span>
@@ -228,7 +228,7 @@ export default function ClientDetailsClient() {
           Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
-              className="grid grid-cols-4 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-800"
+              className="grid grid-cols-4 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-800 min-w-[600px]"
             >
               <Skeleton className="h-5 w-24 bg-neutral-800" />
               <Skeleton className="h-5 w-32 bg-neutral-800" />
@@ -240,7 +240,7 @@ export default function ClientDetailsClient() {
             <Link
               href={`/main/appointments/${appointment.id}`}
               key={appointment.id}
-              className="grid grid-cols-4 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
+              className="grid grid-cols-4 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl min-w-[600px]"
             >
               <div className="col-name overflow-hidden">
                 {dateReseter(appointment.date, "dd-mm-yyy")}
