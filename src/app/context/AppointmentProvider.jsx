@@ -1,5 +1,5 @@
 "use client"
-import axios from "axios"
+import api from "@/lib/api"
 import { createContext, useState, useEffect } from "react"
 import { useUser } from "@/hooks/useUser"
 const AppointmentContext = createContext()
@@ -15,7 +15,7 @@ const AppointmentProvider = ({children}) => {
                     "Authorization": token
                 }
                 try {
-                    const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-params?startDate=${new Date()}&page=1&limit=20`, { headers })
+                    const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-params?startDate=${new Date()}&page=1&limit=20`, { headers })
                     setAppointments(data.appointments)
                 } catch (error) {
                     console.error(error.message)

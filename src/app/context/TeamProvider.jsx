@@ -1,5 +1,5 @@
 "use client"
-import axios from "axios"
+import api from "@/lib/api"
 import { createContext, useState, useEffect } from "react"
 import { useUser } from "@/hooks/useUser"
 const TeamContext = createContext()
@@ -15,7 +15,7 @@ const TeamProvider = ({children}) => {
                     "Authorization": token
                 }
                 try {
-                    const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/user/get-all-users`, { headers })
+                    const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/user/get-all-users`, { headers })
                     setTeam(data)
                     
                 } catch (error) {

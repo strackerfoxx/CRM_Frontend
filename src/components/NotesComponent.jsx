@@ -1,6 +1,6 @@
 "use client"
 
-import axios from "axios";
+import api from "@/lib/api";
 import { useEffect, useRef, useState } from "react";
 
 import { useUser } from "@/hooks/useUser";
@@ -35,7 +35,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
         setIsUpdatingNote(true);
 
         try {
-            const { data } = await axios.put(
+            const { data } = await api.put(
               `${process.env.NEXT_PUBLIC_API_URL}/note/update`,
               {
                   id: noteId,
@@ -70,7 +70,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
       
     const deleteNote = async (noteId) => {
       try {
-          await axios.delete(
+          await api.delete(
             `${process.env.NEXT_PUBLIC_API_URL}/note/delete?id=${noteId}`,
             {
                 headers: {
@@ -95,7 +95,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
       setIsCreatingNote(true);
 
       try {
-          const { data } = await axios.post(
+          const { data } = await api.post(
             `${process.env.NEXT_PUBLIC_API_URL}/note/create`,
             {
                 businessClientId: id,

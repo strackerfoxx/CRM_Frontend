@@ -1,5 +1,5 @@
 "use client"
-import axios from "axios"
+import api from "@/lib/api"
 import { createContext, useState, useEffect } from "react"
 import { useUser } from "@/hooks/useUser"
 const ServiceContext = createContext()
@@ -15,7 +15,7 @@ const ServiceProvider = ({children}) => {
                     "Authorization": token
                 }
                 try {
-                    const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/service/get-services`, { headers })
+                    const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/service/get-services`, { headers })
                     setServices(data.services)
                 } catch (error) {
                     console.error(error.message)
@@ -31,7 +31,7 @@ const ServiceProvider = ({children}) => {
             "Authorization": token
         }
         try {
-            const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/service/get-services`, { headers })
+            const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/service/get-services`, { headers })
             setServices(data.services)
         } catch (error) {
             console.error(error.message)

@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
-import axios from "axios";
+import api from "@/lib/api";
 import { useEffect, useState } from "react";
 
 import { dateReseter } from "@/middleware/dateReseter";
@@ -36,7 +36,7 @@ export default function ProfessionalDetailsClient() {
 
       const getProfessional = async () => {
         try {
-          const { data } = await axios.get(
+          const { data } = await api.get(
             `${process.env.NEXT_PUBLIC_API_URL}/user/get-user-by-id?id=${id}`,
             {
               headers: {
@@ -47,7 +47,7 @@ export default function ProfessionalDetailsClient() {
           setProfessional(data || {})
 
           // Also fetch schedules
-          const schedulesRes = await axios.get(
+          const schedulesRes = await api.get(
               `${process.env.NEXT_PUBLIC_API_URL}/user/schedule?userId=${id}`,
               {
                 headers: {
@@ -71,7 +71,7 @@ export default function ProfessionalDetailsClient() {
 
     const handleDelete = async () => {
       try {
-        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/user/delete-user`, {
+        await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/user/delete-user`, {
           data: { id },
           headers: {
             Authorization: token,

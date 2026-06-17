@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import axios from "axios"
+import api from "@/lib/api"
 import { toast, Toaster } from "sonner"
 import { z } from "zod"
 import { useUser } from "@/hooks/useUser"
@@ -58,7 +58,7 @@ export default function ClientComponent({
       const url = `${process.env.NEXT_PUBLIC_API_URL}/client/create`
 
 
-        await axios.post(url, validation.data, {
+        await api.post(url, validation.data, {
           headers: {
             Authorization: token,
           },

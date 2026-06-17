@@ -1,5 +1,5 @@
 "use client"
-import axios from "axios"
+import api from "@/lib/api"
 import { createContext, useState, useEffect } from "react"
 import { useUser } from "@/hooks/useUser"
 const BusinessContext = createContext()
@@ -15,7 +15,7 @@ const BusinessProvider = ({ children }) => {
                     "Authorization": token
                 }
                 try {
-                    const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/business/get-business-by-id`, { headers })
+                    const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/business/get-business-by-id`, { headers })
                     setBusiness(data)
                 } catch (error) {
                     console.error(error.message)

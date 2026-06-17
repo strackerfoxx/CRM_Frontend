@@ -1,5 +1,5 @@
 "use client"
-import axios from "axios";
+import api from "@/lib/api";
 import { useState, useEffect } from "react";
 
 import { useUser } from "@/hooks/useUser";

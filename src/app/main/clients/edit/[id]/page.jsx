@@ -1,5 +1,5 @@
 "use client"
-import axios from "axios";
+import api from "@/lib/api";
 import { useState, useEffect } from "react";
 import { useUser } from "@/hooks/useUser";
 import { useParams } from "next/navigation";
@@ -22,7 +22,7 @@ export default function EditClient() {
     const getClient = async () => {
       setIsLoading(true)
       try {
-        const { data } = await axios.get(
+        const { data } = await api.get(
           `${process.env.NEXT_PUBLIC_API_URL}/client/get-client-by-id?id=${id}`,
           {
             headers: {

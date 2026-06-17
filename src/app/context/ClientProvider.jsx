@@ -1,5 +1,5 @@
 "use client"
-import axios from "axios"
+import api from "@/lib/api"
 import { createContext, useState, useEffect } from "react"
 import { useUser } from "@/hooks/useUser"
 const ClientContext = createContext()
@@ -15,7 +15,7 @@ const ClientProvider = ({children}) => {
                     "Authorization": token
                 }
                 try {
-                    const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/client/get-clients`, { headers })
+                    const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/client/get-clients`, { headers })
                     setClients(data.clients)
                 } catch (error) {
                     console.error(error.message)
@@ -31,7 +31,7 @@ const ClientProvider = ({children}) => {
             "Authorization": token
         }
         try {
-            const { data } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/client/get-clients`, { headers })
+            const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/client/get-clients`, { headers })
             setClients(data.clients)
         } catch (error) {
             console.error(error.message)

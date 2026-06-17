@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "@/lib/api";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import Pagination from "@/components/Pagination";
@@ -25,7 +25,7 @@ export default function UsersListUsers() {
         setLoading(true);
 
         try {
-            const {data} = await axios(`${process.env.NEXT_PUBLIC_API_URL}/user/get-users-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}${role ? `&role=${role}` : ""}`,
+            const {data} = await api(`${process.env.NEXT_PUBLIC_API_URL}/user/get-users-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}${role ? `&role=${role}` : ""}`,
                 {
                     headers: {
                         Authorization: token,
