@@ -3,7 +3,7 @@ import {
 } from "lucide-react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import axios from "axios"
+import api from "@/lib/api"
 import { toast, Toaster } from "sonner"
 import { z } from "zod"
 import { useUser } from "@/hooks/useUser"
@@ -95,14 +95,14 @@ export default function ServiceComponent({
         : `${process.env.NEXT_PUBLIC_API_URL}/service/create`
 
       if (editMode) {
-        await axios.put(url, validation.data, {
+        await api.put(url, validation.data, {
           headers: {
             Authorization: token,
           },
         })
         refetchServices()
       } else {
-        await axios.post(url, payload, {
+        await api.post(url, payload, {
           headers: {
             Authorization: token,
           },

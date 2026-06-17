@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react'
 
-import axios from 'axios'
+import api from "@/lib/api"
 
 import { useUser } from '@/hooks/useUser'
 import { useService } from '@/hooks/useService'
@@ -39,7 +39,7 @@ export default function AppointmetsListAppointment() {
     async function onSubmit() {
         setLoading(true)
         try {
-            const { data } = await axios.get(
+            const { data } = await api.get(
                 `${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-params?startDate=${new Date(date.from).toISOString().split('T')[0]}&endDate=${new Date(date.to).toISOString().split('T')[0]}${status !== 'all' ? `&status=${status}` : ''}${category ? `&category=${category}` : ''}${service ? `&service=${service}` : ''}${search ? `&search=${search}` : ''}&page=${page}&limit=20`,
                 {
                     headers: {

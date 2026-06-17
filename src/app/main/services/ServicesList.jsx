@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "@/lib/api";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -37,7 +37,7 @@ export default function ServicesList() {
     const getServices = async () => {
         setLoading(true); 
         try {
-            const { data } = await axios.get(
+            const { data } = await api.get(
                 `${process.env.NEXT_PUBLIC_API_URL}/service/get-services-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}${userId ? `&userId=${userId}` : ""}`,
                 {
                     headers: {
@@ -62,7 +62,7 @@ export default function ServicesList() {
 
     const handleDelete = async (deleteId) => {
         try {
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/service/delete-service`, {
+            await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/service/delete-service`, {
                 data: { id: deleteId },
                 headers: {
                     Authorization: token,

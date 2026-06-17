@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
-import axios from "axios";
+import api from "@/lib/api";
 import { useEffect, useState } from "react";
 
 import { dateReseter } from "@/middleware/dateReseter";
@@ -34,7 +34,7 @@ export default function ServiceDetailsClient() {
       
       const getService = async () => {
         try {
-          const { data } = await axios.get(
+          const { data } = await api.get(
             `${process.env.NEXT_PUBLIC_API_URL}/service/get-service-by-id?id=${id}`,
             {
               headers: {
@@ -56,7 +56,7 @@ export default function ServiceDetailsClient() {
 
     const handleDelete = async () => {
       try {
-        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/service/delete-service`, {
+        await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/service/delete-service`, {
           data: { id },
           headers: {
             Authorization: token,

@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
-import axios from "axios"
+import api from "@/lib/api"
 import { useRouter } from "next/navigation"
 import { toast, Toaster } from "sonner"
 import OverviewHeader from "./OverviewHeader"
@@ -68,7 +68,7 @@ export default function SettingsComponent() {
         specialDays: business.specialDays || {}
       }
 
-      const { data } = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/business/update`, payload, {
+      const { data } = await api.put(`${process.env.NEXT_PUBLIC_API_URL}/business/update`, payload, {
         headers: {
           Authorization: token,
         },

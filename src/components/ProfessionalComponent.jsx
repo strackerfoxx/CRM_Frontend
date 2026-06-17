@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import axios from "axios"
+import api from "@/lib/api"
 import { toast, Toaster } from "sonner"
 import { z } from "zod"
 import { useUser } from "@/hooks/useUser"
@@ -125,7 +125,7 @@ export default function ProfessionalComponent({
         : `${process.env.NEXT_PUBLIC_API_URL}/user/create`
 
       if (editMode) {
-        await axios.patch(url, validation.data, {
+        await api.patch(url, validation.data, {
           headers: {
             Authorization: token,
           },
@@ -140,7 +140,7 @@ export default function ProfessionalComponent({
                   return
                 }
                 if (schedule.id) {
-                     await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/user/update-schedule`, {
+                     await api.put(`${process.env.NEXT_PUBLIC_API_URL}/user/update-schedule`, {
                          id: schedule.id,
                          dayOfWeek: schedule.dayOfWeek,
                          startTime: schedule.startTime,
@@ -151,7 +151,7 @@ export default function ProfessionalComponent({
                          }
                      })
                  } else if (schedule.isNew) {
-                     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/create-schedule`, {
+                     await api.post(`${process.env.NEXT_PUBLIC_API_URL}/user/create-schedule`, {
                          userId: id,
                          dayOfWeek: schedule.dayOfWeek,
                          startTime: schedule.startTime,
@@ -165,7 +165,7 @@ export default function ProfessionalComponent({
             }
         }
       } else {
-        await axios.post(url, validation.data, {
+        await api.post(url, validation.data, {
           headers: {
             Authorization: token,
           },
@@ -185,7 +185,7 @@ export default function ProfessionalComponent({
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/user/delete-schedule`, {
+      await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/user/delete-schedule`, {
         data: { id },
         headers: {
           Authorization: token,

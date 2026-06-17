@@ -1,5 +1,5 @@
 ﻿"use client"
-import axios from "axios"
+import api from "@/lib/api"
 import { cn } from "@/lib/utils"
 
 import { Label } from "@/components/ui/label"
@@ -150,11 +150,11 @@ export default function CreateAppointmentForm({
       const request =
         mode === "edit" && appointment?.id
           ? 
-          axios.put(`${process.env.NEXT_PUBLIC_API_URL}/appointment/update`, appointmentData, {
+          api.put(`${process.env.NEXT_PUBLIC_API_URL}/appointment/update`, appointmentData, {
               headers,
             })
           : 
-          axios.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/create`, appointmentData, {
+          api.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/create`, appointmentData, {
               headers,
             })
 
@@ -205,7 +205,7 @@ export default function CreateAppointmentForm({
           businessId: business.id
       }
       try {
-        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/availability/users`, usersData, {
+        const { data } = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/availability/users`, usersData, {
               headers,
             }
         )

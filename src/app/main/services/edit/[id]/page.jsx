@@ -1,5 +1,5 @@
 "use client"
-import axios from "axios";
+import api from "@/lib/api";
 import { useState, useEffect } from "react";
 
 import { useUser } from "@/hooks/useUser";
@@ -33,7 +33,7 @@ export default function EditService({ params }) {
       const getService = async () => {
         setIsLoading(true)
         try {
-          const { data } = await axios.get(
+          const { data } = await api.get(
             `${process.env.NEXT_PUBLIC_API_URL}/service/get-service-by-id?id=${id}`,
             {
               headers: {

@@ -1,5 +1,5 @@
 "use client"
-import axios from "axios";
+import api from "@/lib/api";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
@@ -23,7 +23,7 @@ export default function EditProfessional() {
 
     const fetchProfessional = async () => {
         try {
-            const { data } = await axios.get(
+            const { data } = await api.get(
                 `${process.env.NEXT_PUBLIC_API_URL}/user/get-user-by-id?id=${id}`,
                 {
                   headers: {
@@ -39,7 +39,7 @@ export default function EditProfessional() {
                 setPhone(data.phone || "");
             }
 
-            const schedulesRes = await axios.get(
+            const schedulesRes = await api.get(
                 `${process.env.NEXT_PUBLIC_API_URL}/user/schedule?userId=${id}`,
                 {
                   headers: {

@@ -12,9 +12,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import axios from "axios"
+import api from "@/lib/api"
 import { useUser } from "@/hooks/useUser"
-import { saveAccessToken, saveUser } from "@/lib/tokenService"
 
 import { useForm, FormProvider } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -46,9 +45,10 @@ export default function LoginForm() {
     async function onSubmit(data) {
 
       try {
-        const { data: response } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, data)
+        const { data: response } = await api.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api'}/user/login`, data)
         setToken(`Bearer ${response.token}`)
         localStorage.setItem("user", JSON.stringify(response))
+        localStorage.setItem("accessToken", response.token)
 
         toast.success("Login exitoso!", {
           description: `Redireccionando...`,

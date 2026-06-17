@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "@/lib/api";
 
 import { dateReseter } from "@/middleware/dateReseter";
 import { useUser } from "@/hooks/useUser";
@@ -40,7 +40,7 @@ export default function AppointmentDetailsClient() {
       let isActive = true;
       try {
         setIsLoading(true);
-        const { data } = await axios.get(
+        const { data } = await api.get(
           `${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-id?id=${id}`,
           {
             headers: {
@@ -92,7 +92,7 @@ export default function AppointmentDetailsClient() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/appointment/delete-appointment`, {
+      await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/appointment/delete-appointment`, {
         data: { id },
         headers: {
           Authorization: token,

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import axios from "axios"
+import api from "@/lib/api"
 import Link from "next/link"
 import { format, parseISO, startOfMonth, endOfMonth } from "date-fns"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -56,7 +56,7 @@ export default function CalendarView() {
       const startDate = format(startOfMonth(date), 'yyyy-MM-dd')
       const endDate = format(endOfMonth(date), 'yyyy-MM-dd')
 
-      const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/appointment/calendar-metrics?startDate=${startDate}&endDate=${endDate}`,
+      const {data} = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/appointment/calendar-metrics?startDate=${startDate}&endDate=${endDate}`,
             {
                 headers: {
                   Authorization: token,
@@ -80,7 +80,7 @@ export default function CalendarView() {
       .toISOString()
       .split("T")[0]
 
-    const response = await axios.get(
+    const response = await api.get(
       `${process.env.NEXT_PUBLIC_API_URL}/appointment/day-metrics`,
       {
         params: {

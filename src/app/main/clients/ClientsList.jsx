@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "@/lib/api";
 import { useUser } from "@/hooks/useUser"
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -21,7 +21,7 @@ export default function ClientsList() {
     const getClients = async () => {
         setLoading(true); 
         try {
-            const { data } = await axios.get(
+            const { data } = await api.get(
                 `${process.env.NEXT_PUBLIC_API_URL}/client/get-client-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}`,
                 {
                     headers: {
