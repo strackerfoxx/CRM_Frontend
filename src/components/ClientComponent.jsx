@@ -9,6 +9,7 @@ import OverviewHeader from "@/components/OverviewHeader"
 import { Skeleton } from "@/components/ui/skeleton"
 
 import { useClient } from "@/hooks/useClients"
+import PhoneInput from "react-phone-input-2"
 
 const clientSchema = z.object({
   id: z.union([z.string(), z.number()]).optional(),
@@ -149,15 +150,19 @@ export default function ClientComponent({
                   onChange={e => setName(e.target.value)}
                 />
 
-                <Input
-                  label="Teléfono"
-                  type="text"
-                  placeholder="Ej. 5551234567"
-                  className="rounded-xl"
-                  name="phone"
-                  value={phone}
-                  onChange={e => setPhone(e.target.value)}
-                />
+                <div className="space-y-1">
+                  <label className="label text-neutral-400">Teléfono</label>
+                  <PhoneInput
+                    country={'mx'}
+                    value={phone}
+                    onChange={phone => setPhone(phone)}
+                    inputClass="!w-full !bg-[#0e0e0e] !p-3 sm:!p-4 !pl-[48px] sm:!pl-[48px] !outline-none !text-sm !rounded-lg !mt-2 !text-white !border-none !h-[48px] sm:!h-[52px]"
+                    buttonClass="!bg-transparent !border-none !mt-2 !pl-2"
+                    dropdownClass="!bg-[#1a1a1a] !text-white !border-neutral-800"
+                    containerClass="w-full"
+                    placeholder="Ej. 555 123 4567"
+                  />
+                </div>
 
                 <Input
                   label="Email (opcional)"
