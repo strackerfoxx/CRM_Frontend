@@ -7,6 +7,7 @@ import { useUser } from "@/hooks/useUser"
 import { useBusiness } from "@/hooks/useBusiness"
 
 import OverviewHeader from "@/components/OverviewHeader"
+import PhoneInput from "react-phone-input-2"
 
 const professionalSchema = z.object({
   id: z.union([z.string(), z.number()]).optional(),
@@ -260,14 +261,19 @@ export default function ProfessionalComponent({
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
-              <Input
-                label="Teléfono"
-                placeholder="+123456789"
-                className="rounded-xl"
-                name="phone"
-                value={phone || ""}
-                onChange={e => setPhone(e.target.value)}
-              />
+              <div className="space-y-1">
+                <label className="label text-neutral-400">Teléfono</label>
+                <PhoneInput
+                  country={'mx'}
+                  value={phone || ""}
+                  onChange={phone => setPhone(phone)}
+                  inputClass="!w-full !bg-[#0e0e0e] !p-3 sm:!p-4 !pl-[48px] sm:!pl-[48px] !outline-none !text-sm !rounded-lg !mt-2 !text-white !border-none !h-[48px] sm:!h-[52px]"
+                  buttonClass="!bg-transparent !border-none !mt-2 !pl-2"
+                  dropdownClass="!bg-[#1a1a1a] !text-white !border-neutral-800"
+                  containerClass="w-full"
+                  placeholder="+123456789"
+                />
+              </div>
               <Select
                 label="Rol"
                 className="rounded-xl"

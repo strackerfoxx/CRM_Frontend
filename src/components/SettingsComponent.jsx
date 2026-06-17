@@ -8,6 +8,7 @@ import { useUser } from "@/hooks/useUser"
 import { useBusiness } from "@/hooks/useBusiness"
 import { Skeleton } from "@/components/ui/skeleton"
 import BlockedTimesSection from "./BlockedTimesSection"
+import PhoneInput from "react-phone-input-2"
 
 export default function SettingsComponent() {
   const router = useRouter()
@@ -185,14 +186,19 @@ export default function SettingsComponent() {
                 value={address}
                 onChange={e => setAddress(e.target.value)}
               />
-              <Input
-                label="Teléfono"
-                placeholder="552405238"
-                className="rounded-xl"
-                name="phone"
-                value={phone}
-                onChange={e => setPhone(e.target.value)}
-              />
+              <div className="space-y-1">
+                <label className="label text-neutral-400">Teléfono</label>
+                <PhoneInput
+                  country={'mx'}
+                  value={phone || ""}
+                  onChange={phone => setPhone(phone)}
+                  inputClass="!w-full !bg-[#0e0e0e] !p-3 sm:!p-4 !pl-[48px] sm:!pl-[48px] !outline-none !text-sm !rounded-lg !mt-2 !text-white !border-none !h-[48px] sm:!h-[52px]"
+                  buttonClass="!bg-transparent !border-none !mt-2 !pl-2"
+                  dropdownClass="!bg-[#1a1a1a] !text-white !border-neutral-800"
+                  containerClass="w-full"
+                  placeholder="552405238"
+                />
+              </div>
             </div>
           </Section>
 

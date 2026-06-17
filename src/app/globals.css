@@ -1,7 +1,21 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "react-phone-input-2/lib/style.css";
 
 @custom-variant dark (&:is(.dark *));
+
+/* react-phone-input-2 dark mode overrides */
+.dark .react-tel-input .country-list {
+  background-color: #1a1a1a;
+  border-color: #262626;
+  color: white;
+}
+.dark .react-tel-input .country-list .country:hover {
+  background-color: #262626;
+}
+.dark .react-tel-input .country-list .country.highlight {
+  background-color: #333333;
+}
 
 @theme inline {
   --color-background: var(--background);
