@@ -46,12 +46,12 @@ export default function ClientsList() {
 
   return (
     <>
-        <div className="flex justify-between items-center mt-5 mx-7">
-            <div className="flex">
+        <div className="block sm:flex justify-between items-center mt-5 mx-7">
+            <div className="block sm:flex">
                 <h1 className="scroll-m-20 text-start text-4xl font-bold tracking-tight text-balance" >Clientes</h1>
-                <span className="text-neutral-400 mx-7 mt-3">Total de clientes: {totalResults}</span>
+                <span className="block text-neutral-400 sm:mx-7 mt-3 mb-4 sm:mb-0">Total de clientes: {totalResults}</span>
             </div>
-            <Link href="/main/clients/create" className="bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear cliente</Link>
+            <Link href="/main/clients/create" className="block sm:inline-block w-full sm:w-auto text-center bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear cliente</Link>
         </div>
         {/* <div className="m-7 flex text-center items-center gap-3 px-3 bg-neutral-800 rounded-lg border border-neutral-700 text-white">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">

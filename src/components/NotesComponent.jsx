@@ -60,7 +60,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
             toast.success(data?.msg || "Nota actualizada exitosamente")
 
         } catch (error) {
-            toast.error("Error updating note");
+            toast.error("Error al actualizar la nota");
             console.error("Error updating note", error);
 
         } finally {
@@ -84,7 +84,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
           toast.success("Nota eliminada exitosamente")
 
       } catch (error) {
-          toast.error("Error deleting note");
+          toast.error("Error al eliminar la nota");
           console.error("Error deleting note", error);
       }
     };
@@ -118,7 +118,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
           toast.success(data?.msg || "Nota creada exitosamente")
 
       } catch (error) {
-          toast.error("Error creating note");
+          toast.error("Error al crear la nota");
           console.error("Error creating note", error);
 
       } finally {
