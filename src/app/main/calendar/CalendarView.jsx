@@ -293,11 +293,9 @@ export default function CalendarView() {
       }
       columns.forEach((col, i) => {
         col.forEach(event => {
-          // Fixed width logic instead of percentage to support any number of columns
-          const columnWidth = 180;
           event._layout = {
-            left: i * (columnWidth + 10), // 10px gap
-            width: columnWidth
+            left: `${(100 / numColumns) * i}%`,
+            width: `${100 / numColumns}%`
           };
         });
       });
@@ -418,11 +416,9 @@ export default function CalendarView() {
                  {(() => {
                     const { sorted, maxColumns } = organizeAppointments(dayMetrics.appointments);
                     const gridHeight = timeSlots.length * 60
-                    // Ensure minimum width of 100% or calculated width based on columns
-                    const containerMinWidth = Math.max(100, (maxColumns * 190) + 60); // 180 + 10 gap + 60 left padding
 
                     return (
-                      <div className="relative" style={{ minWidth: `${containerMinWidth}px`, minHeight: `${gridHeight}px` }}>
+                      <div className="relative" style={{ minWidth: '100%', minHeight: `${gridHeight}px` }}>
                         {/* Background grid for time slots (08:00 to 20:00 = 12 hours * 60px = 720px) */}
                         {timeSlots.map((time, i) => (
                           <div
@@ -445,8 +441,8 @@ export default function CalendarView() {
                                   className={`absolute bg-card p-2 rounded-md border-l-4 shadow-sm overflow-hidden cursor-pointer ${getStatusBorderColor(apt.status)}`}
                                   style={{
                                     ...pos,
-                                    left: `${apt._layout?.left || 0}px`,
-                                    width: `${apt._layout?.width || 180}px`
+                                    left: apt._layout?.left || '0%',
+                                    width: apt._layout?.width || '100%'
                                   }}
                                 >
                                   <div className="text-xs font-bold truncate">{apt.startTime} - {apt.endTime}</div>
