@@ -260,6 +260,8 @@ export default function CalendarView() {
     generateTimeSlots(date)
   }
 
+  const PIXELS_PER_MINUTE = 2;
+
   // Calculate top position and height based on startTime and endTime
   const calculatePosition = (startTime, endTime) => {
     const [startH, startM] = startTime.split(':').map(Number)
@@ -269,8 +271,8 @@ export default function CalendarView() {
     const durationMinutes = (endH * 60 + endM) - (startH * 60 + startM)
 
     return {
-      top: `${startOffsetMinutes}px`,
-      height: `${durationMinutes}px`
+      top: `${startOffsetMinutes * PIXELS_PER_MINUTE}px`,
+      height: `${durationMinutes * PIXELS_PER_MINUTE}px`
     }
   }
 
@@ -415,7 +417,7 @@ export default function CalendarView() {
                 <div className="relative w-full min-h-[720px] mt-4">
                  {(() => {
                     const { sorted, maxColumns } = organizeAppointments(dayMetrics.appointments);
-                    const gridHeight = timeSlots.length * 60
+                    const gridHeight = timeSlots.length * (60 * PIXELS_PER_MINUTE)
 
                     return (
                       <div className="relative" style={{ minWidth: '100%', minHeight: `${gridHeight}px` }}>
@@ -424,9 +426,9 @@ export default function CalendarView() {
                           <div
                             key={time}
                             className="absolute w-full flex items-start border-t border-border/50 text-xs text-muted-foreground"
-                            style={{ top: `${i * 60}px`, height: '60px' }}
+                            style={{ top: `${i * 60 * PIXELS_PER_MINUTE}px`, height: `${60 * PIXELS_PER_MINUTE}px` }}
                           >
-                            <span className="w-12 -mt-2 pr-2 text-right bg-background sticky left-0 z-10">{time}</span>
+                            <span className="w-14 -mt-2 pr-2 text-right bg-background sticky left-0 z-20 border-r border-border/50">{time}</span>
                             <div className="flex-1 h-full border-l border-border/50 pl-2"></div>
                           </div>
                         ))}
