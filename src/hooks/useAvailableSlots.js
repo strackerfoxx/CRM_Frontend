@@ -20,12 +20,13 @@ export async function useAvailableSlots({ date, servicesSelected, business, toke
       }
     })
 
-    const data = {
+  const data = {
       businessId: business.id,
       services,
-      date: date.toISOString().split('T')[0],
+      date: DateTime.fromJSDate(new Date(date)).toISODate(),
       excludeAppointmentId,
-      currentTime: DateTime.now().toISO()
+      currentTime: DateTime.now().toISO(),
+      timezone: DateTime.local().zoneName
     }
 
     const {data: validSlots} = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/appointment/availability/slots`, data, { headers })

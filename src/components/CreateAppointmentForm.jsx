@@ -130,7 +130,6 @@ export default function CreateAppointmentForm({
       businessClientId: client,
       services: servicesQuery,
       businessId: business.id,
-      user: user.id,
       startTime: hour,
     }
 
