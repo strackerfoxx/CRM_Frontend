@@ -260,6 +260,9 @@ export default function CalendarView() {
     generateTimeSlots(date)
   }
 
+  const PIXELS_PER_MINUTE = 2;
+  const MIN_APPOINTMENT_HEIGHT = 70; // 70px is enough for 3 lines of text (approx 3x16px + 16px padding)
+
   // Calculate top position and height based on startTime and endTime
   const calculatePosition = (startTime, endTime) => {
     const [startH, startM] = startTime.split(':').map(Number)
@@ -268,9 +271,12 @@ export default function CalendarView() {
     const startOffsetMinutes = (startH * 60 + startM) - (timelineStart.hour * 60 + timelineStart.minute)
     const durationMinutes = (endH * 60 + endM) - (startH * 60 + startM)
 
+    // Ensure the appointment has a minimum height to fit content
+    const calculatedHeight = Math.max(durationMinutes * PIXELS_PER_MINUTE, MIN_APPOINTMENT_HEIGHT);
+
     return {
-      top: `${startOffsetMinutes}px`,
-      height: `${durationMinutes}px`
+      top: `${startOffsetMinutes * PIXELS_PER_MINUTE}px`,
+      height: `${calculatedHeight}px`
     }
   }
 
@@ -293,11 +299,9 @@ export default function CalendarView() {
       }
       columns.forEach((col, i) => {
         col.forEach(event => {
-          // Fixed width logic instead of percentage to support any number of columns
-          const columnWidth = 180;
           event._layout = {
-            left: i * (columnWidth + 10), // 10px gap
-            width: columnWidth
+            left: `${(100 / numColumns) * i}%`,
+            width: `${100 / numColumns}%`
           };
         });
       });
@@ -308,7 +312,12 @@ export default function CalendarView() {
       const start = ev.startTime.split(':').map(Number);
       const end = ev.endTime.split(':').map(Number);
       ev._startMins = start[0] * 60 + start[1];
-      ev._endMins = end[0] * 60 + end[1];
+
+      const actualDuration = (end[0] * 60 + end[1]) - ev._startMins;
+      const minDuration = Math.ceil(MIN_APPOINTMENT_HEIGHT / PIXELS_PER_MINUTE);
+      const effectiveDuration = Math.max(actualDuration, minDuration);
+
+      ev._endMins = ev._startMins + effectiveDuration;
 
       if (lastEventEnding !== null && ev._startMins >= lastEventEnding) {
         packEvents();
@@ -417,20 +426,18 @@ export default function CalendarView() {
                 <div className="relative w-full min-h-[720px] mt-4">
                  {(() => {
                     const { sorted, maxColumns } = organizeAppointments(dayMetrics.appointments);
-                    const gridHeight = timeSlots.length * 60
-                    // Ensure minimum width of 100% or calculated width based on columns
-                    const containerMinWidth = Math.max(100, (maxColumns * 190) + 60); // 180 + 10 gap + 60 left padding
+                    const gridHeight = timeSlots.length * (60 * PIXELS_PER_MINUTE)
 
                     return (
-                      <div className="relative" style={{ minWidth: `${containerMinWidth}px`, minHeight: `${gridHeight}px` }}>
+                      <div className="relative" style={{ minWidth: '100%', minHeight: `${gridHeight}px` }}>
                         {/* Background grid for time slots (08:00 to 20:00 = 12 hours * 60px = 720px) */}
                         {timeSlots.map((time, i) => (
                           <div
                             key={time}
                             className="absolute w-full flex items-start border-t border-border/50 text-xs text-muted-foreground"
-                            style={{ top: `${i * 60}px`, height: '60px' }}
+                            style={{ top: `${i * 60 * PIXELS_PER_MINUTE}px`, height: `${60 * PIXELS_PER_MINUTE}px` }}
                           >
-                            <span className="w-12 -mt-2 pr-2 text-right bg-background sticky left-0 z-10">{time}</span>
+                            <span className="w-14 -mt-2 pr-2 text-right bg-background sticky left-0 z-20 border-r border-border/50">{time}</span>
                             <div className="flex-1 h-full border-l border-border/50 pl-2"></div>
                           </div>
                         ))}
@@ -445,8 +452,8 @@ export default function CalendarView() {
                                   className={`absolute bg-card p-2 rounded-md border-l-4 shadow-sm overflow-hidden cursor-pointer ${getStatusBorderColor(apt.status)}`}
                                   style={{
                                     ...pos,
-                                    left: `${apt._layout?.left || 0}px`,
-                                    width: `${apt._layout?.width || 180}px`
+                                    left: apt._layout?.left || '0%',
+                                    width: apt._layout?.width || '100%'
                                   }}
                                 >
                                   <div className="text-xs font-bold truncate">{apt.startTime} - {apt.endTime}</div>
