@@ -2,47 +2,49 @@ import axios from "axios"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
+let inMemoryAccessToken = null;
+let inMemoryUser = null;
+
 /**
- * Guardar el accessToken en localStorage
+ * Guardar el accessToken en memoria
  */
 export const saveAccessToken = (token) => {
-  localStorage.setItem("accessToken", token)
+  inMemoryAccessToken = token;
 }
 
 /**
- * Obtener el accessToken desde localStorage
+ * Obtener el accessToken desde memoria
  */
 export const getAccessToken = () => {
-  return localStorage.getItem("accessToken")
+  return inMemoryAccessToken;
 }
 
 /**
- * Limpiar el accessToken de localStorage
+ * Limpiar el accessToken en memoria
  */
 export const clearAccessToken = () => {
-  localStorage.removeItem("accessToken")
+  inMemoryAccessToken = null;
 }
 
 /**
- * Guardar datos del usuario en localStorage
+ * Guardar datos del usuario en memoria
  */
 export const saveUser = (user) => {
-  localStorage.setItem("user", JSON.stringify(user))
+  inMemoryUser = user;
 }
 
 /**
- * Obtener datos del usuario desde localStorage
+ * Obtener datos del usuario desde memoria
  */
 export const getUser = () => {
-  const user = localStorage.getItem("user")
-  return user ? JSON.parse(user) : null
+  return inMemoryUser;
 }
 
 /**
- * Limpiar datos del usuario
+ * Limpiar datos del usuario en memoria
  */
 export const clearUser = () => {
-  localStorage.removeItem("user")
+  inMemoryUser = null;
 }
 
 /**

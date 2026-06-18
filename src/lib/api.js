@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAccessToken, getUser, saveAccessToken, saveUser, clearAccessToken, clearUser } from '@/lib/tokenService';
 
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api', // Tu URL del backend
@@ -7,12 +8,10 @@ const api = axios.create({
 
 // 1. Agregar el access token a todas las peticiones
 api.interceptors.request.use((config) => {
-    let token = localStorage.getItem("accessToken");
-    if (!token && localStorage.getItem("user")) {
-        try {
-            const userObj = JSON.parse(localStorage.getItem("user"));
-            token = userObj.token;
-        } catch (e) {}
+    let token = getAccessToken();
+    if (!token && getUser()) {
+        const userObj = getUser();
+        token = userObj?.token;
     }
 
     if (token) {
@@ -47,15 +46,13 @@ api.interceptors.response.use(
 
                 // Guardamos el nuevo access token
                 const newAccessToken = response.data.token;
-                localStorage.setItem("accessToken", newAccessToken);
+                saveAccessToken(newAccessToken);
 
-                // Update the user object in localStorage to reflect new token
-                if (localStorage.getItem("user")) {
-                    try {
-                        const userObj = JSON.parse(localStorage.getItem("user"));
-                        userObj.token = newAccessToken;
-                        localStorage.setItem("user", JSON.stringify(userObj));
-                    } catch (e) {}
+                // Update the user object in memory to reflect new token
+                if (getUser()) {
+                    const userObj = getUser();
+                    userObj.token = newAccessToken;
+                    saveUser(userObj);
                 }
 
                 // Actualizamos el header de la petición que falló y la reintentamos
@@ -63,8 +60,8 @@ api.interceptors.response.use(
                 return api(originalRequest);
 
             } catch (refreshError) {
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("user");
+                clearAccessToken();
+                clearUser();
                 window.location.href = '/';
                 return Promise.reject(refreshError);
             }

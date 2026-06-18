@@ -1,6 +1,8 @@
 "use client"
 import api from "@/lib/api"
 import { createContext, useState, useEffect } from "react"
+import { refreshAccessToken, saveUser, clearUser, clearAccessToken } from "@/lib/tokenService"
+
 const UserContext = createContext()
 
 const UserProvider = ({ children }) => {
@@ -9,30 +11,35 @@ const UserProvider = ({ children }) => {
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
-      if (localStorage.getItem("user")) {
-            const userState = JSON.parse(localStorage.getItem("user"))
-            setToken(`Bearer ${userState.token}`)
-            setUser(userState.user)
+        const initializeAuth = async () => {
+            try {
+                // Try to refresh token using the HttpOnly cookie
+                const newToken = await refreshAccessToken()
+                if (newToken) {
+                    setToken(`Bearer ${newToken}`)
 
-            const getUser = async () => {
-                const headers = {
-                    "Authorization": `Bearer ${userState.token}`
-                }
-                try {
+                    const headers = {
+                        "Authorization": `Bearer ${newToken}`
+                    }
+                    // Fetch user details with the new token
                     const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/user/get-user-by-id`, { headers })
-                    setUser({name: data?.user?.name, email: data?.user?.email, id: data?.user?._id})
-                } catch (error) {
-                    console.error(error.message)
+                    const userData = {name: data?.user?.name, email: data?.user?.email, id: data?.user?._id}
+                    setUser(userData)
+                    saveUser({ token: newToken, user: userData })
                 }
+            } catch (error) {
+                // Ignore error, means user is not authenticated
+            } finally {
+                setIsLoaded(true)
             }
-            getUser()
         }
-        setIsLoaded(true)
+
+        initializeAuth()
     }, [])
 
     const clearSession = () => {
-        localStorage.removeItem("user")
-        localStorage.removeItem("accessToken")
+        clearUser()
+        clearAccessToken()
         setToken(null)
         setUser(null)
     }
@@ -44,7 +51,7 @@ const UserProvider = ({ children }) => {
             console.error("Logout error:", error)
         } finally {
             clearSession()
-            window.location.href = '/login'
+            window.location.href = '/'
         }
     }
 

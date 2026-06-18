@@ -23,6 +23,7 @@ import { z } from "zod"
 import { redirect } from "next/navigation"
 import { useEffect } from "react";
 import { useRouter } from "next/navigation"
+import { saveAccessToken, saveUser } from "@/lib/tokenService"
 
 export default function LoginForm() {
 
@@ -47,8 +48,8 @@ export default function LoginForm() {
       try {
         const { data: response } = await api.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api'}/user/login`, data)
         setToken(`Bearer ${response.token}`)
-        localStorage.setItem("user", JSON.stringify(response))
-        localStorage.setItem("accessToken", response.token)
+        saveUser(response)
+        saveAccessToken(response.token)
 
         toast.success("Login exitoso!", {
           description: `Redireccionando...`,
