@@ -261,6 +261,7 @@ export default function CalendarView() {
   }
 
   const PIXELS_PER_MINUTE = 2;
+  const MIN_APPOINTMENT_HEIGHT = 70; // 70px is enough for 3 lines of text (approx 3x16px + 16px padding)
 
   // Calculate top position and height based on startTime and endTime
   const calculatePosition = (startTime, endTime) => {
@@ -270,9 +271,12 @@ export default function CalendarView() {
     const startOffsetMinutes = (startH * 60 + startM) - (timelineStart.hour * 60 + timelineStart.minute)
     const durationMinutes = (endH * 60 + endM) - (startH * 60 + startM)
 
+    // Ensure the appointment has a minimum height to fit content
+    const calculatedHeight = Math.max(durationMinutes * PIXELS_PER_MINUTE, MIN_APPOINTMENT_HEIGHT);
+
     return {
       top: `${startOffsetMinutes * PIXELS_PER_MINUTE}px`,
-      height: `${durationMinutes * PIXELS_PER_MINUTE}px`
+      height: `${calculatedHeight}px`
     }
   }
 
@@ -308,7 +312,12 @@ export default function CalendarView() {
       const start = ev.startTime.split(':').map(Number);
       const end = ev.endTime.split(':').map(Number);
       ev._startMins = start[0] * 60 + start[1];
-      ev._endMins = end[0] * 60 + end[1];
+
+      const actualDuration = (end[0] * 60 + end[1]) - ev._startMins;
+      const minDuration = Math.ceil(MIN_APPOINTMENT_HEIGHT / PIXELS_PER_MINUTE);
+      const effectiveDuration = Math.max(actualDuration, minDuration);
+
+      ev._endMins = ev._startMins + effectiveDuration;
 
       if (lastEventEnding !== null && ev._startMins >= lastEventEnding) {
         packEvents();
