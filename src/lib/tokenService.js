@@ -59,10 +59,10 @@ export const refreshAccessToken = async () => {
         withCredentials: true, // Enviar cookies
       }
     )
-    const { accessToken } = response.data
-    if (accessToken) {
-      saveAccessToken(accessToken)
-      return accessToken
+    const token = response.data.token || response.data.accessToken
+    if (token) {
+      saveAccessToken(token)
+      return token
     }
   } catch (error) {
     console.error("Error refreshing token:", error)
