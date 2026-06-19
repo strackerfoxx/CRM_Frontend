@@ -10,6 +10,13 @@ const UserProvider = ({ children }) => {
     const [token, setToken] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
 
+    const clearSession = () => {
+        clearUser()
+        clearAccessToken()
+        setToken(null)
+        setUser(null)
+    }
+
     useEffect(() => {
         const initializeAuth = async () => {
             try {
@@ -26,9 +33,12 @@ const UserProvider = ({ children }) => {
                     const userData = {name: data?.user?.name, email: data?.user?.email, id: data?.user?._id}
                     setUser(userData)
                     saveUser({ token: newToken, user: userData })
+                } else {
+                    clearSession()
                 }
             } catch (error) {
                 // Ignore error, means user is not authenticated
+                clearSession()
             } finally {
                 setIsLoaded(true)
             }
@@ -36,13 +46,6 @@ const UserProvider = ({ children }) => {
 
         initializeAuth()
     }, [])
-
-    const clearSession = () => {
-        clearUser()
-        clearAccessToken()
-        setToken(null)
-        setUser(null)
-    }
 
     const logout = async () => {
         try {
