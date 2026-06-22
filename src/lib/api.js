@@ -45,14 +45,16 @@ api.interceptors.response.use(
                 );
 
                 // Guardamos el nuevo access token
-                const newAccessToken = response.data.token;
-                saveAccessToken(newAccessToken);
+                const newAccessToken = response.data.token || response.data.accessToken;
+                if (newAccessToken) {
+                    saveAccessToken(newAccessToken);
 
-                // Update the user object in memory to reflect new token
-                if (getUser()) {
-                    const userObj = getUser();
-                    userObj.token = newAccessToken;
-                    saveUser(userObj);
+                    // Update the user object in memory to reflect new token
+                    if (getUser()) {
+                        const userObj = getUser();
+                        userObj.token = newAccessToken;
+                        saveUser(userObj);
+                    }
                 }
 
                 // Actualizamos el header de la petición que falló y la reintentamos
