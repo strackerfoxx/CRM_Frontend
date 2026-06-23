@@ -24,7 +24,7 @@ export default function BlockedTimesSection() {
     const fetchBlockedTimes = async () => {
         setIsLoading(true)
         try {
-            const { data } = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/blocked-time/get-blocked-times`, {
+            const { data } = await api.get(`/blocked-time/get-blocked-times`, {
                 headers: {
                     Authorization: token,
                 },
@@ -99,12 +99,12 @@ export default function BlockedTimesSection() {
 
             if (isEditing) {
                 payload.id = editId
-                await api.put(`${process.env.NEXT_PUBLIC_API_URL}/blocked-time/update`, payload, {
+                await api.put(`/blocked-time/update`, payload, {
                     headers: { Authorization: token },
                 })
                 toast.success("Tiempo bloqueado actualizado")
             } else {
-                await api.post(`${process.env.NEXT_PUBLIC_API_URL}/blocked-time/create`, payload, {
+                await api.post(`/blocked-time/create`, payload, {
                     headers: { Authorization: token },
                 })
                 toast.success("Tiempo bloqueado creado")

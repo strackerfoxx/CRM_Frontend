@@ -46,7 +46,7 @@ export default function LoginForm() {
     async function onSubmit(data) {
 
       try {
-        const { data: response } = await api.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api'}/user/login`, data)
+        const { data: response } = await api.post(`/user/login`, data)
         setToken(`Bearer ${response.token}`)
         saveUser(response)
         saveAccessToken(response.token)

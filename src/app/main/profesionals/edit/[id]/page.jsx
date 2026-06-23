@@ -24,7 +24,7 @@ export default function EditProfessional() {
     const fetchProfessional = async () => {
         try {
             const { data } = await api.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/user/get-user-by-id?id=${id}`,
+                `/user/get-user-by-id?id=${id}`,
                 {
                   headers: {
                     Authorization: token,
@@ -40,7 +40,7 @@ export default function EditProfessional() {
             }
 
             const schedulesRes = await api.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/user/schedule?userId=${id}`,
+                `/user/schedule?userId=${id}`,
                 {
                   headers: {
                     Authorization: token,

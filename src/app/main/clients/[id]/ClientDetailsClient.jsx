@@ -41,7 +41,7 @@ export default function ClientDetailsClient() {
       
       const getClient = async () => {
         const { data } = await api.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/client/get-client-by-id?id=${id}`,
+          `/client/get-client-by-id?id=${id}`,
           {
             headers: {
               Authorization: token,
@@ -53,7 +53,7 @@ export default function ClientDetailsClient() {
 
       const getAppointments = async () => {
         const { data } = await api.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-client-id?clientId=${id}&page=1&limit=20`,
+          `/appointment/get-appointments-by-client-id?clientId=${id}&page=1&limit=20`,
           {
             headers: {
               Authorization: token,
@@ -68,7 +68,7 @@ export default function ClientDetailsClient() {
       const getNotes = async () => {
 
         const { data } = await api.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/note/get-notes?clientId=${id}`,
+          `/note/get-notes?clientId=${id}`,
           {
             headers: {
               Authorization: token,
@@ -93,7 +93,7 @@ export default function ClientDetailsClient() {
     useEffect(() => {
       const getAppointmentsByDate = async (date) => {
         const { data } = await 
-        api(`${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-params?startDate=${date}&clientId=${id}&page=1&limit=20`,
+        api(`/appointment/get-appointments-by-params?startDate=${date}&clientId=${id}&page=1&limit=20`,
         {
             headers: {
               Authorization: token,
@@ -109,7 +109,7 @@ export default function ClientDetailsClient() {
     
     const handleDelete = async () => {
       try {
-        await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/client/delete-client`, {
+        await api.delete(`/client/delete-client`, {
           data: { id },
           headers: {
             Authorization: token,

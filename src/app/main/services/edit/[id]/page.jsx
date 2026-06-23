@@ -35,7 +35,7 @@ export default function EditService({ params }) {
         setIsLoading(true)
         try {
           const { data } = await api.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/service/get-service-by-id?id=${id}`,
+            `/service/get-service-by-id?id=${id}`,
             {
               headers: {
                 Authorization: token,

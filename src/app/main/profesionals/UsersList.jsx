@@ -25,7 +25,7 @@ export default function UsersListUsers() {
         setLoading(true);
 
         try {
-            const {data} = await api(`${process.env.NEXT_PUBLIC_API_URL}/user/get-users-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}${role ? `&role=${role}` : ""}`,
+            const {data} = await api(`/user/get-users-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}${role ? `&role=${role}` : ""}`,
                 {
                     headers: {
                         Authorization: token,

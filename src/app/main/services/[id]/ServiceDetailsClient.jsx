@@ -35,7 +35,7 @@ export default function ServiceDetailsClient() {
       const getService = async () => {
         try {
           const { data } = await api.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/service/get-service-by-id?id=${id}`,
+            `/service/get-service-by-id?id=${id}`,
             {
               headers: {
                 Authorization: token,
@@ -56,7 +56,7 @@ export default function ServiceDetailsClient() {
 
     const handleDelete = async () => {
       try {
-        await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/service/delete-service`, {
+        await api.delete(`/service/delete-service`, {
           data: { id },
           headers: {
             Authorization: token,

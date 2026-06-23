@@ -29,7 +29,7 @@ const UserProvider = ({ children }) => {
                         "Authorization": `Bearer ${newToken}`
                     }
                     // Fetch user details with the new token
-                    const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/user/get-user-by-id`, { headers })
+                    const { data } = await api(`/user/get-user-by-id`, { headers })
                     const userData = {name: data?.user?.name, email: data?.user?.email, id: data?.user?._id}
                     setUser(userData)
                     saveUser({ token: newToken, user: userData })
