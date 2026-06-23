@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { getAccessToken, getUser, saveAccessToken, saveUser, clearAccessToken, clearUser } from '@/lib/tokenService';
 
+const API_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api').replace(/\/$/, '');
+
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api', // Tu URL del backend
+    baseURL: API_URL, // Tu URL del backend
     withCredentials: true // MUY IMPORTANTE: Permite que se envíen y reciban las cookies
 });
 
@@ -38,8 +40,8 @@ api.interceptors.response.use(
 
             try {
                 // Hacemos un request POST al nuevo endpoint de refresh
-                const response = await axios.post(
-                    `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api'}/user/refresh`,
+                const response = await api.post(
+                    '/user/refresh',
                     {},
                     { withCredentials: true } // MUY IMPORTANTE enviar cookies
                 );
