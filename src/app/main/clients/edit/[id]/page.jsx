@@ -23,7 +23,7 @@ export default function EditClient() {
       setIsLoading(true)
       try {
         const { data } = await api.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/client/get-client-by-id?id=${id}`,
+          `/client/get-client-by-id?id=${id}`,
           {
             headers: {
               Authorization: token,

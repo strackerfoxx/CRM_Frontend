@@ -93,8 +93,8 @@ export default function ServiceComponent({
       }
 
       const url = editMode
-        ? `${process.env.NEXT_PUBLIC_API_URL}/service/update`
-        : `${process.env.NEXT_PUBLIC_API_URL}/service/create`
+        ? `/service/update`
+        : `/service/create`
 
       if (editMode) {
         await api.put(url, validation.data, {

@@ -36,7 +36,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
 
         try {
             const { data } = await api.put(
-              `${process.env.NEXT_PUBLIC_API_URL}/note/update`,
+              `/note/update`,
               {
                   id: noteId,
                   content: editNoteContent
@@ -71,7 +71,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
     const deleteNote = async (noteId) => {
       try {
           await api.delete(
-            `${process.env.NEXT_PUBLIC_API_URL}/note/delete?id=${noteId}`,
+            `/note/delete?id=${noteId}`,
             {
                 headers: {
                   Authorization: token,
@@ -96,7 +96,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
 
       try {
           const { data } = await api.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/note/create`,
+            `/note/create`,
             {
                 businessClientId: id,
                 content: newNote

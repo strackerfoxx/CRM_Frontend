@@ -41,7 +41,7 @@ export default function AppointmentDetailsClient() {
       try {
         setIsLoading(true);
         const { data } = await api.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-id?id=${id}`,
+          `/appointment/get-appointments-by-id?id=${id}`,
           {
             headers: {
               Authorization: token,
@@ -92,7 +92,7 @@ export default function AppointmentDetailsClient() {
 
   const handleDelete = async () => {
     try {
-      await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/appointment/delete-appointment`, {
+      await api.delete(`/appointment/delete-appointment`, {
         data: { id },
         headers: {
           Authorization: token,

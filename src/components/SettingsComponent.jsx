@@ -69,7 +69,7 @@ export default function SettingsComponent() {
         specialDays: business.specialDays || {}
       }
 
-      const { data } = await api.put(`${process.env.NEXT_PUBLIC_API_URL}/business/update`, payload, {
+      const { data } = await api.put(`/business/update`, payload, {
         headers: {
           Authorization: token,
         },

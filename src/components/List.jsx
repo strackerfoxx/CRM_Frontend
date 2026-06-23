@@ -19,7 +19,7 @@ export default function List({appointments}) {
     useEffect(() => {
       const getAppointmentsByDate = async (date) => {
         const { data } = await 
-        api(`${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-params?startDate=${date}&page=1&limit=20`,
+        api(`/appointment/get-appointments-by-params?startDate=${date}&page=1&limit=20`,
         {
             headers: {
               Authorization: token,

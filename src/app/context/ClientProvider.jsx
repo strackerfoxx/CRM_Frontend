@@ -15,7 +15,7 @@ const ClientProvider = ({children}) => {
                     "Authorization": token
                 }
                 try {
-                    const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/client/get-clients`, { headers })
+                    const { data } = await api(`/client/get-clients`, { headers })
                     setClients(data.clients)
                 } catch (error) {
                     console.error(error.message)
@@ -31,7 +31,7 @@ const ClientProvider = ({children}) => {
             "Authorization": token
         }
         try {
-            const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/client/get-clients`, { headers })
+            const { data } = await api(`/client/get-clients`, { headers })
             setClients(data.clients)
         } catch (error) {
             console.error(error.message)

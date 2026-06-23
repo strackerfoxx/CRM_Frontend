@@ -15,7 +15,7 @@ const BusinessProvider = ({ children }) => {
                     "Authorization": token
                 }
                 try {
-                    const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/business/get-business-by-id`, { headers })
+                    const { data } = await api(`/business/get-business-by-id`, { headers })
                     setBusiness(data)
                 } catch (error) {
                     console.error(error.message)

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { getAccessToken, getUser, saveAccessToken, saveUser, clearAccessToken, clearUser } from '@/lib/tokenService';
 
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api').replace(/\/$/, '');
+const API_URL = '/api';
 
 const api = axios.create({
-    baseURL: API_URL, // Tu URL del backend
+    baseURL: API_URL, // Usamos el proxy de Next.js
     withCredentials: true // MUY IMPORTANTE: Permite que se envíen y reciban las cookies
 });
 

@@ -56,7 +56,7 @@ export default function ClientComponent({
         return
       }
 
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/client/create`
+      const url = `/client/create`
 
 
         await api.post(url, validation.data, {

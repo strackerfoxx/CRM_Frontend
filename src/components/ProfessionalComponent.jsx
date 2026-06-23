@@ -122,8 +122,8 @@ export default function ProfessionalComponent({
       }
 
       const url = editMode
-        ? `${process.env.NEXT_PUBLIC_API_URL}/user/update-user`
-        : `${process.env.NEXT_PUBLIC_API_URL}/user/create`
+        ? `/user/update-user`
+        : `/user/create`
 
       if (editMode) {
         await api.patch(url, validation.data, {
@@ -141,7 +141,7 @@ export default function ProfessionalComponent({
                   return
                 }
                 if (schedule.id) {
-                     await api.put(`${process.env.NEXT_PUBLIC_API_URL}/user/update-schedule`, {
+                     await api.put(`/user/update-schedule`, {
                          id: schedule.id,
                          dayOfWeek: schedule.dayOfWeek,
                          startTime: schedule.startTime,
@@ -152,7 +152,7 @@ export default function ProfessionalComponent({
                          }
                      })
                  } else if (schedule.isNew) {
-                     await api.post(`${process.env.NEXT_PUBLIC_API_URL}/user/create-schedule`, {
+                     await api.post(`/user/create-schedule`, {
                          userId: id,
                          dayOfWeek: schedule.dayOfWeek,
                          startTime: schedule.startTime,
@@ -186,7 +186,7 @@ export default function ProfessionalComponent({
 
   const handleDelete = async (id) => {
     try {
-      await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/user/delete-schedule`, {
+      await api.delete(`/user/delete-schedule`, {
         data: { id },
         headers: {
           Authorization: token,
