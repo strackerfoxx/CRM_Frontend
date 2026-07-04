@@ -15,7 +15,7 @@ const ProfesionalProvider = ({children}) => {
                     "Authorization": token
                 }
                 try {
-                    const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/user/get-all-users`, { headers })
+                    const { data } = await api(`/user/get-all-users`, { headers })
                     setProfessionals(data)
                 } catch (error) {
                     console.error(error.message)

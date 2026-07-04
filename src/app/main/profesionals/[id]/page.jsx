@@ -37,7 +37,7 @@ export default function ProfessionalDetailsClient() {
       const getProfessional = async () => {
         try {
           const { data } = await api.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/user/get-user-by-id?id=${id}`,
+            `/user/get-user-by-id?id=${id}`,
             {
               headers: {
                 Authorization: token,
@@ -48,7 +48,7 @@ export default function ProfessionalDetailsClient() {
 
           // Also fetch schedules
           const schedulesRes = await api.get(
-              `${process.env.NEXT_PUBLIC_API_URL}/user/schedule?userId=${id}`,
+              `/user/schedule?userId=${id}`,
               {
                 headers: {
                   Authorization: token,
@@ -71,7 +71,7 @@ export default function ProfessionalDetailsClient() {
 
     const handleDelete = async () => {
       try {
-        await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/user/delete-user`, {
+        await api.delete(`/user/delete-user`, {
           data: { id },
           headers: {
             Authorization: token,

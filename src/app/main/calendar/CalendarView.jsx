@@ -56,7 +56,7 @@ export default function CalendarView() {
       const startDate = format(startOfMonth(date), 'yyyy-MM-dd')
       const endDate = format(endOfMonth(date), 'yyyy-MM-dd')
 
-      const {data} = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/appointment/calendar-metrics?startDate=${startDate}&endDate=${endDate}`,
+      const {data} = await api.get(`/appointment/calendar-metrics?startDate=${startDate}&endDate=${endDate}`,
             {
                 headers: {
                   Authorization: token,
@@ -81,7 +81,7 @@ export default function CalendarView() {
       .split("T")[0]
 
     const response = await api.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/appointment/day-metrics`,
+      `/appointment/day-metrics`,
       {
         params: {
           date: formattedDate,

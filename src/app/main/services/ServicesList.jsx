@@ -38,7 +38,7 @@ export default function ServicesList() {
         setLoading(true); 
         try {
             const { data } = await api.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/service/get-services-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}${userId ? `&userId=${userId}` : ""}`,
+                `/service/get-services-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}${userId ? `&userId=${userId}` : ""}`,
                 {
                     headers: {
                         Authorization: token,
@@ -62,7 +62,7 @@ export default function ServicesList() {
 
     const handleDelete = async (deleteId) => {
         try {
-            await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/service/delete-service`, {
+            await api.delete(`/service/delete-service`, {
                 data: { id: deleteId },
                 headers: {
                     Authorization: token,

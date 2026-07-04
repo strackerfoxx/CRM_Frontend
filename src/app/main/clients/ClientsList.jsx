@@ -22,7 +22,7 @@ export default function ClientsList() {
         setLoading(true); 
         try {
             const { data } = await api.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/client/get-client-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}`,
+                `/client/get-client-by-params?page=${page}&limit=20${searchTerm ? `&search=${searchTerm}` : ""}`,
                 {
                     headers: {
                         Authorization: token,

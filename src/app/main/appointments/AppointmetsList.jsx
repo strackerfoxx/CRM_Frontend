@@ -40,7 +40,7 @@ export default function AppointmetsListAppointment() {
         setLoading(true)
         try {
             const { data } = await api.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/appointment/get-appointments-by-params?startDate=${new Date(date.from).toISOString().split('T')[0]}&endDate=${new Date(date.to).toISOString().split('T')[0]}${status !== 'all' ? `&status=${status}` : ''}${category ? `&category=${category}` : ''}${service ? `&service=${service}` : ''}${search ? `&search=${search}` : ''}&page=${page}&limit=20`,
+                `/appointment/get-appointments-by-params?startDate=${new Date(date.from).toISOString().split('T')[0]}&endDate=${new Date(date.to).toISOString().split('T')[0]}${status !== 'all' ? `&status=${status}` : ''}${category ? `&category=${category}` : ''}${service ? `&service=${service}` : ''}${search ? `&search=${search}` : ''}&page=${page}&limit=20`,
                 {
                     headers: {
                     Authorization: token,
