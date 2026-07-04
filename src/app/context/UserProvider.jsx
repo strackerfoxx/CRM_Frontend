@@ -1,7 +1,7 @@
 "use client"
 import api from "@/lib/api"
 import { createContext, useState, useEffect } from "react"
-import { refreshAccessToken, saveUser, clearUser, clearAccessToken } from "@/lib/tokenService"
+import { refreshAccessToken, saveAccessToken, saveUser, clearUser, clearAccessToken } from "@/lib/tokenService"
 
 const UserContext = createContext()
 
@@ -20,24 +20,28 @@ const UserProvider = ({ children }) => {
     useEffect(() => {
         const initializeAuth = async () => {
             try {
-                // Try to refresh token using the HttpOnly cookie
                 const newToken = await refreshAccessToken()
                 if (newToken) {
-                    setToken(`Bearer ${newToken}`)
+                    saveAccessToken(newToken)
+                    setToken(newToken)
 
-                    const headers = {
-                        "Authorization": `Bearer ${newToken}`
+                    const { data } = await api.get('/user/get-user-by-id')
+                    const userPayload = data?.user ?? data
+                    const userData = {
+                        id: userPayload?.id,
+                        name: userPayload?.name,
+                        email: userPayload?.email,
+                        role: userPayload?.role,
+                        businessId: userPayload?.businessId,
+                        ...userPayload,
                     }
-                    // Fetch user details with the new token
-                    const { data } = await api(`${process.env.NEXT_PUBLIC_API_URL}/user/get-user-by-id`, { headers })
-                    const userData = {name: data?.user?.name, email: data?.user?.email, id: data?.user?._id}
+
                     setUser(userData)
                     saveUser({ token: newToken, user: userData })
                 } else {
                     clearSession()
                 }
             } catch (error) {
-                // Ignore error, means user is not authenticated
                 clearSession()
             } finally {
                 setIsLoaded(true)
