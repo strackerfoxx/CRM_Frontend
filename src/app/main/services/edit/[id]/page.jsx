@@ -25,7 +25,6 @@ export default function EditService({ params }) {
   const [service, setService] = useState({})
 
   const { token, isLoaded } = useUser()
-  const { team } = useTeam()
 
     useEffect(() => {
       if(!isLoaded) return;
@@ -71,7 +70,6 @@ export default function EditService({ params }) {
   return (
     <>
         <ServiceComponent 
-          team={team}
           id={id}
           editMode={Boolean(id)}
           name={name}

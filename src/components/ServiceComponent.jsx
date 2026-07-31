@@ -1,13 +1,14 @@
 import {
   CheckCircle
 } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import api from "@/lib/api"
 import { toast, Toaster } from "sonner"
 import { z } from "zod"
 import { useUser } from "@/hooks/useUser"
 import { useService } from "@/hooks/useService";
+import { useTeam } from "@/hooks/useTeam";
 
 import OverviewHeader from "@/components/OverviewHeader"
 
@@ -25,7 +26,6 @@ const serviceSchema = z.object({
 })
 
 export default function ServiceComponent({
-  team = [],
   id,
   editMode = false,
   name,
@@ -51,7 +51,7 @@ export default function ServiceComponent({
   const { token } = useUser()
   const { refetchServices } = useService()
   const [isLoading, setIsLoading] = useState(false)
-
+  const { team, refreshTeam } = useTeam()
 
   const isSelected = (staffId) => selectedStaff.some((staff) => staff.id === staffId)
 
@@ -125,6 +125,10 @@ export default function ServiceComponent({
   const handleCancel = () => {
     router.back()
   }
+
+  useEffect(() => {
+    refreshTeam()
+  }, [])
 
   return (
     <div className="min-h-screen bg-black text-[#e2e2e2] mb-10">

@@ -9,7 +9,6 @@ import ServiceComponent from "@/components/ServiceComponent";
 
 export default function CreateService({ params }) {
   const { id } = useParams();
-  const { team } = useTeam()
 
   const [name, setName] = useState("")
   const [category, setCategory] = useState("")
@@ -23,8 +22,7 @@ export default function CreateService({ params }) {
 
   return (
     <>
-        <ServiceComponent 
-          team={team}
+        <ServiceComponent
           id={id}
           editMode={Boolean(id)}
           name={name}

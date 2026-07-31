@@ -27,8 +27,21 @@ const TeamProvider = ({children}) => {
         }
     }, [token])
 
+    const refreshTeam = async () => {
+        const headers = {
+            "Authorization": token
+        }
+        try {
+            const { data } = await api(`/user/get-all-users`, { headers })
+            setTeam(data)
+            
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+
     return (
-        <TeamContext.Provider value={{ team }} >
+        <TeamContext.Provider value={{ team, refreshTeam }} >
             {children}
         </TeamContext.Provider>
     )
