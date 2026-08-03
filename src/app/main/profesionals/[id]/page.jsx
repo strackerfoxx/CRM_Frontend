@@ -29,6 +29,7 @@ export default function ProfessionalDetailsClient() {
   const [ professional, setProfessional ] = useState({})
   const [ schedules, setSchedules ] = useState([])
   const [ isLoading, setIsLoading ] = useState(true)
+  const isAdminProfessional = professional?.role === "ADMIN"
 
     useEffect(() => {
       if(!isLoaded) return;
@@ -175,12 +176,22 @@ export default function ProfessionalDetailsClient() {
                   <Link href={`/main/profesionals/edit/${id}`} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 hover:bg-blue-700 cursor-pointer flex items-center justify-center">
                     Editar profesional
                   </Link>
-                  <DeleteModal
-                    title="¿Eliminar profesional?"
-                    description="Esta acción es permanente e irreversible. ¿Estás seguro de que quieres eliminar a este profesional?"
-                    onDelete={handleDelete}
-                    triggerLabel="Eliminar"
-                  />
+                  {!isAdminProfessional ? (
+                    <DeleteModal
+                      title="¿Eliminar profesional?"
+                      description="Esta acción es permanente e irreversible. ¿Estás seguro de que quieres eliminar a este profesional?"
+                      onDelete={handleDelete}
+                      triggerLabel="Eliminar"
+                    />
+                  ) : (
+                    <button
+                      disabled
+                      className="bg-neutral-700 p-2 rounded-3xl font-semibold px-4 text-neutral-400 cursor-not-allowed flex items-center justify-center"
+                      title="Los administradores no pueden ser eliminados"
+                    >
+                      Eliminar
+                    </button>
+                  )}
                 </div>
               </div>
 
