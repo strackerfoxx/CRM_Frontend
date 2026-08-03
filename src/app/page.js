@@ -11,9 +11,11 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Eye, EyeOff } from "lucide-react"
 
 import api from "@/lib/api"
 import { useUser } from "@/hooks/useUser"
+import { sanitizeString } from "@/lib/utils"
 
 import { useForm, FormProvider } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -21,11 +23,12 @@ import { toast, Toaster } from "sonner"
 import { z } from "zod"
 
 import { redirect } from "next/navigation"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"
 import { saveAccessToken, saveUser } from "@/lib/tokenService"
 
 export default function LoginForm() {
+  const [showPassword, setShowPassword] = useState(false)
 
   const router = useRouter()
   const { token, setToken, isLoaded, setUser } = useUser()
@@ -44,9 +47,13 @@ export default function LoginForm() {
   })
 
     async function onSubmit(data) {
+      const trimmedData = {
+        email: sanitizeString(data.email),
+        password: sanitizeString(data.password),
+      }
 
       try {
-        const { data: response } = await api.post(`/user/login`, data)
+        const { data: response } = await api.post(`/user/login`, trimmedData)
         setToken(`Bearer ${response.token}`)
         saveUser(response)
         saveAccessToken(response.token)
@@ -100,7 +107,22 @@ export default function LoginForm() {
                     <FormItem>
                       <FormLabel>Contraseña</FormLabel>
                       <FormControl>
-                        <Input type="password" {...field} autoComplete="current-password" />
+                        <div className="relative w-full">
+                          <Input
+                            type={showPassword ? "text" : "password"}
+                            {...field}
+                            autoComplete="current-password"
+                            className="pr-10"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword((value) => !value)}
+                            className="absolute inset-y-0 right-2 flex items-center justify-center rounded-md px-2 text-muted-foreground transition-colors hover:text-primary focus:outline-none focus:ring-2 focus:ring-ring"
+                            aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                          >
+                            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          </button>
+                        </div>
                       </FormControl>
                       {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
                     </FormItem>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getAccessToken, getUser, saveAccessToken, saveUser, clearAccessToken, clearUser } from '@/lib/tokenService';
+import { sanitizePayload } from '@/lib/utils';
 
 const API_URL = '/api';
 
@@ -10,6 +11,10 @@ const api = axios.create({
 
 // 1. Agregar el access token a todas las peticiones
 api.interceptors.request.use((config) => {
+    if (config.data) {
+        config.data = sanitizePayload(config.data);
+    }
+
     let token = getAccessToken();
     if (!token && getUser()) {
         const userObj = getUser();
