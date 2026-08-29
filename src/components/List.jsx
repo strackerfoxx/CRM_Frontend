@@ -52,9 +52,9 @@ export default function List({appointments}) {
             <div className="col-time">{appointment.startTime}</div>
             <div className="col-status">
               <div 
-                className={` text-sm text-center py-1 rounded-3xl w-24 ${appointment.status === "SCHEDULED" ? "bg-amber-400/60 text-white border border-amber-400 h-7"
-                  : appointment.status === "CANCELED" ? "bg-red-900/60 text-white border border-red-500 h-7"
-                  : appointment.status === "COMPLETED" ? "bg-blue-900/60 text-white border border-blue-500" : "bg-green-900/60 text-white border border-green-400 h-7"}`}>
+                className={` text-sm text-center py-1 rounded-3xl w-24 ${appointment.status === "SCHEDULED" ? "bg-amber-500/20 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-400/60 text-amber-700 dark:text-white border border-amber-400 h-7"
+                  : appointment.status === "CANCELED" ? "bg-red-500/20 dark:bg-red-100 dark:bg-red-100 dark:bg-red-900/60 text-amber-700 dark:text-white border border-red-500 h-7"
+                  : appointment.status === "COMPLETED" ? "bg-blue-500/20 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-900/60 text-amber-700 dark:text-white border border-blue-500" : "bg-green-500/20 dark:bg-green-100 dark:bg-green-100 dark:bg-green-900/60 text-amber-700 dark:text-white border border-green-400 h-7"}`}>
                 {appointment.status === "SCHEDULED" ? "Agendada"
                   : appointment.status === "CANCELED" ? "Cancelada"
                   : appointment.status === "COMPLETED" ? "Completada" : "Confirmada"}

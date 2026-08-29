@@ -233,7 +233,7 @@ export default function ServiceComponent({
             <div className="space-y-4">
               <label className="label text-neutral-400 tg">*opcional*</label>
 
-              <div className="bg-[#0e0e0e] rounded-lg mt-2">
+              <div className="bg-muted/30 rounded-lg mt-2">
                 <textarea 
                   name="description"
                   value={description}
@@ -327,14 +327,14 @@ export default function ServiceComponent({
         </div>
       </main>
       
-      <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+      <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </div>
   )
 }
 
 function Section({ title, index, children }) {
   return (
-    <section className="bg-[#1b1b1b] p-5 sm:p-8 border space-y-6 sm:space-y-8 rounded-xl">
+    <section className="bg-card p-5 sm:p-8 border space-y-6 sm:space-y-8 rounded-xl">
       <div className="flex items-center gap-3 sm:gap-4">
         <span className="text-[10px] uppercase tracking-[0.2em] text-blue-400 px-3 py-1 bg-blue-400/10 rounded-full">
           {index}
@@ -361,7 +361,7 @@ function Input({ label, onFocus, ...props }) {
 
           onFocus?.(e);
         }}
-        className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none text-sm rounded-lg mt-2"
+        className="w-full bg-muted/30 p-3 sm:p-4 outline-none text-sm rounded-lg mt-2"
       />
     </div>
   )
@@ -373,7 +373,7 @@ function Textarea({ label, className = "", ...props }) {
       <label className="label text-neutral-400">{label}</label>
       <textarea
         {...props}
-        className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none resize-none text-sm rounded-lg mt-2"
+        className="w-full bg-muted/30 p-3 sm:p-4 outline-none resize-none text-sm rounded-lg mt-2"
       />
     </div>
   )
@@ -385,7 +385,7 @@ function Select({ label, ...props }) {
       <label className="label text-neutral-400">{label}</label>
       <select
         {...props}
-        className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none text-sm rounded-lg mt-2"
+        className="w-full bg-muted/30 p-3 sm:p-4 outline-none text-sm rounded-lg mt-2"
         disabled
       >
         <option>Selecciona una categoria</option>

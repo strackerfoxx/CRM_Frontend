@@ -152,7 +152,7 @@ export default function MessageSender({ appointment }) {
   }
 
   return (
-    <div className="mt-8 rounded-xl border border-border bg-neutral-950 p-6">
+    <div className="mt-8 rounded-xl border border-border bg-card p-6">
       <div className="flex items-center justify-between gap-3">
         <div>
           <h3 className="flex items-center gap-3 text-lg font-semibold text-foreground">
@@ -179,7 +179,7 @@ export default function MessageSender({ appointment }) {
                 onClick={() => handleModeSelect(mode.id)}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                   isActive
-                    ? "bg-blue-950/[50%] border border-blue-500 text-white"
+                    ? "bg-primary text-primary-foreground border border-blue-500 text-white"
                     : "bg-card text-neutral-300 hover:bg-accent hover:text-accent-foreground"
                 }`}
               >

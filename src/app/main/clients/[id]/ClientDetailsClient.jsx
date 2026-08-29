@@ -252,23 +252,23 @@ export default function ClientDetailsClient() {
                 <span
                   className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset ${
                     appointment.status === "SCHEDULED"
-                      ? "bg-amber-400/60 ring-amber-300/40 border-amber-300 text-amber-300"
+                      ? "bg-amber-500/20 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-400/60 ring-amber-300/40 border-amber-300 text-amber-700 dark:text-amber-300"
                       : appointment.status === "CANCELED"
-                      ? "bg-red-900/60 ring-red-400/30 border-red-500 text-red-300"
+                      ? "bg-red-500/20 dark:bg-red-100 dark:bg-red-100 dark:bg-red-100 dark:bg-red-900/60 ring-red-400/30 border-red-500 text-red-700 dark:text-red-300"
                       : appointment.status === "COMPLETED"
-                      ? "bg-blue-900/60 ring-blue-400/30 text-blue-300"
-                      : "bg-green-900/60 ring-green-400/30 border border-green-400 text-green-300"
+                      ? "bg-blue-500/20 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-900/60 ring-blue-400/30 text-blue-700 dark:text-blue-300"
+                      : "bg-green-500/20 dark:bg-green-100 dark:bg-green-100 dark:bg-green-100 dark:bg-green-900/60 ring-green-400/30 border border-green-400 text-green-700 dark:text-green-300"
                   }`}
                 >
                   <span
                     className={`h-1.5 w-1.5 rounded-full ${
                       appointment.status === "SCHEDULED"
-                        ? "bg-amber-400/60 border border-amber-300"
+                        ? "bg-amber-500/20 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-400/60 border border-amber-300"
                         : appointment.status === "CANCELED"
-                        ? "bg-red-900/60 border border-red-500"
+                        ? "bg-red-500/20 dark:bg-red-100 dark:bg-red-100 dark:bg-red-100 dark:bg-red-900/60 border border-red-500"
                         : appointment.status === "COMPLETED"
-                        ? "bg-blue-900/60"
-                        : "bg-green-900/60 border border-green-400"
+                        ? "bg-blue-500/20 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-900/60"
+                        : "bg-green-500/20 dark:bg-green-100 dark:bg-green-100 dark:bg-green-100 dark:bg-green-900/60 border border-green-400"
                     }`}
                   ></span>
                   {appointment.status === "SCHEDULED"
@@ -287,7 +287,7 @@ export default function ClientDetailsClient() {
           ))}
     </div>
   </div>
-  <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+  <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
 </>
   )
 }

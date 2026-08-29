@@ -37,9 +37,9 @@ export default function AppointmentsList({ appointments, loading }) {
                                 <div className="col-name overflow-hidden truncate">{a.businessClient.client.name}</div>
                                 <div className="col-phone overflow-hidden truncate">{a.businessClient.client.phone}</div>
                                 <div
-                                    className={` text-sm text-center py-1 rounded-3xl w-24 ${a.status === "SCHEDULED" ? "bg-amber-400/60 text-white border border-amber-400 h-7"
-                                    : a.status === "CANCELED" ? "bg-red-900/60 text-white border border-red-500 h-7"
-                                    : a.status === "COMPLETED" ? "bg-blue-900/60 text-white border border-blue-500" : "bg-green-900/60 text-white border border-green-400 h-7"}`}>
+                                    className={` text-sm text-center py-1 rounded-3xl w-24 ${a.status === "SCHEDULED" ? "bg-amber-500/20 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-400/60 text-amber-700 dark:text-white border border-amber-400 h-7"
+                                    : a.status === "CANCELED" ? "bg-red-500/20 dark:bg-red-100 dark:bg-red-100 dark:bg-red-900/60 text-amber-700 dark:text-white border border-red-500 h-7"
+                                    : a.status === "COMPLETED" ? "bg-blue-500/20 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-900/60 text-amber-700 dark:text-white border border-blue-500" : "bg-green-500/20 dark:bg-green-100 dark:bg-green-100 dark:bg-green-900/60 text-amber-700 dark:text-white border border-green-400 h-7"}`}>
                                     {a.status === "SCHEDULED" ? "Agendada"
                                     : a.status === "CANCELED" ? "Cancelada"
                                     : a.status === "COMPLETED" ? "Completada" : "Confirmada"}
