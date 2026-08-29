@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { Button } from "@/components/ui/button"
+import { ThemeToggle } from "./ThemeToggle"
 import { useLogout } from "@/hooks/useLogout"
 
 // Menu items.
@@ -91,7 +92,7 @@ export function AppSidebar() {
           <SidebarGroupContent className="transition-all group-data-[collapsible=icon]:mt-13 mt-5 transition-none">
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title} className=" rounded-r-lg hover:bg-neutral-900">
+                <SidebarMenuItem key={item.title} className=" rounded-r-lg hover:bg-accent hover:text-accent-foreground">
                   <SidebarMenuButton asChild className="[&>svg]:size-5" isActive={true}>
                     <Link href={item.url} className="flex items-center h-6 px-4 my-3">
                       <item.icon/>
@@ -122,6 +123,7 @@ export function AppSidebar() {
                   <DropdownMenuItem>
                     <span>Account</span>
                   </DropdownMenuItem>
+                  <ThemeToggle />
                   <DropdownMenuItem>
                     <Button onClick={handleLogout} variant="outline" className="w-full">
                       Sign out

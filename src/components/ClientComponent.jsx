@@ -83,7 +83,7 @@ export default function ClientComponent({
   }
 
   return (
-    <div className="min-h-screen bg-black text-[#e2e2e2] mb-10">
+    <div className="min-h-screen bg-background text-[#e2e2e2] mb-10">
     <Toaster position="top-center" richColors />
     {/* HEADER */}
       <OverviewHeader />
@@ -106,7 +106,7 @@ export default function ClientComponent({
           <div className="flex gap-3 sm:gap-4">
             <button
               onClick={handleCancel}
-              className="bg-neutral-800 px-4 sm:px-8 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase rounded-xl hover:bg-neutral-900 transition cursor-pointer">
+              className="bg-secondary text-secondary-foreground px-4 sm:px-8 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase rounded-xl hover:bg-accent hover:text-accent-foreground transition cursor-pointer">
               Cancelar
             </button>
             <button
@@ -127,16 +127,16 @@ export default function ClientComponent({
             {isFetchingData ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-2">
-                   <Skeleton className="h-5 w-24 bg-neutral-800" />
-                   <Skeleton className="h-12 w-full rounded-xl bg-neutral-800" />
+                   <Skeleton className="h-5 w-24 bg-secondary text-secondary-foreground" />
+                   <Skeleton className="h-12 w-full rounded-xl bg-secondary text-secondary-foreground" />
                 </div>
                 <div className="space-y-2">
-                   <Skeleton className="h-5 w-24 bg-neutral-800" />
-                   <Skeleton className="h-12 w-full rounded-xl bg-neutral-800" />
+                   <Skeleton className="h-5 w-24 bg-secondary text-secondary-foreground" />
+                   <Skeleton className="h-12 w-full rounded-xl bg-secondary text-secondary-foreground" />
                 </div>
                 <div className="space-y-2">
-                   <Skeleton className="h-5 w-24 bg-neutral-800" />
-                   <Skeleton className="h-12 w-full rounded-xl bg-neutral-800" />
+                   <Skeleton className="h-5 w-24 bg-secondary text-secondary-foreground" />
+                   <Skeleton className="h-12 w-full rounded-xl bg-secondary text-secondary-foreground" />
                 </div>
               </div>
             ) : (
@@ -156,9 +156,9 @@ export default function ClientComponent({
                     country={'mx'}
                     value={phone}
                     onChange={phone => setPhone(phone)}
-                    inputClass="!w-full !bg-[#0e0e0e] !p-3 sm:!p-4 !pl-[48px] sm:!pl-[48px] !outline-none !text-sm !rounded-lg !mt-2 !text-white !border-none !h-[48px] sm:!h-[52px]"
+                    inputClass="!w-full !bg-[#0e0e0e] !p-3 sm:!p-4 !pl-[48px] sm:!pl-[48px] !outline-none !text-sm !rounded-lg !mt-2 !text-foreground !border-none !h-[48px] sm:!h-[52px]"
                     buttonClass="!bg-transparent !border-none !mt-2 !pl-2"
-                    dropdownClass="!bg-[#1a1a1a] !text-white !border-neutral-800"
+                    dropdownClass="!bg-[#1a1a1a] !text-foreground !border-border"
                     containerClass="w-full"
                     placeholder="Ej. 555 123 4567"
                   />

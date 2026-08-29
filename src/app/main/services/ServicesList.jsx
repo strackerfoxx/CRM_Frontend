@@ -93,14 +93,14 @@ export default function ServicesList() {
             onSubmit={getServices}
             placeholder="Buscar servicios por nombre, precio o duración..."
         >
-            <div className='flex justify-between gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 w-[220px] mr-1 mb-4 md:mb-0 h-10'>
+            <div className='flex justify-between gap-2 items-center bg-background text-foreground p-2 rounded-lg border border-border w-[220px] mr-1 mb-4 md:mb-0 h-10'>
                 <span className='text-gray-600 font-semibold'>Profesional</span>
                 <select
                     name="userId"
                     id="userId"
                     value={userId}
                     onChange={e => setUserId(e.target.value)}
-                    className="bg-black text-white items-center w-full text-center"
+                    className="bg-background text-foreground items-center w-full text-center"
                 >
                     <option value="">Selecciona el profesional</option>
                     {professionals.map((professional) => (
@@ -112,7 +112,7 @@ export default function ServicesList() {
             </div>
         </SearchBarComponent>
         <div className="m-5">
-            <div className="bg-neutral-900 rounded-2xl font-semibold">
+            <div className="bg-card rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}
                 <div className="hidden sm:grid list-grid-actions text-neutral-400 font-semibold mb-2 border-b pb-2 p-5">
                     <span>Nombre</span>
@@ -133,7 +133,7 @@ export default function ServicesList() {
                     <>
                         {filteredServices?.map((s) => (
                             <Link href={`/main/services/${s.id}`} key={s.id} 
-                                className="list-grid-actions item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
+                                className="list-grid-actions item hover:bg-accent hover:text-accent-foreground px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
                             > 
                                 <div className="col-name overflow-hidden truncate text-lg">{s.name}</div>
                                 <div className="col-price overflow-hidden truncate">${s.price.toFixed(2)}</div>

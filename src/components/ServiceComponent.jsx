@@ -131,7 +131,7 @@ export default function ServiceComponent({
   }, [])
 
   return (
-    <div className="min-h-screen bg-black text-[#e2e2e2] mb-10">
+    <div className="min-h-screen bg-background text-[#e2e2e2] mb-10">
     <Toaster position="top-center" richColors />
     {/* HEADER */}
       <OverviewHeader />
@@ -154,7 +154,7 @@ export default function ServiceComponent({
           <div className="flex gap-3 sm:gap-4">
             <button 
               onClick={handleCancel}
-              className="bg-neutral-800 px-4 sm:px-8 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase rounded-xl hover:bg-neutral-900 transition cursor-pointer">
+              className="bg-secondary text-secondary-foreground px-4 sm:px-8 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase rounded-xl hover:bg-accent hover:text-accent-foreground transition cursor-pointer">
               Cancelar
             </button>
             <button 
@@ -261,7 +261,7 @@ export default function ServiceComponent({
                   name="cleaningTimeMin"
                   value={cleaningTimeMin}
                   onChange={e => setCleaningTimeMin(e.target.value)}
-                  className="w-20 bg-neutral-800 rounded-l-lg p-2 text-center"
+                  className="w-20 bg-secondary text-secondary-foreground rounded-l-lg p-2 text-center"
                   min={0}
                   onFocus={e => e.target.select()}
                 />
@@ -307,7 +307,7 @@ export default function ServiceComponent({
                     onClick={() => handleStaffToggle(staff)}
                     role="button"
                     tabIndex={0}
-                    className={`p-5 border transition cursor-pointer flex justify-between items-center rounded-lg ${selected ? "border-blue-500 bg-blue-600/10" : "border-neutral-800 hover:border-neutral-600"}`}
+                    className={`p-5 border transition cursor-pointer flex justify-between items-center rounded-lg ${selected ? "border-blue-500 bg-blue-600/10" : "border-border hover:border-neutral-600"}`}
                   >
                     <div>
                       <p className="text-sm font-bold uppercase">

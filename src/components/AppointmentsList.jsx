@@ -8,7 +8,7 @@ export default function AppointmentsList({ appointments, loading }) {
   return (
     <>
         <div className="m-5">
-            <div className="bg-neutral-900 rounded-2xl font-semibold">
+            <div className="bg-card rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}
                 <div className="hidden md:grid grid-cols-5 header text-neutral-400 font-semibold mb-2 border-b pb-2 p-5 rounded-b-xl">
                     <span>Cliente</span>
@@ -32,7 +32,7 @@ export default function AppointmentsList({ appointments, loading }) {
                     <>
                         {appointments.map((a) => (
                             <Link href={`/main/appointments/${a.id}`} key={a.id}
-                                className="grid grid-cols-1 md:grid-cols-5 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
+                                className="grid grid-cols-1 md:grid-cols-5 item hover:bg-accent hover:text-accent-foreground px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
                             >
                                 <div className="col-name overflow-hidden truncate">{a.businessClient.client.name}</div>
                                 <div className="col-phone overflow-hidden truncate">{a.businessClient.client.phone}</div>

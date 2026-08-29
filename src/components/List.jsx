@@ -37,7 +37,7 @@ export default function List({appointments}) {
 
   return (
     <div className="list-screen m-5">
-      <div className="bg-neutral-900 rounded-2xl font-semibold">
+      <div className="bg-card rounded-2xl font-semibold">
         <div className="list-grid header text-neutral-400 font-semibold mb-2 border-b pb-2 p-5">
           <span>Hora</span>
           <span>Estado</span>
@@ -47,7 +47,7 @@ export default function List({appointments}) {
 
         {filteredAppointments.map((appointment) => (
           <Link href={`/main/appointments/${appointment.id}`} key={appointment.id} 
-            className="list-grid item hover:bg-neutral-800 px-6 py-4 mt-2 border-b rounded-b-xl border-b-neutral-700"
+            className="list-grid item hover:bg-accent hover:text-accent-foreground px-6 py-4 mt-2 border-b rounded-b-xl border-b-neutral-700"
           >
             <div className="col-time">{appointment.startTime}</div>
             <div className="col-status">
@@ -75,7 +75,7 @@ export default function List({appointments}) {
           mode="single"
           selected={date}
           onSelect={setDate}
-          className="rounded-lg bg-neutral-900"
+          className="rounded-lg bg-card"
         />
     </div>
   )

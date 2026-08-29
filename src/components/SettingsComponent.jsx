@@ -111,16 +111,16 @@ export default function SettingsComponent() {
 
   if (isFetching) {
     return (
-      <div className="min-h-screen bg-black text-[#e2e2e2] mb-10">
+      <div className="min-h-screen bg-background text-[#e2e2e2] mb-10">
         <OverviewHeader />
         <main className="pt-10 sm:pt-10">
           <div className="px-4 sm:px-10 py-10 sm:py-12 flex flex-col lg:flex-row gap-6 lg:justify-between lg:items-end">
-             <Skeleton className="h-12 w-64 bg-neutral-800" />
+             <Skeleton className="h-12 w-64 bg-secondary text-secondary-foreground" />
           </div>
           <div className="px-4 sm:px-10 py-10 sm:py-12 max-w-5xl mx-auto space-y-10 sm:space-y-14 rounded-2xl">
-             <Skeleton className="h-48 w-full bg-neutral-800" />
-             <Skeleton className="h-48 w-full bg-neutral-800" />
-             <Skeleton className="h-64 w-full bg-neutral-800" />
+             <Skeleton className="h-48 w-full bg-secondary text-secondary-foreground" />
+             <Skeleton className="h-48 w-full bg-secondary text-secondary-foreground" />
+             <Skeleton className="h-64 w-full bg-secondary text-secondary-foreground" />
           </div>
         </main>
       </div>
@@ -128,7 +128,7 @@ export default function SettingsComponent() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-[#e2e2e2] mb-10">
+    <div className="min-h-screen bg-background text-[#e2e2e2] mb-10">
       <Toaster position="top-center" richColors />
       <OverviewHeader />
 
@@ -146,7 +146,7 @@ export default function SettingsComponent() {
           <div className="flex gap-3 sm:gap-4">
             <button
               onClick={handleCancel}
-              className="bg-neutral-800 px-4 sm:px-8 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase rounded-xl hover:bg-neutral-900 transition cursor-pointer">
+              className="bg-secondary text-secondary-foreground px-4 sm:px-8 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase rounded-xl hover:bg-accent hover:text-accent-foreground transition cursor-pointer">
               Cancelar
             </button>
             <button
@@ -192,9 +192,9 @@ export default function SettingsComponent() {
                   country={'mx'}
                   value={phone || ""}
                   onChange={phone => setPhone(phone)}
-                  inputClass="!w-full !bg-[#0e0e0e] !p-3 sm:!p-4 !pl-[48px] sm:!pl-[48px] !outline-none !text-sm !rounded-lg !mt-2 !text-white !border-none !h-[48px] sm:!h-[52px]"
+                  inputClass="!w-full !bg-[#0e0e0e] !p-3 sm:!p-4 !pl-[48px] sm:!pl-[48px] !outline-none !text-sm !rounded-lg !mt-2 !text-foreground !border-none !h-[48px] sm:!h-[52px]"
                   buttonClass="!bg-transparent !border-none !mt-2 !pl-2"
-                  dropdownClass="!bg-[#1a1a1a] !text-white !border-neutral-800"
+                  dropdownClass="!bg-[#1a1a1a] !text-foreground !border-border"
                   containerClass="w-full"
                   placeholder="552405238"
                 />
@@ -217,7 +217,7 @@ export default function SettingsComponent() {
                   name="defaultSlotInterval"
                   value={defaultSlotInterval}
                   onChange={e => setDefaultSlotInterval(e.target.value)}
-                  className="w-20 bg-[#0e0e0e] rounded-l-lg p-3 sm:p-4 text-center text-white outline-none"
+                  className="w-20 bg-[#0e0e0e] rounded-l-lg p-3 sm:p-4 text-center text-foreground outline-none"
                   min={5}
                   step={5}
                 />
@@ -259,7 +259,7 @@ export default function SettingsComponent() {
                               type="time"
                               value={daySchedule.open}
                               onChange={e => handleBusinessHourChange(key, 'open', e.target.value)}
-                              className="bg-[#1b1b1b] p-2 rounded-lg text-white outline-none w-full"
+                              className="bg-[#1b1b1b] p-2 rounded-lg text-foreground outline-none w-full"
                             />
                         </div>
                         <div className="flex items-center gap-2">
@@ -268,7 +268,7 @@ export default function SettingsComponent() {
                               type="time"
                               value={daySchedule.close}
                               onChange={e => handleBusinessHourChange(key, 'close', e.target.value)}
-                              className="bg-[#1b1b1b] p-2 rounded-lg text-white outline-none w-full"
+                              className="bg-[#1b1b1b] p-2 rounded-lg text-foreground outline-none w-full"
                             />
                         </div>
                       </>
@@ -293,7 +293,7 @@ export default function SettingsComponent() {
 
 function Section({ title, index, children, className = "" }) {
   return (
-    <section className={`bg-[#1b1b1b] p-5 sm:p-8 border space-y-6 sm:space-y-8 rounded-xl border-neutral-800 ${className}`}>
+    <section className={`bg-[#1b1b1b] p-5 sm:p-8 border space-y-6 sm:space-y-8 rounded-xl border-border ${className}`}>
       <div className="flex items-center gap-3 sm:gap-4">
         <span className="text-[10px] uppercase tracking-[0.2em] text-blue-400 px-3 py-1 bg-blue-400/10 rounded-full">
           {index}
@@ -313,7 +313,7 @@ function Input({ label, className = "", ...props }) {
       <label className="label text-neutral-400">{label}</label>
       <input
         {...props}
-        className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none text-sm rounded-lg mt-2 text-white"
+        className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none text-sm rounded-lg mt-2 text-foreground"
       />
     </div>
   )

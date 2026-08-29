@@ -210,7 +210,7 @@ export default function ProfessionalComponent({
   };
 
   return (
-    <div className="min-h-screen bg-black text-[#e2e2e2] mb-10">
+    <div className="min-h-screen bg-background text-[#e2e2e2] mb-10">
       <Toaster position="top-center" richColors />
       <OverviewHeader />
 
@@ -229,7 +229,7 @@ export default function ProfessionalComponent({
           <div className="flex gap-3 sm:gap-4">
             <button
               onClick={handleCancel}
-              className="bg-neutral-800 px-4 sm:px-8 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase rounded-xl hover:bg-neutral-900 transition cursor-pointer">
+              className="bg-secondary text-secondary-foreground px-4 sm:px-8 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase rounded-xl hover:bg-accent hover:text-accent-foreground transition cursor-pointer">
               Cancelar
             </button>
             <button
@@ -267,9 +267,9 @@ export default function ProfessionalComponent({
                   country={'mx'}
                   value={phone || ""}
                   onChange={phone => setPhone(phone)}
-                  inputClass="!w-full !bg-[#0e0e0e] !p-3 sm:!p-4 !pl-[48px] sm:!pl-[48px] !outline-none !text-sm !rounded-lg !mt-2 !text-white !border-none !h-[48px] sm:!h-[52px]"
+                  inputClass="!w-full !bg-[#0e0e0e] !p-3 sm:!p-4 !pl-[48px] sm:!pl-[48px] !outline-none !text-sm !rounded-lg !mt-2 !text-foreground !border-none !h-[48px] sm:!h-[52px]"
                   buttonClass="!bg-transparent !border-none !mt-2 !pl-2"
-                  dropdownClass="!bg-[#1a1a1a] !text-white !border-neutral-800"
+                  dropdownClass="!bg-[#1a1a1a] !text-foreground !border-border"
                   containerClass="w-full"
                   placeholder="+123456789"
                 />
@@ -362,7 +362,7 @@ export default function ProfessionalComponent({
 
 function Section({ title, index, children }) {
   return (
-    <section className="bg-[#1b1b1b] p-5 sm:p-8 border space-y-6 sm:space-y-8 rounded-xl border-neutral-800">
+    <section className="bg-[#1b1b1b] p-5 sm:p-8 border space-y-6 sm:space-y-8 rounded-xl border-border">
       <div className="flex items-center gap-3 sm:gap-4">
         <span className="text-[10px] uppercase tracking-[0.2em] text-blue-400 px-3 py-1 bg-blue-400/10 rounded-full">
           {index}
@@ -382,7 +382,7 @@ function Input({ label, ...props }) {
       <label className="label text-neutral-400">{label}</label>
       <input
         {...props}
-        className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none text-sm rounded-lg mt-2 text-white"
+        className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none text-sm rounded-lg mt-2 text-foreground"
       />
     </div>
   )
@@ -394,7 +394,7 @@ function Select({ label, options, ...props }) {
       <label className="label text-neutral-400">{label}</label>
       <select
         {...props}
-        className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none text-sm rounded-lg mt-2 text-white"
+        className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none text-sm rounded-lg mt-2 text-foreground"
       >
         <option value="">Selecciona</option>
         {options.map((opt) => (

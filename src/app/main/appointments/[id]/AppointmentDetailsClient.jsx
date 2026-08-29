@@ -177,7 +177,7 @@ export default function AppointmentDetailsClient() {
           <div className="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
             <div>
               <div className="flex items-center gap-3">
-                <h2 className="text-3xl font-bold text-white">Detalles de la Cita</h2>
+                <h2 className="text-3xl font-bold text-foreground">Detalles de la Cita</h2>
                 <span
                   className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset ${
                     appointment.status === "SCHEDULED"
@@ -248,13 +248,13 @@ export default function AppointmentDetailsClient() {
                 />
               </div>
 
-              <div className="mt-6 rounded-lg border border-neutral-800 bg-neutral-950 p-4">
-                <h3 className="mb-4 text-lg font-semibold text-white">Servicios Asignados</h3>
+              <div className="mt-6 rounded-lg border border-border bg-neutral-950 p-4">
+                <h3 className="mb-4 text-lg font-semibold text-foreground">Servicios Asignados</h3>
                 <div className="space-y-3">
                   {appointment.services?.map((service) => (
-                    <div key={service.id} className="flex items-center justify-between rounded-md border border-neutral-700 bg-neutral-900 p-3">
+                    <div key={service.id} className="flex items-center justify-between rounded-md border border-border bg-card p-3">
                       <div>
-                        <p className="font-medium text-white">{service.service?.name}</p>
+                        <p className="font-medium text-foreground">{service.service?.name}</p>
                         <p className="text-sm text-neutral-400">${service.service?.price} • {service.service?.durationMin} min</p>
                       </div>
                       <div className="text-right">

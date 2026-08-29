@@ -136,7 +136,7 @@ export default function BlockedTimesSection() {
                             type="date"
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
-                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-white"
+                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-foreground"
                             required
                         />
                     </div>
@@ -146,7 +146,7 @@ export default function BlockedTimesSection() {
                             type="time"
                             value={start}
                             onChange={(e) => setStart(e.target.value)}
-                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-white"
+                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-foreground"
                             required
                         />
                     </div>
@@ -156,7 +156,7 @@ export default function BlockedTimesSection() {
                             type="time"
                             value={end}
                             onChange={(e) => setEnd(e.target.value)}
-                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-white"
+                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-foreground"
                             required
                         />
                     </div>
@@ -165,7 +165,7 @@ export default function BlockedTimesSection() {
                         <select
                             value={userId}
                             onChange={(e) => setUserId(e.target.value)}
-                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-white"
+                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-foreground"
                         >
                             <option value="">Todos</option>
                             {professionals?.map(p => (
@@ -179,7 +179,7 @@ export default function BlockedTimesSection() {
                         <button
                             type="button"
                             onClick={resetForm}
-                            className="px-4 py-2 text-xs font-bold bg-neutral-800 rounded-lg hover:bg-neutral-700 transition"
+                            className="px-4 py-2 text-xs font-bold bg-secondary text-secondary-foreground rounded-lg hover:bg-neutral-700 transition"
                         >
                             Cancelar
                         </button>
@@ -213,7 +213,7 @@ export default function BlockedTimesSection() {
                             )}
                             <button
                                 onClick={() => handleEdit(bt)}
-                                className="ml-4 px-3 py-1 bg-neutral-800 text-xs rounded-lg hover:bg-neutral-700 transition"
+                                className="ml-4 px-3 py-1 bg-secondary text-secondary-foreground text-xs rounded-lg hover:bg-neutral-700 transition"
                             >
                                 Editar
                             </button>

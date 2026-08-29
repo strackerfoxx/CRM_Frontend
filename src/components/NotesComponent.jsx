@@ -140,13 +140,13 @@ export default function NotesComponent({ notes, setNotes, id }) {
   return (
 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 mt-10">
   {/* Sección: Agregar nota */}
-  <div className="bg-neutral-900 rounded-md p-6 flex flex-col gap-4">
+  <div className="bg-card rounded-md p-6 flex flex-col gap-4">
     <h3 className="text-lg font-semibold">Agregar nota</h3>
     {isLoading ? (
       <>
-        <Skeleton className="w-full h-[150px] bg-neutral-800" />
+        <Skeleton className="w-full h-[150px] bg-secondary text-secondary-foreground" />
         <div className="flex justify-end">
-          <Skeleton className="w-32 h-10 rounded-3xl bg-neutral-800" />
+          <Skeleton className="w-32 h-10 rounded-3xl bg-secondary text-secondary-foreground" />
         </div>
       </>
     ) : (
@@ -156,7 +156,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
           id="notes"
           value={newNote}
           onChange={(e) => setNewNote(e.target.value)}
-          className="w-full h-[150px] bg-neutral-950 text-white rounded-md p-4"
+          className="w-full h-[150px] bg-neutral-950 text-foreground rounded-md p-4"
         ></textarea>
         <div className="flex justify-end">
           <button
@@ -172,16 +172,16 @@ export default function NotesComponent({ notes, setNotes, id }) {
   </div>
 
   {/* Sección: Lista de Notas */}
-  <div className="bg-neutral-900 rounded-md p-6 flex flex-col gap-4">
+  <div className="bg-card rounded-md p-6 flex flex-col gap-4">
     <h3 className="text-lg font-semibold">Notas</h3>
     <div className="space-y-4 overflow-y-scroll max-h-[200px] pr-2">
       {isLoading ? (
         // Mostramos 3 skeletons simulando las notas
         Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className="bg-neutral-950 p-4 rounded-md">
-            <Skeleton className="h-4 w-24 mb-3 bg-neutral-800" />
-            <Skeleton className="h-4 w-full mb-2 bg-neutral-800" />
-            <Skeleton className="h-4 w-3/4 bg-neutral-800" />
+            <Skeleton className="h-4 w-24 mb-3 bg-secondary text-secondary-foreground" />
+            <Skeleton className="h-4 w-full mb-2 bg-secondary text-secondary-foreground" />
+            <Skeleton className="h-4 w-3/4 bg-secondary text-secondary-foreground" />
           </div>
         ))
       ) : (
@@ -221,7 +221,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
                 <textarea
                   value={editNoteContent}
                   onChange={(e) => setEditNoteContent(e.target.value)}
-                  className="w-full bg-neutral-900 text-white rounded-md p-3 min-h-[80px]"
+                  className="w-full bg-card text-foreground rounded-md p-3 min-h-[80px]"
                 />
                 <div className="flex justify-end gap-2 mt-1">
                   <button
@@ -229,7 +229,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
                       setEditingNoteId(null);
                       setEditNoteContent("");
                     }}
-                    className="text-xs text-neutral-400 hover:text-white px-2 py-1"
+                    className="text-xs text-neutral-400 hover:text-foreground px-2 py-1"
                     disabled={isUpdatingNote}
                   >
                     Cancelar
@@ -244,7 +244,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
                 </div>
               </div>
             ) : (
-              <p className="text-white">{note.content}</p>
+              <p className="text-foreground">{note.content}</p>
             )}
           </div>
         ))
