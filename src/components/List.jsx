@@ -47,7 +47,7 @@ export default function List({appointments}) {
 
         {filteredAppointments.map((appointment) => (
           <Link href={`/main/appointments/${appointment.id}`} key={appointment.id} 
-            className="list-grid item hover:bg-accent hover:text-accent-foreground px-6 py-4 mt-2 border-b rounded-b-xl border-b-neutral-700"
+            className="list-grid item hover:bg-accent hover:text-accent-foreground px-6 py-4 mt-2 border-b rounded-b-xl border-border"
           >
             <div className="col-time">{appointment.startTime}</div>
             <div className="col-status">

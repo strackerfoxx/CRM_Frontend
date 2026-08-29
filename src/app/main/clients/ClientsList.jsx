@@ -79,18 +79,18 @@ export default function ClientsList() {
 
                 {loading ? (
                     Array.from({ length: 5 }).map((_, i) => (
-                        <div key={i} className="grid grid-cols-1 md:grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl">
-                            <Skeleton className="h-6 w-32 bg-neutral-700" />
-                            <Skeleton className="h-6 w-24 bg-neutral-700" />
-                            <Skeleton className="h-6 w-40 bg-neutral-700" />
-                            <Skeleton className="h-6 w-24 bg-neutral-700" />
+                        <div key={i} className="grid grid-cols-1 md:grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-border rounded-b-2xl">
+                            <Skeleton className="h-6 w-32 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-24 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-40 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-24 bg-secondary text-secondary-foreground" />
                         </div>
                     ))
                 ) : (
                     <>
                         {clientsList.map((c) => (
                             <Link href={`/main/clients/${c.id}`} key={c.id}
-                                className="grid grid-cols-1 md:grid-cols-4 item hover:bg-accent hover:text-accent-foreground px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
+                                className="grid grid-cols-1 md:grid-cols-4 item hover:bg-accent hover:text-accent-foreground px-6 gap-5 py-4 mb-2 border-b border-border rounded-b-2xl"
                             >
                                 <div className="col-name overflow-hidden truncate">{c.client?.name}</div>
                                 <div className="col-phone overflow-hidden truncate">{c.client?.phone}</div>

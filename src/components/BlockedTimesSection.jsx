@@ -127,7 +127,7 @@ export default function BlockedTimesSection() {
                 Bloquea horarios específicos para evitar reservas. Puedes bloquear para un profesional o para todos (dejando vacío).
             </p>
 
-            <form onSubmit={handleSubmit} className="bg-[#0e0e0e] p-4 sm:p-6 rounded-xl space-y-4">
+            <form onSubmit={handleSubmit} className="bg-muted p-4 sm:p-6 rounded-xl space-y-4">
                 <h5 className="font-semibold mb-4">{isEditing ? "Editar bloqueo" : "Nuevo bloqueo"}</h5>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="space-y-1">
@@ -136,7 +136,7 @@ export default function BlockedTimesSection() {
                             type="date"
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
-                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-foreground"
+                            className="w-full bg-card p-2 text-sm outline-none rounded-lg text-foreground"
                             required
                         />
                     </div>
@@ -146,7 +146,7 @@ export default function BlockedTimesSection() {
                             type="time"
                             value={start}
                             onChange={(e) => setStart(e.target.value)}
-                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-foreground"
+                            className="w-full bg-card p-2 text-sm outline-none rounded-lg text-foreground"
                             required
                         />
                     </div>
@@ -156,7 +156,7 @@ export default function BlockedTimesSection() {
                             type="time"
                             value={end}
                             onChange={(e) => setEnd(e.target.value)}
-                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-foreground"
+                            className="w-full bg-card p-2 text-sm outline-none rounded-lg text-foreground"
                             required
                         />
                     </div>
@@ -165,7 +165,7 @@ export default function BlockedTimesSection() {
                         <select
                             value={userId}
                             onChange={(e) => setUserId(e.target.value)}
-                            className="w-full bg-[#1b1b1b] p-2 text-sm outline-none rounded-lg text-foreground"
+                            className="w-full bg-card p-2 text-sm outline-none rounded-lg text-foreground"
                         >
                             <option value="">Todos</option>
                             {professionals?.map(p => (
@@ -199,7 +199,7 @@ export default function BlockedTimesSection() {
             ) : (
                 <div className="space-y-4">
                     {blockedTimes.map((bt) => (
-                        <div key={bt.id || bt._id} className="bg-[#0e0e0e] p-4 rounded-xl flex justify-between items-center">
+                        <div key={bt.id || bt._id} className="bg-muted p-4 rounded-xl flex justify-between items-center">
                             <div>
                                 <p className="font-semibold">{dateReseter(bt.date, "dd-mm-yyy")}</p>
                                 <p className="text-sm text-neutral-400">

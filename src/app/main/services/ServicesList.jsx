@@ -122,23 +122,23 @@ export default function ServicesList() {
 
                 {loading ? (
                     Array.from({ length: 5 }).map((_, i) => (
-                        <div key={i} className="grid grid-cols-1 sm:grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl">
-                            <Skeleton className="h-6 w-32 bg-neutral-700" />
-                            <Skeleton className="h-6 w-24 bg-neutral-700" />
-                            <Skeleton className="h-6 w-40 bg-neutral-700" />
-                            <Skeleton className="h-6 w-24 bg-neutral-700" />
+                        <div key={i} className="grid grid-cols-1 sm:grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-border rounded-b-2xl">
+                            <Skeleton className="h-6 w-32 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-24 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-40 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-24 bg-secondary text-secondary-foreground" />
                         </div>
                     ))
                 ) : (
                     <>
                         {filteredServices?.map((s) => (
                             <Link href={`/main/services/${s.id}`} key={s.id} 
-                                className="list-grid-actions item hover:bg-accent hover:text-accent-foreground px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
+                                className="list-grid-actions item hover:bg-accent hover:text-accent-foreground px-6 gap-5 py-4 mb-2 border-b border-border rounded-b-2xl"
                             > 
                                 <div className="col-name overflow-hidden truncate text-lg">{s.name}</div>
                                 <div className="col-price overflow-hidden truncate">${s.price.toFixed(2)}</div>
                                 <div className="col-duration overflow-hidden truncate">{s.durationMin} minutos</div>
-                                <div className="col-actions overflow-hidden flex gap-3 items-center bg-neutral-700 rounded-lg p-1 justify-center w-9">
+                                <div className="col-actions overflow-hidden flex gap-3 items-center bg-secondary text-secondary-foreground rounded-lg p-1 justify-center w-9">
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
                                             <Button variant="ghost" className="h-8 w-8 p-0 cursor-pointer" onClick={(e) => e.stopPropagation()}>

@@ -111,7 +111,7 @@ export default function SettingsComponent() {
 
   if (isFetching) {
     return (
-      <div className="min-h-screen bg-background text-[#e2e2e2] mb-10">
+      <div className="min-h-screen bg-background text-foreground mb-10">
         <OverviewHeader />
         <main className="pt-10 sm:pt-10">
           <div className="px-4 sm:px-10 py-10 sm:py-12 flex flex-col lg:flex-row gap-6 lg:justify-between lg:items-end">
@@ -128,12 +128,12 @@ export default function SettingsComponent() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-[#e2e2e2] mb-10">
+    <div className="min-h-screen bg-background text-foreground mb-10">
       <Toaster position="top-center" richColors />
       <OverviewHeader />
 
       <main className="pt-10 sm:pt-10">
-        <div className="px-4 sm:px-10 py-10 sm:py-12 flex flex-col lg:flex-row gap-6 lg:justify-between lg:items-end bg-gradient-to-b from-[#0e0e0e] to-transparent rounded-4xl">
+        <div className="px-4 sm:px-10 py-10 sm:py-12 flex flex-col lg:flex-row gap-6 lg:justify-between lg:items-end bg-gradient-to-b from-muted to-transparent rounded-4xl">
           <div>
             <h2 className="text-3xl sm:text-5xl font-extrabold leading-tight">
               Configuración del Negocio
@@ -192,9 +192,9 @@ export default function SettingsComponent() {
                   country={'mx'}
                   value={phone || ""}
                   onChange={phone => setPhone(phone)}
-                  inputClass="!w-full !bg-[#0e0e0e] !p-3 sm:!p-4 !pl-[48px] sm:!pl-[48px] !outline-none !text-sm !rounded-lg !mt-2 !text-foreground !border-none !h-[48px] sm:!h-[52px]"
+                  inputClass="!w-full !bg-muted !p-3 sm:!p-4 !pl-[48px] sm:!pl-[48px] !outline-none !text-sm !rounded-lg !mt-2 !text-foreground !border-none !h-[48px] sm:!h-[52px]"
                   buttonClass="!bg-transparent !border-none !mt-2 !pl-2"
-                  dropdownClass="!bg-[#1a1a1a] !text-foreground !border-border"
+                  dropdownClass="!bg-card !text-foreground !border-border"
                   containerClass="w-full"
                   placeholder="552405238"
                 />
@@ -217,7 +217,7 @@ export default function SettingsComponent() {
                   name="defaultSlotInterval"
                   value={defaultSlotInterval}
                   onChange={e => setDefaultSlotInterval(e.target.value)}
-                  className="w-20 bg-[#0e0e0e] rounded-l-lg p-3 sm:p-4 text-center text-foreground outline-none"
+                  className="w-20 bg-muted rounded-l-lg p-3 sm:p-4 text-center text-foreground outline-none"
                   min={5}
                   step={5}
                 />
@@ -234,7 +234,7 @@ export default function SettingsComponent() {
                 const daySchedule = businessHours[key] || { open: "09:00", close: "18:00", closed: false }
 
                 return (
-                  <div key={key} className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-center bg-[#0e0e0e] p-4 rounded-xl">
+                  <div key={key} className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-center bg-muted p-4 rounded-xl">
                     <div className="font-semibold">{label}</div>
 
                     <div className="flex items-center gap-3">
@@ -259,7 +259,7 @@ export default function SettingsComponent() {
                               type="time"
                               value={daySchedule.open}
                               onChange={e => handleBusinessHourChange(key, 'open', e.target.value)}
-                              className="bg-[#1b1b1b] p-2 rounded-lg text-foreground outline-none w-full"
+                              className="bg-card p-2 rounded-lg text-foreground outline-none w-full"
                             />
                         </div>
                         <div className="flex items-center gap-2">
@@ -268,7 +268,7 @@ export default function SettingsComponent() {
                               type="time"
                               value={daySchedule.close}
                               onChange={e => handleBusinessHourChange(key, 'close', e.target.value)}
-                              className="bg-[#1b1b1b] p-2 rounded-lg text-foreground outline-none w-full"
+                              className="bg-card p-2 rounded-lg text-foreground outline-none w-full"
                             />
                         </div>
                       </>
@@ -286,14 +286,14 @@ export default function SettingsComponent() {
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+      <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </div>
   )
 }
 
 function Section({ title, index, children, className = "" }) {
   return (
-    <section className={`bg-[#1b1b1b] p-5 sm:p-8 border space-y-6 sm:space-y-8 rounded-xl border-border ${className}`}>
+    <section className={`bg-card p-5 sm:p-8 border space-y-6 sm:space-y-8 rounded-xl border-border ${className}`}>
       <div className="flex items-center gap-3 sm:gap-4">
         <span className="text-[10px] uppercase tracking-[0.2em] text-blue-400 px-3 py-1 bg-blue-400/10 rounded-full">
           {index}
@@ -313,7 +313,7 @@ function Input({ label, className = "", ...props }) {
       <label className="label text-neutral-400">{label}</label>
       <input
         {...props}
-        className="w-full bg-[#0e0e0e] p-3 sm:p-4 outline-none text-sm rounded-lg mt-2 text-foreground"
+        className="w-full bg-muted p-3 sm:p-4 outline-none text-sm rounded-lg mt-2 text-foreground"
       />
     </div>
   )

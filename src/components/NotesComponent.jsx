@@ -156,7 +156,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
           id="notes"
           value={newNote}
           onChange={(e) => setNewNote(e.target.value)}
-          className="w-full h-[150px] bg-neutral-950 text-foreground rounded-md p-4"
+          className="w-full h-[150px] bg-muted text-foreground rounded-md p-4"
         ></textarea>
         <div className="flex justify-end">
           <button
@@ -178,7 +178,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
       {isLoading ? (
         // Mostramos 3 skeletons simulando las notas
         Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="bg-neutral-950 p-4 rounded-md">
+          <div key={i} className="bg-muted p-4 rounded-md">
             <Skeleton className="h-4 w-24 mb-3 bg-secondary text-secondary-foreground" />
             <Skeleton className="h-4 w-full mb-2 bg-secondary text-secondary-foreground" />
             <Skeleton className="h-4 w-3/4 bg-secondary text-secondary-foreground" />
@@ -186,7 +186,7 @@ export default function NotesComponent({ notes, setNotes, id }) {
         ))
       ) : (
         notes?.map((note) => (
-          <div key={note.id} className="bg-neutral-950 p-4 rounded-md group relative">
+          <div key={note.id} className="bg-muted p-4 rounded-md group relative">
             <div className="flex justify-between items-center mb-2">
               <p className="text-sm text-neutral-400 m-0">
                 {dateReseter(note.updatedAt, "dd-mm-yyy")}

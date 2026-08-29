@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation"
 export default function OverviewHeader() {
   const router = useRouter()
   return (
-      <header className="fixed top-0 w-full z-50 bg-black/70 backdrop-blur-2xl flex items-center justify-between px-4 sm:px-6 h-16 sm:h-20 mb-10">
+      <header className="fixed top-0 w-full z-50 bg-background/70 backdrop-blur-2xl flex items-center justify-between px-4 sm:px-6 h-16 sm:h-20 mb-10">
         <div className="flex items-center gap-3 sm:gap-4">
           <button onClick={() => { router.back() }}
             className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center active:scale-95 transition cursor-pointer">
