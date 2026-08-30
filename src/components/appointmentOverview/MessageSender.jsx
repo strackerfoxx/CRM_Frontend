@@ -152,10 +152,10 @@ export default function MessageSender({ appointment }) {
   }
 
   return (
-    <div className="mt-8 rounded-xl border border-neutral-800 bg-neutral-950 p-6">
+    <div className="mt-8 rounded-xl border border-border bg-card p-6">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h3 className="flex items-center gap-3 text-lg font-semibold text-white">
+          <h3 className="flex items-center gap-3 text-lg font-semibold text-foreground">
             <WhatsAppIcon />
             Enviar Mensaje
           </h3>
@@ -163,7 +163,7 @@ export default function MessageSender({ appointment }) {
             Escoge un modo, revisa la plantilla y envía un mensaje consistente.
           </p>
         </div>
-        <div className="rounded-full bg-neutral-900 px-3 py-1 text-xs text-neutral-400 ring-1 ring-neutral-800">
+        <div className="rounded-full bg-card px-3 py-1 text-xs text-neutral-400 ring-1 ring-neutral-800">
           Sugerido: {selectedModeData.label}
         </div>
       </div>
@@ -179,8 +179,8 @@ export default function MessageSender({ appointment }) {
                 onClick={() => handleModeSelect(mode.id)}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                   isActive
-                    ? "bg-blue-950/[50%] border border-blue-500 text-white"
-                    : "bg-neutral-900 text-neutral-300 hover:bg-neutral-800"
+                    ? "bg-primary text-primary-foreground border border-blue-500 text-white"
+                    : "bg-card text-neutral-300 hover:bg-accent hover:text-accent-foreground"
                 }`}
               >
                 {mode.label}
@@ -192,7 +192,7 @@ export default function MessageSender({ appointment }) {
         <p className="text-sm text-neutral-500">{selectedModeData.description}</p>
 
         <textarea
-          className="w-full rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-primary focus:ring-primary"
+          className="w-full rounded-lg border border-border bg-card px-4 py-3 text-sm text-foreground placeholder-neutral-500 focus:border-primary focus:ring-primary"
           rows="6"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
@@ -204,7 +204,7 @@ export default function MessageSender({ appointment }) {
             type="button"
             onClick={restoreTemplate}
             disabled={message === templateSnapshot}
-            className="rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-2 text-sm text-white transition hover:border-neutral-700 hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-lg border border-border bg-card px-4 py-2 text-sm text-foreground transition hover:border-border hover:bg-accent hover:text-accent-foreground disabled:cursor-not-allowed disabled:opacity-50"
           >
             Regenerar mensaje
           </button>
@@ -213,9 +213,9 @@ export default function MessageSender({ appointment }) {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-4">
+        <div className="rounded-2xl border border-border bg-card p-4">
           <div className="mb-3 flex items-center justify-between gap-3">
-            <span className="text-sm font-medium text-white">Preview</span>
+            <span className="text-sm font-medium text-foreground">Preview</span>
             <span className="text-xs text-neutral-500">Estilo WhatsApp</span>
           </div>
           <div className="flex justify-end">

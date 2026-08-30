@@ -77,14 +77,14 @@ export default function LoginForm() {
 
   if(isLoaded && !token) {
     return (
-      <div className="w-screen h-screen flex flex-col items-center justify-center bg-black">
+      <div className="w-screen h-screen flex flex-col items-center justify-center bg-background">
         <Toaster position="top-center" richColors />
         <h1 className="text-3xl font-bold mb-8">Iniciar sesión</h1>
         <Form>
           <FormProvider {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="w-96 p-6 bg-neutral-800 rounded-lg shadow-lg space-y-6"
+              className="w-96 p-6 bg-secondary text-secondary-foreground rounded-lg shadow-lg space-y-6"
             >
                 {/* Email */}
                 <FormField

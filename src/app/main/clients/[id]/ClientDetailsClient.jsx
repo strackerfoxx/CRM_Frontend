@@ -133,8 +133,8 @@ export default function ClientDetailsClient() {
       <div>
         {isLoading ? (
           <>
-            <Skeleton className="h-10 w-64 mb-3 bg-neutral-800" />
-            <Skeleton className="h-5 w-48 bg-neutral-800" />
+            <Skeleton className="h-10 w-64 mb-3 bg-secondary text-secondary-foreground" />
+            <Skeleton className="h-5 w-48 bg-secondary text-secondary-foreground" />
           </>
         ) : (
           <>
@@ -146,7 +146,7 @@ export default function ClientDetailsClient() {
         )}
       </div>
       {isLoading ? (
-        <Skeleton className="h-10 w-36 rounded-3xl bg-neutral-800" />
+        <Skeleton className="h-10 w-36 rounded-3xl bg-secondary text-secondary-foreground" />
       ) : (
         <div className="flex gap-2">
           <Link href={`/main/clients/edit/${id}`} className="bg-blue-600 p-2 rounded-3xl font-semibold px-4 flex items-center justify-center">
@@ -165,17 +165,17 @@ export default function ClientDetailsClient() {
     <div className="lg:flex flex-1 gap-6 mt-10">
       {/* Información del cliente */}
       <div className="space-y-6 lg:flex-1 ">
-        <div className="bg-neutral-900 rounded-lg p-8 flex flex-col gap-4">
+        <div className="bg-card rounded-lg p-8 flex flex-col gap-4">
           <span>Nombre</span>
           {isLoading ? (
-            <Skeleton className="h-5 w-3/4 bg-neutral-800" />
+            <Skeleton className="h-5 w-3/4 bg-secondary text-secondary-foreground" />
           ) : (
             <span className="text-neutral-500">{client?.client?.name}</span>
           )}
 
           <span>Creado el</span>
           {isLoading ? (
-            <Skeleton className="h-5 w-1/2 bg-neutral-800" />
+            <Skeleton className="h-5 w-1/2 bg-secondary text-secondary-foreground" />
           ) : (
             <span className="text-neutral-500">
               {dateReseter(client?.client?.createdAt, "dd-mm-yyy")}
@@ -184,7 +184,7 @@ export default function ClientDetailsClient() {
 
           <span>Telefono</span>
           {isLoading ? (
-            <Skeleton className="h-5 w-1/2 bg-neutral-800" />
+            <Skeleton className="h-5 w-1/2 bg-secondary text-secondary-foreground" />
           ) : (
             <span className="text-neutral-500">{client?.client?.phone}</span>
           )}
@@ -194,7 +194,7 @@ export default function ClientDetailsClient() {
       {/* Calendario */}
       <div className="space-y-6 mt-10 lg:mt-0">
         {isLoading ? (
-          <Skeleton className="w-[300px] h-[320px] rounded-lg bg-neutral-900" />
+          <Skeleton className="w-[300px] h-[320px] rounded-lg bg-card" />
         ) : (
           <Calendar
             mode="single"
@@ -214,9 +214,9 @@ export default function ClientDetailsClient() {
     <NotesComponent notes={notes} setNotes={setNotes} id={id} isLoading={isLoading} />
 
     {/* Historial de citas */}
-    <div className="bg-neutral-900 rounded-md mt-10 mb-16 overflow-x-auto">
+    <div className="bg-card rounded-md mt-10 mb-16 overflow-x-auto">
       <h3 className="text-lg font-semibold p-6 min-w-[600px]">Historial de citas</h3>
-      <div className="grid grid-cols-4 header text-neutral-400 font-semibold mb-2 border-b border-neutral-800 pb-2 p-5 min-w-[600px]">
+      <div className="grid grid-cols-4 header text-neutral-400 font-semibold mb-2 border-b border-border pb-2 p-5 min-w-[600px]">
         <span>Fecha</span>
         <span>Servicio</span>
         <span>Estado</span>
@@ -230,17 +230,17 @@ export default function ClientDetailsClient() {
               key={i}
               className="grid grid-cols-4 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-800 min-w-[600px]"
             >
-              <Skeleton className="h-5 w-24 bg-neutral-800" />
-              <Skeleton className="h-5 w-32 bg-neutral-800" />
-              <Skeleton className="h-6 w-28 rounded-full bg-neutral-800" />
-              <Skeleton className="h-5 w-16 bg-neutral-800" />
+              <Skeleton className="h-5 w-24 bg-secondary text-secondary-foreground" />
+              <Skeleton className="h-5 w-32 bg-secondary text-secondary-foreground" />
+              <Skeleton className="h-6 w-28 rounded-full bg-secondary text-secondary-foreground" />
+              <Skeleton className="h-5 w-16 bg-secondary text-secondary-foreground" />
             </div>
           ))
         : appointments?.map((appointment) => (
             <Link
               href={`/main/appointments/${appointment.id}`}
               key={appointment.id}
-              className="grid grid-cols-4 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl min-w-[600px]"
+              className="grid grid-cols-4 item hover:bg-accent hover:text-accent-foreground px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl min-w-[600px]"
             >
               <div className="col-name overflow-hidden">
                 {dateReseter(appointment.date, "dd-mm-yyy")}
@@ -252,23 +252,23 @@ export default function ClientDetailsClient() {
                 <span
                   className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset ${
                     appointment.status === "SCHEDULED"
-                      ? "bg-amber-400/60 ring-amber-300/40 border-amber-300 text-amber-300"
+                      ? "bg-amber-500/20 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-400/60 ring-amber-300/40 border-amber-300 text-amber-700 dark:text-amber-300"
                       : appointment.status === "CANCELED"
-                      ? "bg-red-900/60 ring-red-400/30 border-red-500 text-red-300"
+                      ? "bg-red-500/20 dark:bg-red-100 dark:bg-red-100 dark:bg-red-100 dark:bg-red-900/60 ring-red-400/30 border-red-500 text-red-700 dark:text-red-300"
                       : appointment.status === "COMPLETED"
-                      ? "bg-blue-900/60 ring-blue-400/30 text-blue-300"
-                      : "bg-green-900/60 ring-green-400/30 border border-green-400 text-green-300"
+                      ? "bg-blue-500/20 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-900/60 ring-blue-400/30 text-blue-700 dark:text-blue-300"
+                      : "bg-green-500/20 dark:bg-green-100 dark:bg-green-100 dark:bg-green-100 dark:bg-green-900/60 ring-green-400/30 border border-green-400 text-green-700 dark:text-green-300"
                   }`}
                 >
                   <span
                     className={`h-1.5 w-1.5 rounded-full ${
                       appointment.status === "SCHEDULED"
-                        ? "bg-amber-400/60 border border-amber-300"
+                        ? "bg-amber-500/20 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-400/60 border border-amber-300"
                         : appointment.status === "CANCELED"
-                        ? "bg-red-900/60 border border-red-500"
+                        ? "bg-red-500/20 dark:bg-red-100 dark:bg-red-100 dark:bg-red-100 dark:bg-red-900/60 border border-red-500"
                         : appointment.status === "COMPLETED"
-                        ? "bg-blue-900/60"
-                        : "bg-green-900/60 border border-green-400"
+                        ? "bg-blue-500/20 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-900/60"
+                        : "bg-green-500/20 dark:bg-green-100 dark:bg-green-100 dark:bg-green-100 dark:bg-green-900/60 border border-green-400"
                     }`}
                   ></span>
                   {appointment.status === "SCHEDULED"
@@ -287,7 +287,7 @@ export default function ClientDetailsClient() {
           ))}
     </div>
   </div>
-  <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+  <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
 </>
   )
 }

@@ -41,7 +41,7 @@ export default function Schedule({ date, servicesSelected, hour, setHour, userId
             onClick={() => setHour(time)}
             type="button"
             className={`m-2 p-2 border rounded font-bold cursor-pointer
-              ${hour === time ? "bg-blue-600 text-white" : "hover:bg-neutral-800"}`}
+              ${hour === time ? "bg-blue-600 text-white" : "hover:bg-accent hover:text-accent-foreground"}`}
           >
             {time}
           </button>

@@ -125,8 +125,8 @@ export default function CalendarView() {
       const dayMetric = metrics?.dailyMetrics?.find(m => m.date === dateStr)
       const isCurrentMonth = isSameMonth(day, monthStart)
 
-      // let containerClass = "relative h-16 w-full max-w-16 aspect-square rounded-full mx-auto flex flex-col items-center justify-center p-1 transition-colors hover:bg-neutral-800"
-      let containerClass = "relative h-16 w-full max-w-16 aspect-square rounded-full mx-auto flex flex-col items-center justify-center p-1 transition-colors hover:bg-neutral-800 border-2 border-transparent"
+      // let containerClass = "relative h-16 w-full max-w-16 aspect-square rounded-full mx-auto flex flex-col items-center justify-center p-1 transition-colors hover:bg-accent hover:text-accent-foreground"
+      let containerClass = "relative h-16 w-full max-w-16 aspect-square rounded-full mx-auto flex flex-col items-center justify-center p-1 transition-colors hover:bg-accent hover:text-accent-foreground border-2 border-transparent"
       if (!isCurrentMonth) {
         containerClass += " text-muted-foreground opacity-50"
       } else if (isSameDay(day, selectedDate)) {
@@ -353,7 +353,7 @@ export default function CalendarView() {
       
 
         <div className="space-y-6">
-          <div className="flex items-center gap-4 bg-neutral-900 p-4 rounded-lg w-fit">
+          <div className="flex items-center gap-4 bg-card p-4 rounded-lg w-fit">
             <span className="text-md font-medium">Total Citas del Mes:</span>
             <Badge variant="secondary" className="text-md px-3 py-1">
               {metrics?.totalAppointments || 0}

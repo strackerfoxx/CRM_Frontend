@@ -71,7 +71,7 @@ export default function ServiceDetailsClient() {
     }
 
   return (
-    <div className="min-h-screen bg-black text-[#e2e2e2]">
+    <div className="min-h-screen bg-background text-[#e2e2e2]">
       <Toaster position="top-center" richColors />
       {/* HEADER */}
       <OverviewHeader />
@@ -92,7 +92,7 @@ export default function ServiceDetailsClient() {
                 {Array.from({ length: 4 }).map((_, i) => (
                   <div
                     key={i}
-                    className="bg-[#1b1b1b] p-5 sm:p-6 rounded-lg flex flex-col gap-3"
+                    className="bg-card p-5 sm:p-6 rounded-lg flex flex-col gap-3"
                   >
                     <Skeleton className="h-3 w-24" />
                     <Skeleton className="h-8 w-full" />
@@ -101,7 +101,7 @@ export default function ServiceDetailsClient() {
               </div>
             </section>
 
-            <section className="p-5 sm:p-8 bg-[#0e0e0e] rounded-xl mb-4">
+            <section className="p-5 sm:p-8 bg-muted/30 rounded-xl mb-4">
               <Skeleton className="h-6 w-48 mb-6" />
               <div className="space-y-3">
                 <Skeleton className="h-4 w-full max-w-2xl" />
@@ -110,7 +110,7 @@ export default function ServiceDetailsClient() {
               </div>
             </section>
 
-            <section className="p-5 sm:p-8 bg-[#1f1f1f] rounded-xl mb-4">
+            <section className="p-5 sm:p-8 bg-muted/50 rounded-xl mb-4">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-6 sm:mb-8">
                 <div className="space-y-2">
                   <Skeleton className="h-6 w-48" />
@@ -136,7 +136,7 @@ export default function ServiceDetailsClient() {
               </div>
             </section>
 
-            <details className="group bg-[#0e0e0e] rounded-xl border border-neutral-800">
+            <details className="group bg-muted/30 rounded-xl border border-border">
               <summary className="flex items-center justify-between p-5 sm:p-8 cursor-pointer">
                 <div className="flex items-center gap-3 sm:gap-4">
                   <Skeleton className="w-5 h-5 rounded-full" />
@@ -146,7 +146,7 @@ export default function ServiceDetailsClient() {
               </summary>
 
               <div className="px-5 sm:px-8 pb-6 sm:pb-8">
-                <div className="grid gap-6 sm:grid-cols-2 border-t border-neutral-800 pt-6">
+                <div className="grid gap-6 sm:grid-cols-2 border-t border-border pt-6">
                   <div className="space-y-2">
                     <Skeleton className="h-3 w-32" />
                     <Skeleton className="h-4 w-40" />
@@ -194,7 +194,7 @@ export default function ServiceDetailsClient() {
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className="bg-[#1b1b1b] p-5 sm:p-6 rounded-lg flex flex-col gap-2"
+                    className="bg-card p-5 sm:p-6 rounded-lg flex flex-col gap-2"
                   >
                     <span className="text-[10px] uppercase tracking-widest text-neutral-500">
                       {item.label}
@@ -205,7 +205,7 @@ export default function ServiceDetailsClient() {
                         {item.value}
                       </span>
                     ) : (
-                      <span className="text-xl sm:text-2xl font-bold text-white">
+                      <span className="text-xl sm:text-2xl font-bold text-foreground">
                         {item.value}
                       </span>
                     )}
@@ -215,7 +215,7 @@ export default function ServiceDetailsClient() {
             </section>
 
             {/* DESCRIPTION */}
-            <section className="p-5 sm:p-8 bg-[#0e0e0e] rounded-xl mb-4">
+            <section className="p-5 sm:p-8 bg-muted/30 rounded-xl mb-4">
               <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">
                 Service Overview
               </h3>
@@ -226,7 +226,7 @@ export default function ServiceDetailsClient() {
             </section>
 
             {/* TEAM */}
-            <section className="p-5 sm:p-8 bg-[#1f1f1f] rounded-xl mb-4">
+            <section className="p-5 sm:p-8 bg-muted/50 rounded-xl mb-4">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-6 sm:mb-8">
                 <div>
                   <h3 className="text-lg sm:text-xl font-bold">
@@ -237,7 +237,7 @@ export default function ServiceDetailsClient() {
                   </p>
                 </div>
 
-                <button className="text-xs uppercase tracking-widest text-white border-b border-white/30 pb-1 w-fit">
+                <button className="text-xs uppercase tracking-widest text-foreground border-b border-white/30 pb-1 w-fit">
                   Manage Crew
                 </button>
               </div>
@@ -248,11 +248,11 @@ export default function ServiceDetailsClient() {
                     key={i}
                     className="flex items-center gap-3 sm:gap-4 p-4 bg-[#2a2a2a] rounded-lg hover:bg-[#393939] transition cursor-pointer"
                   >
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-neutral-800 flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center">
                       <User className="text-neutral-500 w-5 h-5" />
                     </div>
                     <div className="min-w-0">
-                      <p className="font-bold text-white truncate">
+                      <p className="font-bold text-foreground truncate">
                         {user.user.name}
                       </p>
                       {/* <p className="text-xs text-neutral-500">
@@ -267,7 +267,7 @@ export default function ServiceDetailsClient() {
             </section>
 
             {/* METADATA */}
-            <details className="group bg-[#0e0e0e] rounded-xl border border-neutral-800">
+            <details className="group bg-muted/30 rounded-xl border border-border">
               <summary className="flex items-center justify-between p-5 sm:p-8 cursor-pointer">
                 <div className="flex items-center gap-3 sm:gap-4">
                   <History className="text-neutral-500 w-5 h-5" />
@@ -282,7 +282,7 @@ export default function ServiceDetailsClient() {
               </summary>
 
               <div className="px-5 sm:px-8 pb-6 sm:pb-8">
-                <div className="grid gap-6 sm:grid-cols-2 border-t border-neutral-800 pt-6">
+                <div className="grid gap-6 sm:grid-cols-2 border-t border-border pt-6">
                   <div>
                     <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-500">
                       Created At
@@ -309,7 +309,7 @@ export default function ServiceDetailsClient() {
 
 
 
-      <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+      <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </div>
   )
 }

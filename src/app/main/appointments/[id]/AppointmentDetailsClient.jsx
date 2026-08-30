@@ -111,7 +111,7 @@ export default function AppointmentDetailsClient() {
       <div className="flex min-h-screen w-full flex-col font-display">
         <OverviewHeader />
         <main className="flex flex-1 items-center justify-center p-4 sm:p-6 md:p-8">
-          <p className="text-sm text-red-300">{error || "Cita no encontrada."}</p>
+          <p className="text-sm text-red-700 dark:text-red-300">{error || "Cita no encontrada."}</p>
         </main>
       </div>
     );
@@ -177,27 +177,27 @@ export default function AppointmentDetailsClient() {
           <div className="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
             <div>
               <div className="flex items-center gap-3">
-                <h2 className="text-3xl font-bold text-white">Detalles de la Cita</h2>
+                <h2 className="text-3xl font-bold text-foreground">Detalles de la Cita</h2>
                 <span
                   className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset ${
                     appointment.status === "SCHEDULED"
-                      ? "bg-amber-400/60 ring-amber-300/40 border-amber-300 text-amber-300"
+                      ? "bg-amber-500/20 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-400/60 ring-amber-300/40 border-amber-300 text-amber-700 dark:text-amber-300"
                       : appointment.status === "CANCELED"
-                        ? "bg-red-900/60 ring-red-400/30 border-red-500 text-red-300"
+                        ? "bg-red-500/20 dark:bg-red-100 dark:bg-red-100 dark:bg-red-100 dark:bg-red-900/60 ring-red-400/30 border-red-500 text-red-700 dark:text-red-300"
                         : appointment.status === "COMPLETED"
-                          ? "bg-blue-900/60 ring-blue-400/30 text-blue-300"
-                          : "bg-green-900/60 ring-green-400/30 border border-green-400 text-green-300"
+                          ? "bg-blue-500/20 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-900/60 ring-blue-400/30 text-blue-700 dark:text-blue-300"
+                          : "bg-green-500/20 dark:bg-green-100 dark:bg-green-100 dark:bg-green-100 dark:bg-green-900/60 ring-green-400/30 border border-green-400 text-green-700 dark:text-green-300"
                   }`}
                 >
                   <span
                     className={`h-1.5 w-1.5 rounded-full ${
                       appointment.status === "SCHEDULED"
-                        ? "bg-amber-400/60 border border-amber-300"
+                        ? "bg-amber-500/20 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-100 dark:bg-amber-400/60 border border-amber-300"
                         : appointment.status === "CANCELED"
-                          ? "bg-red-900/60 border border-red-500"
+                          ? "bg-red-500/20 dark:bg-red-100 dark:bg-red-100 dark:bg-red-100 dark:bg-red-900/60 border border-red-500"
                           : appointment.status === "COMPLETED"
-                            ? "bg-blue-900/60"
-                            : "bg-green-900/60 border border-green-400"
+                            ? "bg-blue-500/20 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-100 dark:bg-blue-900/60"
+                            : "bg-green-500/20 dark:bg-green-100 dark:bg-green-100 dark:bg-green-100 dark:bg-green-900/60 border border-green-400"
                     }`}
                   ></span>
                   {appointment.status === "SCHEDULED"
@@ -216,7 +216,7 @@ export default function AppointmentDetailsClient() {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleEditClick}
-                className="flex items-center gap-2 rounded-lg bg-blue-600 px-8 py-2.5 text-sm font-semibold text-white hover:bg-blue-600/90 cursor-pointer"
+                className="flex items-center gap-2 rounded-lg bg-blue-600 px-8 py-2.5 text-sm font-semibold text-amber-700 dark:text-white hover:bg-blue-600/90 cursor-pointer"
               >
                 <span>Editar Cita</span>
               </button>
@@ -248,13 +248,13 @@ export default function AppointmentDetailsClient() {
                 />
               </div>
 
-              <div className="mt-6 rounded-lg border border-neutral-800 bg-neutral-950 p-4">
-                <h3 className="mb-4 text-lg font-semibold text-white">Servicios Asignados</h3>
+              <div className="mt-6 rounded-lg border border-border bg-card p-4">
+                <h3 className="mb-4 text-lg font-semibold text-foreground">Servicios Asignados</h3>
                 <div className="space-y-3">
                   {appointment.services?.map((service) => (
-                    <div key={service.id} className="flex items-center justify-between rounded-md border border-neutral-700 bg-neutral-900 p-3">
+                    <div key={service.id} className="flex items-center justify-between rounded-md border border-border bg-card p-3">
                       <div>
-                        <p className="font-medium text-white">{service.service?.name}</p>
+                        <p className="font-medium text-foreground">{service.service?.name}</p>
                         <p className="text-sm text-neutral-400">${service.service?.price} • {service.service?.durationMin} min</p>
                       </div>
                       <div className="text-right">
