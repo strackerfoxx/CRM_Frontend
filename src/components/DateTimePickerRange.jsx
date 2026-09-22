@@ -20,13 +20,13 @@ export function DatePickerWithRange({ date, setDate }) {
   // })
 
   return (
-    <Field className="mx-auto bg-black rounded-md">
+    <Field className="mx-auto bg-background rounded-md">
       <Popover>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             id="date-picker-range"
-            className="justify-start px-2.5 font-normal bg-black text-white w-[250px] p-5"
+            className="justify-start px-2.5 font-normal bg-background text-foreground w-[250px] p-5"
           >
             <CalendarIcon />
             {date?.from ? (
@@ -43,14 +43,14 @@ export function DatePickerWithRange({ date, setDate }) {
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0 bg-black" align="start">
+        <PopoverContent className="w-auto p-0 bg-background" align="start">
           <Calendar
             mode="range"
             defaultMonth={date?.from}
             selected={date}
             onSelect={setDate}
             numberOfMonths={2}
-            className={"bg-black"}
+            className={"bg-background"}
           />
         </PopoverContent>
       </Popover>

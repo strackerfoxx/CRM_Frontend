@@ -24,11 +24,11 @@ export default function AppointmentFilterBar(
   }) {
   return (
     <>
-        <div className='m-[10%] md:m-5 p-5 bg-neutral-900 rounded-2xl '>
+        <div className='m-[10%] md:m-5 p-5 bg-card rounded-2xl '>
 
             {/* Search and Date Range */}
             <div className='md:flex flex-1 gap-5 md:flex-row flex-col items-center justify-between mb-5'>
-                <div className="flex text-center items-center gap-2 px-3 bg-black rounded-lg border border-neutral-800 text-white w-full mb-5 md:mb-0">
+                <div className="flex text-center items-center gap-2 px-3 bg-background rounded-lg border border-border text-foreground w-full mb-5 md:mb-0">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
@@ -54,14 +54,14 @@ export default function AppointmentFilterBar(
  
             {/* Filters */}
             <div className=' md:flex flex-1 '>
-                {/* <div className='flex justify-between gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 md:w-48 w-full mr-1 mb-4 md:mb-0 h-10'>
+                {/* <div className='flex justify-between gap-2 items-center bg-background text-foreground p-2 rounded-lg border border-border md:w-48 w-full mr-1 mb-4 md:mb-0 h-10'>
                     <span className='text-gray-600 font-semibold'>Categoría</span>
                     <select
                       name="category"
                       id="category"
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
-                      className="bg-black text-white items-center w-lg"
+                      className="bg-background text-foreground items-center w-lg"
                     >
                         <option value="cabello">cabello</option>
                         <option value="pestañas">pestañas</option>
@@ -70,14 +70,14 @@ export default function AppointmentFilterBar(
                         <option value="masajes">masajes</option>
                     </select>
                 </div> */}
-                <div className='flex justify-between overflow-hidden gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 w-[220px] mb-4 md:mb-0 h-10'>
+                <div className='flex justify-between overflow-hidden gap-2 items-center bg-background text-foreground p-2 rounded-lg border border-border w-[220px] mb-4 md:mb-0 h-10'>
                     <span className='text-gray-600 font-semibold'>Servicio</span>
                     <select
                       name="service"
                       id="service"
                       value={service}
                       onChange={e => setService(e.target.value)}
-                      className="bg-black text-white items-center w-lg"
+                      className="bg-background text-foreground items-center w-lg"
                     >
                         <option value="">Selecciona un servicio</option>
                         {services.map(s => (
@@ -96,7 +96,7 @@ export default function AppointmentFilterBar(
                           key={option.value}
                           type="button"
                           onClick={() => setStatus(option.value)}
-                          className={`px-4 py-1.5 rounded-full border text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${isActive ? 'bg-blue-950 border-blue-600 text-white' : 'bg-black border-neutral-800 text-slate-500 hover:border-slate-700'}`}
+                          className={`px-4 py-1.5 rounded-full border text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${isActive ? 'bg-blue-950 border-blue-600 text-white' : 'bg-background border-border text-slate-500 hover:border-slate-700'}`}
                         >
                           {option.label}
                         </button>
@@ -114,7 +114,7 @@ export default function AppointmentFilterBar(
                       key={option.value}
                       type="button"
                       onClick={() => setStatus(option.value)}
-                      className={`px-4 py-1.5 rounded-full border text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${isActive ? 'bg-blue-600 border-blue-600 text-white' : 'bg-black border-neutral-800 text-slate-500 hover:border-slate-700'}`}
+                      className={`px-4 py-1.5 rounded-full border text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${isActive ? 'bg-blue-600 border-blue-600 text-white' : 'bg-background border-border text-slate-500 hover:border-slate-700'}`}
                     >
                       {option.label}
                     </button>

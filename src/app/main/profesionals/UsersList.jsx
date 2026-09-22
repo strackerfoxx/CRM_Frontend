@@ -61,14 +61,14 @@ export default function UsersListUsers() {
             onSubmit={getUsers}
             placeholder="Buscar profesionales por nombre, rol o correo..."
         >
-            <div className='flex justify-between gap-2 items-center bg-black text-white p-2 rounded-lg border border-neutral-800 w-[220px] mr-1 mb-4 md:mb-0 h-10'>
+            <div className='flex justify-between gap-2 items-center bg-background text-foreground p-2 rounded-lg border border-border w-[220px] mr-1 mb-4 md:mb-0 h-10'>
                 <span className='text-gray-600 font-semibold'>Rol</span>
                 <select
                     name="role"
                     id="role"
                     value={role}
                     onChange={e => setRole(e.target.value)}
-                    className="bg-black text-white items-center w-full text-center"
+                    className="bg-background text-foreground items-center w-full text-center"
                 >
                     
                     <option value="">Selecciona el rol</option>
@@ -78,7 +78,7 @@ export default function UsersListUsers() {
             </div>
         </SearchBarComponent>
         <div className="m-5">
-            <div className="bg-neutral-900 rounded-2xl font-semibold">
+            <div className="bg-card rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}
                 <div className="hidden md:grid grid-cols-4 header text-neutral-400 font-semibold mb-2 border-b pb-2 p-5">
                     <span>Nombre</span>
@@ -89,18 +89,18 @@ export default function UsersListUsers() {
 
                 {loading ? (
                     Array.from({ length: 5 }).map((_, i) => (
-                        <div key={i} className="grid grid-cols-1 md:grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl">
-                            <Skeleton className="h-6 w-32 bg-neutral-700" />
-                            <Skeleton className="h-6 w-24 bg-neutral-700" />
-                            <Skeleton className="h-6 w-40 bg-neutral-700" />
-                            <Skeleton className="h-6 w-24 bg-neutral-700" />
+                        <div key={i} className="grid grid-cols-1 md:grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-border rounded-b-2xl">
+                            <Skeleton className="h-6 w-32 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-24 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-40 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-24 bg-secondary text-secondary-foreground" />
                         </div>
                     ))
                 ) : (
                     <>
                         {filteredProfessionals.map((p) => (
                             <Link href={`/main/profesionals/${p.id}`} key={p.id}
-                                className="grid grid-cols-1 md:grid-cols-4 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
+                                className="grid grid-cols-1 md:grid-cols-4 item hover:bg-accent hover:text-accent-foreground px-6 gap-5 py-4 mb-2 border-b border-border rounded-b-2xl"
                             >
                                 <div className="col-name overflow-hidden truncate">{p.name}</div>
                                 <div className="col-phone overflow-hidden truncate">{p.role}</div>

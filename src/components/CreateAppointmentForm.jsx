@@ -298,7 +298,7 @@ export default function CreateAppointmentForm({
                 const service = servicesMap[serviceId]
 
                 return (
-                  <div key={serviceId} className="grid gap-3 rounded-lg border border-neutral-800 bg-neutral-950 p-4">
+                  <div key={serviceId} className="grid gap-3 rounded-lg border border-border bg-card p-4">
                     <Label>{service?.name}</Label>
 
                     <Select

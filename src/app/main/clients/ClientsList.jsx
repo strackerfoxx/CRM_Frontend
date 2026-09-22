@@ -53,7 +53,7 @@ export default function ClientsList() {
             </div>
             <Link href="/main/clients/create" className="block sm:inline-block w-full sm:w-auto text-center bg-blue-600 p-2 rounded-3xl font-semibold px-4">Crear cliente</Link>
         </div>
-        {/* <div className="m-7 flex text-center items-center gap-3 px-3 bg-neutral-800 rounded-lg border border-neutral-700 text-white">
+        {/* <div className="m-7 flex text-center items-center gap-3 px-3 bg-secondary text-secondary-foreground rounded-lg border border-border text-foreground">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
@@ -68,7 +68,7 @@ export default function ClientsList() {
             placeholder="Buscar clientes por nombre, telefono o correo..."
         />
         <div className="m-5">
-            <div className="bg-neutral-900 rounded-2xl font-semibold">
+            <div className="bg-card rounded-2xl font-semibold">
                 {/* Header row using same grid as items */}
                 <div className="hidden md:grid grid-cols-4 header text-neutral-400 font-semibold mb-2 border-b pb-2 p-5">
                     <span>Nombre</span>
@@ -79,18 +79,18 @@ export default function ClientsList() {
 
                 {loading ? (
                     Array.from({ length: 5 }).map((_, i) => (
-                        <div key={i} className="grid grid-cols-1 md:grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl">
-                            <Skeleton className="h-6 w-32 bg-neutral-700" />
-                            <Skeleton className="h-6 w-24 bg-neutral-700" />
-                            <Skeleton className="h-6 w-40 bg-neutral-700" />
-                            <Skeleton className="h-6 w-24 bg-neutral-700" />
+                        <div key={i} className="grid grid-cols-1 md:grid-cols-4 item px-6 gap-5 py-4 mb-2 border-b border-border rounded-b-2xl">
+                            <Skeleton className="h-6 w-32 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-24 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-40 bg-secondary text-secondary-foreground" />
+                            <Skeleton className="h-6 w-24 bg-secondary text-secondary-foreground" />
                         </div>
                     ))
                 ) : (
                     <>
                         {clientsList.map((c) => (
                             <Link href={`/main/clients/${c.id}`} key={c.id}
-                                className="grid grid-cols-1 md:grid-cols-4 item hover:bg-neutral-800 px-6 gap-5 py-4 mb-2 border-b border-b-neutral-700 rounded-b-2xl"
+                                className="grid grid-cols-1 md:grid-cols-4 item hover:bg-accent hover:text-accent-foreground px-6 gap-5 py-4 mb-2 border-b border-border rounded-b-2xl"
                             >
                                 <div className="col-name overflow-hidden truncate">{c.client?.name}</div>
                                 <div className="col-phone overflow-hidden truncate">{c.client?.phone}</div>

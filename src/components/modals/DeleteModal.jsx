@@ -28,7 +28,7 @@ export function DeleteModal({ title = "¿Eliminar?", description = "Esta acción
           {triggerLabel}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-neutral-900 border-neutral-800 text-white p-6">
+      <DialogContent className="sm:max-w-[425px] bg-card border-border text-foreground p-6">
         <DialogHeader className="flex flex-col items-center gap-4 text-center sm:text-center">
           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/20 mb-2">
             <AlertTriangle className="h-7 w-7 text-red-500" />
@@ -42,7 +42,7 @@ export function DeleteModal({ title = "¿Eliminar?", description = "Esta acción
         </DialogHeader>
         <DialogFooter className="mt-6 flex flex-row gap-3 w-full sm:flex-row sm:justify-between sm:space-x-0">
           <DialogClose asChild>
-            <Button variant="outline" className="flex-1 bg-transparent border-neutral-700 text-white hover:bg-neutral-800 w-full cursor-pointer">
+            <Button variant="outline" className="flex-1 bg-transparent border-border text-foreground hover:bg-accent hover:text-accent-foreground w-full cursor-pointer">
               Cancelar
             </Button>
           </DialogClose>
