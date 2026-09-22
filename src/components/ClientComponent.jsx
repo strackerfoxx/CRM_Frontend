@@ -57,7 +57,6 @@ export default function ClientComponent({
       }
 
       const url = `/client/create`
-      // console .log("Saving client with payload:", validation.data)
 
         await api.post(url, validation.data, {
           headers: {
