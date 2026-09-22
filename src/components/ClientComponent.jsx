@@ -40,7 +40,7 @@ export default function ClientComponent({
       const payload = {
         businessId: business?.id,
         name,
-        phone,
+        phone: "+" + phone.replace(/\D/g, ""),
         email: email || undefined,
       }
 
@@ -57,7 +57,7 @@ export default function ClientComponent({
       }
 
       const url = `/client/create`
-
+      // console .log("Saving client with payload:", validation.data)
 
         await api.post(url, validation.data, {
           headers: {
