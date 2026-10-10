@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
-    "start": "next start"
+    "start": "next start",
+    "test": "node --test src/lib/__tests__/*.test.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
